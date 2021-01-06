@@ -16,13 +16,11 @@ import pandas as pd
 import numpy as np
 
 urlSiteNbaScore='https://fr.global.nba.com/scores/'
-urlSiteNbaJoueur='https://fr.global.nba.com/playerindex/'
 nomsColonnesStat=['nom', 'nom.1', 'position', 'minute', 'points', 'rebonds', 'passes_dec', 'steal', 
  'contres', 'tir_reussi', 'tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt', 
  'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc', 'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 
  'plus_moins']
 nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
-dossierCsv=r'C:\Users\martin.schoreisz\Documents\AffairesEnCours\temp\basket'
 dnpTupleTexte=("Pas en tenue","N'a pas joué")
 
 def CreationDriverFirefox():
@@ -39,7 +37,7 @@ class JourneeSiteNba(object):
     Resultats des matchs publies sur le site pour une date
     '''
 
-    def __init__(self, dateJournee, sourceDonnees='internet'):
+    def __init__(self, dateJournee, sourceDonnees='internet',dossierExportCsv=r'C:\Users\martin.schoreisz\Documents\AffairesEnCours\temp\basket'):
         '''
         Attributes
             dateJournee : string au format YYYY-MM-DD
@@ -48,13 +46,15 @@ class JourneeSiteNba(object):
             driver : selenium driver firefox, uniquement si sourceDonnees='internet'
             dossierDate : si on enregistre des csv (uniquement si sourceDonnees='internet') : dossier qui conteint les donnees de la journee
             dicoJournee : dico avec en cle un integer  et en value un dico de 3 clé : match, stats_eO et stat_e1 qui contein les dfs de donnees
+            dossierExportCsv : dossier pour export de la journee telechargee
         '''
         self.dateJournee=dateJournee
         self.urlDateJournee=fr'{urlSiteNbaScore}#!/{self.dateJournee}'
         self.sourceDonnees=sourceDonnees
+        self.dossierExportCsv=dossierExportCsv
         if self.sourceDonnees=='internet' : 
             self.driver=CreationDriverFirefox()
-            self.dossierDate=os.path.join(dossierCsv,self.dateJournee)
+            self.dossierDate=os.path.join(self.dossierExportCsv,self.dateJournee)
         self.dicoJournee=self.dicoMatchs()
         
     def __str__(self):
@@ -69,12 +69,14 @@ class JourneeSiteNba(object):
             listePage : liste des urls concernants les matchs d'uen journee
         """
         self.driver.get(self.urlDateJournee)
+        time.sleep(10)
         #recuperer la liste des hyperliens qui ont le mot "feuille" dedans
         try :
-            elements=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.PARTIAL_LINK_TEXT, "Feuille")))
+            #containerScore=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH,f"//div[@class='snapshot-footer']"))) #si besoin que la ligne dessous ne fonctionne pas
+            elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, f"//a[@class='sib3-game-url stats-boxscore game-status-3']")))
         except TimeoutException :
             raise PasDeMatchError(self.dateJournee)
-        return [p.get_attribute("href") for p in elements]
+        return [p.get_attribute("href") for p in elementsScore]
     
     def dicoMatchs(self):
         """
@@ -106,7 +108,7 @@ class JourneeSiteNba(object):
                 dicoJournee[e]['stats_e1']=pd.read_html(self.driver.page_source)[2]
             self.miseEnFormeDf(dicoJournee) 
         elif self.sourceDonnees=='csv' :
-            dossierCsvEnCours=os.path.join(dossierCsv,self.dateJournee)
+            dossierCsvEnCours=os.path.join(self.dossierExportCsv,self.dateJournee)
             with os.scandir(dossierCsvEnCours) as it:
                 listEntry=[(entry.name[1],os.path.join(dossierCsvEnCours,entry.name),'match' if 'equipe' not in entry.name else f'stats_e{i%3-1}') 
                            for i,entry in enumerate(it) if entry.name.endswith('.csv') and entry.is_file()]
@@ -199,7 +201,70 @@ class JourneeSiteNba(object):
                     j.to_csv(os.path.join(self.dossierDate,f'm{k}_{self.dateJournee}.csv'), index=False)
                 else : 
                     j.to_csv(os.path.join(self.dossierDate,f'm{k}_equipe{i[-1]}_{self.dateJournee}.csv'),index=False)
+  
+class JoueursSiteNba(object):  
+    """
+    classes pour récupérer les joueurs depuis le site de la nba
+    le principe : 
+    1. connexion au site
+    2. balalyer les lettres iinitiales des noms
+    3. concatener puis mettre en forme un df
+    """
     
+    def __init__(self, urlPageJoueurs='https://fr.global.nba.com/playerindex/',
+                 nomClassDivContainer='hidden-sm col-sm-9 col-lg-10 letters-wrap'):
+        """
+        Attributes : 
+            driver : driver Selenium pour firefox. cf CreationDriverFirefox()
+            urlPageJoueurs : url de la page des joueurs
+            nomClassDivContainer : nom de la div qui contient les lettres a faire defiler
+            dfJoueurs : dataframe descriptives des joueurs (nom, equipe, taille, poids, position, experience, pays, date_entree_nba
+        """
+        self.driver=CreationDriverFirefox()
+        self.urlPageJoueurs=urlPageJoueurs
+        self.driver.get(urlPageJoueurs)
+        self.nomClassDivContainer=nomClassDivContainer
+        self.dfJoueurs=self.miseEnFormeDfJoueurs(self.creerDfJoueurs())
+    
+    def getlisteBouttonLettre(self):
+        """
+        obetnir le container 
+        """
+        ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
+        containerBouttonLettre=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                    By.XPATH, f"//div[@class='{self.nomClassDivContainer}']")))
+        listBouttonLettre=WebDriverWait(containerBouttonLettre, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
+                    By.XPATH, ".//*")))
+        return listBouttonLettre
+    
+    def creerDfJoueurs(self):
+        """
+        à partir du driver de la classe, creer une df en balyant la page contenant le nom des joueurs
+        """
+        listBouttonLettre=self.getlisteBouttonLettre()
+        dico={}
+        for i,e in enumerate(listBouttonLettre) : 
+            e.click()
+            time.sleep(3)
+            dico[i]=pd.read_html(self.driver.page_source)
+        dfJoueurs=pd.concat([v[0] for v in dico.values()])
+        return dfJoueurs
+    
+    def miseEnFormeDfJoueurs(self,dfJoueurs ):
+        """
+        modification des noms d'attributs, et certains type
+        """
+        dfJoueursForme=dfJoueurs.drop('Unnamed: 1',axis=1).rename(
+            columns={'Joueur':'nom','Équipe':'equipe','POS':'position','Taille':'taille',
+                     'OUEST':'poids', 'EXP':'experience','Pays':'pays'})
+        dfJoueursForme['poids']=dfJoueursForme.poids.apply(lambda x : float(x[:-3]))
+        dfJoueursForme['date_entree_nba']=dfJoueursForme['experience'].apply(lambda x : pd.to_datetime('2020-10-01') - 
+                                          pd.to_timedelta(x*365.25, unit='D')).dt.date
+        dfJoueursForme['nom']=dfJoueursForme.nom.apply(lambda x : ' '.join(x.split()))
+        dfJoueurs.reset_index(drop=True, inplace=True)
+        return dfJoueursForme
+        
+  
 class PasDeMatchError(Exception):  
     """
     erreur levee si pas de match à une date donnee
