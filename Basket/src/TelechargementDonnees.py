@@ -255,7 +255,7 @@ class JoueursSiteNba(object):
         modification des noms d'attributs, et certains type
         """
         dfJoueursForme=dfJoueurs.drop('Unnamed: 1',axis=1).rename(
-            columns={'Joueur':'nom','Équipe':'equipe','POS':'position','Taille':'taille',
+            columns={'Joueur':'nom','Équipe':'equipe','POS':'id_position_terrain','Taille':'taille',
                      'OUEST':'poids', 'EXP':'experience','Pays':'pays'})
         dfJoueursForme['poids']=dfJoueursForme.poids.apply(lambda x : float(x[:-3]))
         dfJoueursForme['date_entree_nba']=dfJoueursForme['experience'].apply(lambda x : pd.to_datetime('2020-10-01') - 
