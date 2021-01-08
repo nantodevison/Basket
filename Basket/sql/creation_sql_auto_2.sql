@@ -26,7 +26,7 @@ CREATE TABLE donnees_source.equipe (
     id_equipe VARCHAR(3) NOT NULL,
     nom_equipe VARCHAR NOT NULL,
     conference VARCHAR(5) NOT NULL,
-	division VARCHAR NOT NULL
+	division VARCHAR NOT NULL ,
     PRIMARY KEY (id_equipe)
 );
 
@@ -174,25 +174,23 @@ ALTER TABLE donnees_source.blessure ADD FOREIGN KEY (id_type_blessure) REFERENCE
  * REMPLIR LES TABLES D'ENUMERATIONS
  ====================================*/
  
--- remplir la table d'énumeration des positions des joueurs est fait dans le notebook C:\Users\martin.schoreisz\git\Basket\Basket\src\TransfertBdd.ipynb
-
 --remplir la table d'enumeration des types de periode de match
 INSERT INTO donnees_source.enum_periode_match (id_periode, nom_periode)
- VALUES (q1, '1er quart-temp'),
- 		(q2, '2eme quart-temp'),
- 		(q3, '3eme quart-temp'),
- 		(q4, '4eme quart-temp'),
- 		(pr1, 'prolongation 1'),
- 		(pr2, 'prolongation 2'),
- 		(pr3, 'prolongation 3'),
- 		(pr4, 'prolongation 4'),
- 		(pr5, 'prolongation 5'),
- 		(final, 'score total')
+ VALUES ('q1', '1er quart-temp'),
+ 		('q2', '2eme quart-temp'),
+ 		('q3', '3eme quart-temp'),
+ 		('q4', '4eme quart-temp'),
+ 		('pr1', 'prolongation 1'),
+ 		('pr2', 'prolongation 2'),
+ 		('pr3', 'prolongation 3'),
+ 		('pr4', 'prolongation 4'),
+ 		('pr5', 'prolongation 5'),
+ 		('final', 'score total') ;
 
 --remplir la table d'enumeration des types de blessure
 INSERT INTO donnees_source.enum_type_blessure (id_type_blessure, nom_blessure)
  VALUES (0, 'inconnue'),
-		(1, 'ligaments croise genou')
+		(1, 'ligaments croise genou') ;
 		
 --remplir la table d'enumeration des types de contrat
 INSERT INTO donnees_source.enum_type_contrat (id_type_contrat, nom_type_contrat)
@@ -202,20 +200,29 @@ INSERT INTO donnees_source.enum_type_contrat (id_type_contrat, nom_type_contrat)
  		(3, 'Player Option'),
  		(4, 'Absent de l’équipe'),
  		(5, 'Early Termination Option (ETO)'),
- 		(6, 'Contrat garanti')
+ 		(6, 'Contrat garanti') ;
 		
 --remplir la table d'enumeration des types de match
 INSERT INTO donnees_source.enum_type_match (id_type_match, nom_type_match)
  VALUES (0, 'Saison Reguliere'),
- 		(1, 'Playoffs')
+ 		(1, 'Playoffs') ;
 		
 --remplir la table d'enumeration des types de match
 INSERT INTO donnees_source.enum_type_playoffs (id_type_playoffs, nom_type_playoffs)
  VALUES (0, 'premier tour'),
  		(1, 'demi finale conference'),
  		(2, 'finale conference'),
- 		(3, 'finale NBA')
+ 		(3, 'finale NBA') ;
 		
 /*=======================================
  * REMPLIR LES TABLES JOUEURS ET EQUIPES
  =======================================*/
+ 
+ -- les tables joueurs et equipe sont initialisées dans le notebook TransfertBdd.ipynb
+ 
+ /*=======================================
+ * REMPLIR LA TABLE SAISON
+ =======================================*/
+ INSERT INTO donnees_source.saison(date_debut, nom_saison) 
+ values('2020-12-22', '2020-2021')
+ 
