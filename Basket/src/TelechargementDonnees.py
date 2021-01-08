@@ -37,7 +37,7 @@ class JourneeSiteNba(object):
     Resultats des matchs publies sur le site pour une date
     '''
 
-    def __init__(self, dateJournee, sourceDonnees='internet',dossierExportCsv=r'C:\Users\martin.schoreisz\Documents\AffairesEnCours\temp\basket'):
+    def __init__(self, dateJournee, sourceDonnees='internet',dossierExportCsv=r'C:\Users\martin.schoreisz\git\Basket\Basket\data'):
         '''
         Attributes
             dateJournee : string au format YYYY-MM-DD
