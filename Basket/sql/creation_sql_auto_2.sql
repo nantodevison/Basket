@@ -17,14 +17,16 @@ DROP TABLE IF EXISTS donnees_source.enum_type_match;
 DROP TABLE IF EXISTS donnees_source.enum_type_playoffs;
 DROP TABLE IF EXISTS donnees_source.enum_type_blessure;
 DROP TABLE IF EXISTS donnees_source.enum_position_terrain;
-DROP TABLE IF EXISTS enum_type_contrat;
+DROP TABLE IF EXISTS donnees_source.enum_type_contrat;
 DROP TABLE IF EXISTS donnees_source.blessure;
+DROP TABLE IF EXISTS donnees_source.saison;
 
 
 CREATE TABLE donnees_source.equipe (
-    id_equipe SERIAL NOT NULL,
+    id_equipe VARCHAR(3) NOT NULL,
     nom_equipe VARCHAR NOT NULL,
     conference VARCHAR(5) NOT NULL,
+	division VARCHAR NOT NULL
     PRIMARY KEY (id_equipe)
 );
 
@@ -42,7 +44,7 @@ CREATE TABLE donnees_source.joueur (
 
 CREATE TABLE donnees_source.contrat (
     id_contrat SERIAL NOT NULL,
-    id_equipe INTEGER NOT NULL,
+    id_equipe VARCHAR(3) NOT NULL,
     id_joueur INTEGER NOT NULL,
     annee DATE NOT NULL,
     date_fin_contrat DATE,
@@ -55,8 +57,8 @@ CREATE TABLE donnees_source.match (
     id_match SERIAL NOT NULL,
 	id_saison INTEGER NOT NULL,
     date_match DATE NOT NULL,
-    equipe_domicile INTEGER NOT NULL,
-    equipe_exterieure INTEGER NOT NULL,
+    equipe_domicile VARCHAR(3) NOT NULL,
+    equipe_exterieure VARCHAR(3) NOT NULL,
     id_type_match INTEGER NOT NULL,
     id_type_playoff INTEGER NOT NULL,
     PRIMARY KEY (id_match)
@@ -93,8 +95,8 @@ CREATE TABLE donnees_source.stats_joueur (
 CREATE TABLE donnees_source.score_match (
     id_score_match BIGINT NOT NULL,
     id_match BIGINT NOT NULL,
-    id_equipe INTEGER NOT NULL,
-    id_periode INTEGER NOT NULL,
+    id_equipe VARCHAR(3) NOT NULL,
+    id_periode VARCHAR NOT NULL,
     PRIMARY KEY (id_score_match)
 );
 
