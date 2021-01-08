@@ -1,0 +1,15 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+T.J. Warren,F,0 days 00:30:55,17.0,2.0,0.0,1.0,0.0,7.0,13.0,53.8,0.0,2.0,0.0,3.0,4.0,75.0,0.0,2.0,2.0,6.0,-12.0,False,False,25.0
+Domantas Sabonis,F,0 days 00:37:44,14.0,11.0,8.0,2.0,1.0,5.0,12.0,41.7,1.0,2.0,50.0,3.0,4.0,75.0,2.0,9.0,2.0,3.0,-15.0,False,False,38.0
+Myles Turner,C,0 days 00:32:39,16.0,6.0,0.0,2.0,3.0,5.0,9.0,55.6,3.0,6.0,50.0,3.0,4.0,75.0,0.0,6.0,2.0,3.0,6.0,False,False,36.0
+Victor Oladipo,G,0 days 00:34:25,24.0,6.0,6.0,0.0,1.0,10.0,18.0,55.6,2.0,6.0,33.3,2.0,2.0,100.0,0.0,6.0,2.0,3.0,5.0,False,False,45.0
+Malcolm Brogdon,G,0 days 00:35:34,19.0,3.0,7.0,0.0,0.0,7.0,15.0,46.7,3.0,9.0,33.3,2.0,2.0,100.0,1.0,2.0,2.0,4.0,0.0,False,False,37.0
+Justin Holiday,,0 days 00:26:36,12.0,1.0,0.0,4.0,0.0,5.0,9.0,55.6,2.0,5.0,40.0,0.0,0.0,0.0,0.0,1.0,2.0,3.0,-5.0,False,False,21.0
+Doug McDermott,,0 days 00:20:32,2.0,1.0,1.0,0.0,0.0,1.0,4.0,25.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,9.0,False,False,4.0
+Aaron Holiday,,0 days 00:14:07,5.0,1.0,2.0,0.0,0.0,2.0,3.0,66.7,1.0,1.0,100.0,0.0,0.0,0.0,0.0,1.0,0.0,2.0,-8.0,False,False,10.0
+T.J. McConnell,,0 days 00:13:25,2.0,5.0,3.0,0.0,0.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,4.0,2.0,0.0,-5.0,False,False,9.0
+Jalen Lecque,,,,,,,,,,,,,,,,,,,,,,True,False,
+Kelan Martin,,,,,,,,,,,,,,,,,,,,,,True,False,
+JaKarr Sampson,,,,,,,,,,,,,,,,,,,,,,True,False,
+Cassius Stanley,,,,,,,,,,,,,,,,,,,,,,True,False,
+Edmond Sumner,,,,,,,,,,,,,,,,,,,,,,True,False,

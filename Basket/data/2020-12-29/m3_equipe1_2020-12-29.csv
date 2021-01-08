@@ -1,0 +1,16 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Danny Green,F,0 days 00:29:34,7.0,2.0,0.0,2.0,2.0,3.0,7.0,42.9,1.0,4.0,25.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,5.0,False,False,14.0
+Tobias Harris,F,0 days 00:38:52,26.0,11.0,3.0,2.0,2.0,11.0,20.0,55.0,2.0,5.0,40.0,2.0,2.0,100.0,2.0,9.0,2.0,1.0,21.0,False,False,51.0
+Joel Embiid,C,0 days 00:38:53,29.0,16.0,4.0,2.0,2.0,7.0,17.0,41.2,1.0,6.0,16.7,14.0,16.0,87.5,4.0,12.0,5.0,1.0,15.0,False,False,67.0
+Seth Curry,G,0 days 00:33:37,17.0,6.0,4.0,1.0,1.0,5.0,11.0,45.5,3.0,6.0,50.0,4.0,4.0,100.0,1.0,5.0,3.0,4.0,1.0,False,False,35.0
+Ben Simmons,G,0 days 00:37:46,11.0,13.0,7.0,1.0,1.0,3.0,11.0,27.3,0.0,0.0,0.0,5.0,8.0,62.5,0.0,13.0,3.0,1.0,10.0,False,False,33.0
+Shake Milton,,0 days 00:26:40,7.0,1.0,2.0,2.0,0.0,2.0,10.0,20.0,1.0,6.0,16.7,2.0,2.0,100.0,0.0,1.0,0.0,3.0,6.0,False,False,14.0
+Matisse Thybulle,,0 days 00:12:21,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-8.0,False,False,-2.0
+Tyrese Maxey,,0 days 00:08:01,0.0,0.0,1.0,0.0,0.0,0.0,3.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,7.0,False,False,0.0
+Mike Scott,,0 days 00:10:08,3.0,2.0,0.0,0.0,1.0,1.0,3.0,33.3,0.0,2.0,0.0,1.0,1.0,100.0,1.0,1.0,0.0,2.0,-14.0,False,False,8.0
+Dwight Howard,,0 days 00:10:07,0.0,3.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,2.0,-8.0,False,False,1.0
+Tony Bradley,,,,,,,,,,,,,,,,,,,,,,True,False,
+Terrance Ferguson,,,,,,,,,,,,,,,,,,,,,,True,False,
+Isaiah Joe,,,,,,,,,,,,,,,,,,,,,,True,False,
+Dakota Mathias,,,,,,,,,,,,,,,,,,,,,,True,False,
+Vincent Poirier,,,,,,,,,,,,,,,,,,,,,,True,False,

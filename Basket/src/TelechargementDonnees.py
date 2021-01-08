@@ -21,7 +21,7 @@ nomsColonnesStat=['nom', 'nom.1', 'position', 'minute', 'points', 'rebonds', 'pa
  'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc', 'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 
  'plus_moins']
 nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
-dnpTupleTexte=("Pas en tenue","N'a pas joué")
+dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe")
 
 def CreationDriverFirefox():
     """

@@ -1,0 +1,15 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Jayson Tatum,F,0 days 00:33:49,30.0,7.0,2.0,2.0,1.0,12.0,28.0,42.9,6.0,13.0,46.2,0.0,0.0,0.0,0.0,7.0,2.0,2.0,-6.0,False,False,49.0
+Tristan Thompson,F,0 days 00:22:24,12.0,8.0,1.0,0.0,0.0,6.0,10.0,60.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,4.0,0.0,3.0,-6.0,False,False,23.0
+Daniel Theis,C,0 days 00:25:40,10.0,3.0,3.0,0.0,0.0,4.0,8.0,50.0,2.0,6.0,33.3,0.0,0.0,0.0,0.0,3.0,0.0,1.0,7.0,False,False,22.0
+Jaylen Brown,G,0 days 00:38:37,33.0,5.0,4.0,2.0,1.0,13.0,24.0,54.2,3.0,8.0,37.5,4.0,4.0,100.0,0.0,5.0,0.0,3.0,8.0,False,False,59.0
+Marcus Smart,G,0 days 00:38:27,3.0,1.0,7.0,0.0,2.0,0.0,3.0,0.0,0.0,2.0,0.0,3.0,4.0,75.0,0.0,1.0,2.0,2.0,0.0,False,False,14.0
+Grant Williams,,0 days 00:15:35,3.0,1.0,1.0,1.0,0.0,1.0,5.0,20.0,1.0,4.0,25.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,-19.0,False,False,6.0
+Jeff Teague,,0 days 00:25:00,19.0,3.0,4.0,2.0,1.0,7.0,15.0,46.7,4.0,4.0,100.0,1.0,2.0,50.0,2.0,1.0,0.0,1.0,8.0,False,False,34.0
+Robert Williams III,,0 days 00:12:28,4.0,4.0,0.0,0.0,1.0,2.0,2.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,1.0,1.0,1.0,-5.0,False,False,10.0
+Payton Pritchard,,0 days 00:13:00,3.0,1.0,0.0,1.0,0.0,1.0,4.0,25.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,-2.0,False,False,5.0
+Semi Ojeleye,,0 days 00:19:58,5.0,4.0,1.0,0.0,0.0,2.0,2.0,100.0,1.0,1.0,100.0,0.0,1.0,0.0,1.0,3.0,0.0,1.0,20.0,False,False,14.0
+Carsen Edwards,,,,,,,,,,,,,,,,,,,,,,True,False,
+Javonte Green,,,,,,,,,,,,,,,,,,,,,,True,False,
+Aaron Nesmith,,,,,,,,,,,,,,,,,,,,,,True,False,
+Tremont Waters,,,,,,,,,,,,,,,,,,,,,,True,False,

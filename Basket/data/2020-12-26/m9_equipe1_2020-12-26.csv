@@ -1,0 +1,16 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Harrison Barnes,F,0 days 00:34:08,11.0,11.0,2.0,0.0,1.0,5.0,14.0,35.7,0.0,2.0,0.0,1.0,1.0,100.0,1.0,10.0,2.0,0.0,2.0,False,False,22.0
+Marvin Bagley III,F,0 days 00:21:42,13.0,11.0,1.0,0.0,0.0,5.0,10.0,50.0,0.0,1.0,0.0,3.0,7.0,42.9,6.0,5.0,3.0,3.0,-3.0,False,False,30.0
+Richaun Holmes,C,0 days 00:24:02,11.0,9.0,1.0,1.0,0.0,3.0,5.0,60.0,0.0,0.0,0.0,5.0,5.0,100.0,3.0,6.0,4.0,4.0,-1.0,False,False,24.0
+Buddy Hield,G,0 days 00:35:41,14.0,4.0,0.0,1.0,0.0,4.0,14.0,28.6,2.0,7.0,28.6,4.0,6.0,66.7,1.0,3.0,1.0,3.0,1.0,False,False,25.0
+De'Aaron Fox,G,0 days 00:35:54,24.0,4.0,7.0,1.0,2.0,7.0,14.0,50.0,3.0,7.0,42.9,7.0,8.0,87.5,1.0,3.0,5.0,2.0,-3.0,False,False,48.0
+Cory Joseph,,0 days 00:19:08,3.0,3.0,1.0,0.0,1.0,1.0,8.0,12.5,0.0,2.0,0.0,1.0,2.0,50.0,0.0,3.0,1.0,2.0,-2.0,False,False,5.0
+Nemanja Bjelica,,0 days 00:16:38,12.0,1.0,2.0,0.0,1.0,5.0,6.0,83.3,0.0,0.0,0.0,2.0,2.0,100.0,1.0,0.0,0.0,3.0,8.0,False,False,22.0
+Hassan Whiteside,,0 days 00:15:16,8.0,8.0,1.0,1.0,2.0,4.0,5.0,80.0,0.0,0.0,0.0,0.0,2.0,0.0,2.0,6.0,1.0,2.0,3.0,False,False,24.0
+Tyrese Haliburton,,0 days 00:26:08,2.0,2.0,5.0,0.0,1.0,1.0,4.0,25.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,2.0,6.0,False,False,10.0
+Glenn Robinson III,,0 days 00:15:21,8.0,3.0,0.0,0.0,1.0,4.0,6.0,66.7,0.0,1.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,1.0,4.0,False,False,15.0
+Kyle Guy,,,,,,,,,,,,,,,,,,,,,,True,False,
+Justin James,,,,,,,,,,,,,,,,,,,,,,True,False,
+Chimezie Metu,,,,,,,,,,,,,,,,,,,,,,True,False,
+Jabari Parker,,,,,,,,,,,,,,,,,,,,,,True,False,
+Robert Woodard II,,,,,,,,,,,,,,,,,,,,,,True,False,

@@ -1,0 +1,15 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Timothe Luwawu-Cabarrot,F,0 days 00:40:53,21.0,6.0,2.0,2.0,1.0,7.0,17.0,41.2,3.0,10.0,30.0,4.0,4.0,100.0,1.0,5.0,4.0,1.0,3.0,False,False,39.0
+Taurean Prince,F,0 days 00:19:35,9.0,5.0,0.0,1.0,0.0,2.0,8.0,25.0,1.0,4.0,25.0,4.0,4.0,100.0,0.0,5.0,1.0,3.0,-14.0,False,False,18.0
+DeAndre Jordan,C,0 days 00:30:55,4.0,9.0,5.0,0.0,4.0,2.0,2.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,8.0,4.0,4.0,-5.0,False,False,20.0
+Joe Harris,G,0 days 00:42:46,14.0,8.0,3.0,1.0,0.0,5.0,13.0,38.5,2.0,4.0,50.0,2.0,2.0,100.0,5.0,3.0,0.0,1.0,-10.0,False,False,29.0
+Caris LeVert,G,0 days 00:38:11,28.0,4.0,11.0,5.0,0.0,12.0,29.0,41.4,2.0,9.0,22.2,2.0,2.0,100.0,1.0,3.0,3.0,5.0,7.0,False,False,51.0
+Landry Shamet,,0 days 00:24:03,5.0,1.0,1.0,3.0,0.0,2.0,5.0,40.0,1.0,3.0,33.3,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-6.0,False,False,12.0
+Jarrett Allen,,0 days 00:22:22,8.0,15.0,1.0,0.0,0.0,3.0,6.0,50.0,0.0,0.0,0.0,2.0,3.0,66.7,5.0,10.0,2.0,1.0,2.0,False,False,25.0
+Jeff Green,,0 days 00:24:39,8.0,1.0,1.0,1.0,1.0,3.0,6.0,50.0,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,0.0,2.0,7.0,False,False,16.0
+Chris Chiozza,,0 days 00:27:33,14.0,1.0,4.0,0.0,0.0,5.0,14.0,35.7,3.0,8.0,37.5,1.0,2.0,50.0,0.0,1.0,3.0,3.0,-9.0,False,False,22.0
+Bruce Brown,,,,,,,,,,,,,,,,,,,,,,True,False,
+Tyler Johnson,,,,,,,,,,,,,,,,,,,,,,True,False,
+Rodions Kurucs,,,,,,,,,,,,,,,,,,,,,,True,False,
+Reggie Perry,,,,,,,,,,,,,,,,,,,,,,True,False,
+-,-,0 days 04:25:00,111.0,50.0,28.0,13.0,6.0,41.0,100.0,41.0,14.0,42.0,33.3,15.0,17.0,88.2,13.0,37.0,17.0,20.0,,False,False,232.0

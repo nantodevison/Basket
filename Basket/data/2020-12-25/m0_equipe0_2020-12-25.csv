@@ -1,0 +1,15 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Brandon Ingram,F,0 days 00:37:03,28.0,2.0,3.0,0.0,0.0,7.0,17.0,41.2,4.0,8.0,50.0,10.0,11.0,90.9,0.0,2.0,4.0,0.0,2.0,False,False,45.0
+Zion Williamson,F,0 days 00:38:17,32.0,14.0,1.0,1.0,0.0,11.0,20.0,55.0,0.0,1.0,0.0,10.0,15.0,66.7,4.0,10.0,3.0,1.0,-13.0,False,False,63.0
+Steven Adams,C,0 days 00:32:22,6.0,9.0,1.0,2.0,1.0,3.0,3.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,5.0,2.0,2.0,5.0,False,False,20.0
+Lonzo Ball,G,0 days 00:33:26,6.0,2.0,6.0,2.0,1.0,2.0,8.0,25.0,2.0,8.0,25.0,0.0,0.0,0.0,0.0,2.0,3.0,4.0,-3.0,False,False,18.0
+Eric Bledsoe,G,0 days 00:33:10,5.0,2.0,6.0,1.0,0.0,2.0,10.0,20.0,1.0,6.0,16.7,0.0,0.0,0.0,0.0,2.0,5.0,2.0,-3.0,False,False,9.0
+Nicolo Melli,,0 days 00:09:22,1.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,0.0,0.0,2.0,-7.0,False,False,2.0
+JJ Redick,,0 days 00:24:24,8.0,2.0,0.0,1.0,0.0,1.0,7.0,14.3,1.0,5.0,20.0,5.0,5.0,100.0,0.0,2.0,1.0,6.0,-27.0,False,False,15.0
+Josh Hart,,0 days 00:29:40,12.0,9.0,0.0,1.0,0.0,5.0,10.0,50.0,2.0,6.0,33.3,0.0,0.0,0.0,2.0,7.0,0.0,3.0,-10.0,False,False,28.0
+Jaxson Hayes,,0 days 00:03:15,0.0,1.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,-9.0,False,False,0.0
+Nickeil Alexander-Walker,,,,,,,,,,,,,,,,,,,,,,True,False,
+Willy Hernangomez,,,,,,,,,,,,,,,,,,,,,,True,False,
+Kira Lewis Jr.,,,,,,,,,,,,,,,,,,,,,,True,False,
+Naji Marshall,,,,,,,,,,,,,,,,,,,,,,True,False,
+Sindarius Thornwell,,,,,,,,,,,,,,,,,,,,,,True,False,
