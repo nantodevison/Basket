@@ -10,7 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException
+from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException, ElementClickInterceptedException
 import time, os
 import pandas as pd
 import numpy as np
@@ -22,6 +22,7 @@ nomsColonnesStat=['nom', 'nom.1', 'position', 'minute', 'points', 'rebonds', 'pa
  'plus_moins']
 nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
 dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe")
+ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
 def CreationDriverFirefox():
     """
@@ -223,6 +224,7 @@ class JoueursSiteNba(object):
         self.driver=CreationDriverFirefox()
         self.urlPageJoueurs=urlPageJoueurs
         self.driver.get(urlPageJoueurs)
+        self.gererCookieJoueurs()
         self.nomClassDivContainer=nomClassDivContainer
         self.dfJoueurs=self.miseEnFormeDfJoueurs(self.creerDfJoueurs())
     
@@ -230,7 +232,6 @@ class JoueursSiteNba(object):
         """
         obetnir le container 
         """
-        ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
         containerBouttonLettre=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                     By.XPATH, f"//div[@class='{self.nomClassDivContainer}']")))
         listBouttonLettre=WebDriverWait(containerBouttonLettre, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
@@ -244,11 +245,28 @@ class JoueursSiteNba(object):
         listBouttonLettre=self.getlisteBouttonLettre()
         dico={}
         for i,e in enumerate(listBouttonLettre) : 
-            e.click()
+            try : 
+                e.click()
+            except ElementClickInterceptedException : 
+                self.gererCookieJoueurs()
+                e.click()
             time.sleep(3)
             dico[i]=pd.read_html(self.driver.page_source)
         dfJoueurs=pd.concat([v[0] for v in dico.values()])
         return dfJoueurs
+    
+    def gererCookieJoueurs(self):
+        """
+        si sur la page joueur un cookie apparait je veux pouvoir le clicker
+        """
+        time.sleep(5)
+        try : 
+            boutonCookie=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                    By.XPATH, f"//button[@id='onetrust-accept-btn-handler']")))
+            boutonCookie.click()
+            time.sleep(3)
+        except TimeoutException : 
+            pass
     
     def miseEnFormeDfJoueurs(self,dfJoueurs ):
         """
@@ -263,8 +281,7 @@ class JoueursSiteNba(object):
         dfJoueursForme['nom']=dfJoueursForme.nom.apply(lambda x : ' '.join(x.split()))
         dfJoueurs.reset_index(drop=True, inplace=True)
         return dfJoueursForme
-        
-  
+ 
 class PasDeMatchError(Exception):  
     """
     erreur levee si pas de match à une date donnee

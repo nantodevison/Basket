@@ -38,7 +38,7 @@ CREATE TABLE donnees_source.joueur (
     nom VARCHAR NOT NULL,
     taille NUMERIC(3,2),
     poids NUMERIC (4,1),
-    id_position_terrain VARCHAR NOT NULL,
+    id_position_terrain VARCHAR,
     PRIMARY KEY (id_joueur)
 );
 
@@ -225,4 +225,23 @@ INSERT INTO donnees_source.enum_type_playoffs (id_type_playoffs, nom_type_playof
  =======================================*/
  INSERT INTO donnees_source.saison(date_debut, nom_saison) 
  values('2020-12-22', '2020-2021')
+ 
+ /* ========================
+  * REMPLIR LA TABLE BLESSURE
+  =========================*/
+  
+ --exemple de remplissage à la main
+INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure)
+ SELECT id_joueur, 1,'2021-01-06' 
+ FROM donnees_source.joueur j
+ WHERE nom='Markelle Fultz'
+ 
+--remplissage auto dans un des notebook
+
+ /* ========================
+  * QUESTIONNER LA TABLE BLESSURE
+  ========================= */
+
+--recuperer les noms de joueurs blesse dont la date de debut de blessure est antérieure à une date et qui n'ont pas guéri 
+select b.*,j.nom from donnees_source.joueur j JOIN donnees_source.blessure b ON j.id_joueur=b.id_joueur
  
