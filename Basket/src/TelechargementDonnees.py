@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException, ElementClickInterceptedException
+from selenium.webdriver.support.ui import Select
 import time, os
 import pandas as pd
 import numpy as np
@@ -208,12 +209,12 @@ class JoueursSiteNba(object):
     classes pour récupérer les joueurs depuis le site de la nba
     le principe : 
     1. connexion au site
-    2. balalyer les lettres iinitiales des noms
-    3. concatener puis mettre en forme un df
+    2. acceder à liste deroulante et choisir All
+    3. mettre en forme la df
     """
     
-    def __init__(self, urlPageJoueurs='https://fr.global.nba.com/playerindex/',
-                 nomClassDivContainer='hidden-sm col-sm-9 col-lg-10 letters-wrap'):
+    def __init__(self, urlPageJoueurs='https://www.nba.com/players',
+                 titreSelect='Page Number Selection Drown Down List'):
         """
         Attributes : 
             driver : driver Selenium pour firefox. cf CreationDriverFirefox()
@@ -225,35 +226,19 @@ class JoueursSiteNba(object):
         self.urlPageJoueurs=urlPageJoueurs
         self.driver.get(urlPageJoueurs)
         self.gererCookieJoueurs()
-        self.nomClassDivContainer=nomClassDivContainer
-        self.dfJoueurs=self.miseEnFormeDfJoueurs(self.creerDfJoueurs())
+        self.titreSelect=titreSelect
+        self.dfJoueurs=self.obtenirDfBase()
     
-    def getlisteBouttonLettre(self):
+    def obtenirDfBase(self):
         """
         obetnir le container 
         """
-        containerBouttonLettre=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                    By.XPATH, f"//div[@class='{self.nomClassDivContainer}']")))
-        listBouttonLettre=WebDriverWait(containerBouttonLettre, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
-                    By.XPATH, ".//*")))
-        return listBouttonLettre
-    
-    def creerDfJoueurs(self):
-        """
-        à partir du driver de la classe, creer une df en balyant la page contenant le nom des joueurs
-        """
-        listBouttonLettre=self.getlisteBouttonLettre()
-        dico={}
-        for i,e in enumerate(listBouttonLettre) : 
-            try : 
-                e.click()
-            except ElementClickInterceptedException : 
-                self.gererCookieJoueurs()
-                e.click()
-            time.sleep(3)
-            dico[i]=pd.read_html(self.driver.page_source)
-        dfJoueurs=pd.concat([v[0] for v in dico.values()])
-        return dfJoueurs
+        select = Select(WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+                    By.XPATH, f"//select[@title='{self.titreSelect}']"))))
+        select.select_by_value('-1')
+        time.sleep(3)
+        #dfJoueurs=pd.read_html(self.driver.page_source)[0]
+        return select
     
     def gererCookieJoueurs(self):
         """
@@ -267,20 +252,6 @@ class JoueursSiteNba(object):
             time.sleep(3)
         except TimeoutException : 
             pass
-    
-    def miseEnFormeDfJoueurs(self,dfJoueurs ):
-        """
-        modification des noms d'attributs, et certains type
-        """
-        dfJoueursForme=dfJoueurs.drop('Unnamed: 1',axis=1).rename(
-            columns={'Joueur':'nom','Équipe':'equipe','POS':'id_position_terrain','Taille':'taille',
-                     'OUEST':'poids', 'EXP':'experience','Pays':'pays'})
-        dfJoueursForme['poids']=dfJoueursForme.poids.apply(lambda x : float(x[:-3]))
-        dfJoueursForme['date_entree_nba']=dfJoueursForme['experience'].apply(lambda x : pd.to_datetime('2020-10-01') - 
-                                          pd.to_timedelta(x*365.25, unit='D')).dt.date
-        dfJoueursForme['nom']=dfJoueursForme.nom.apply(lambda x : ' '.join(x.split()))
-        dfJoueurs.reset_index(drop=True, inplace=True)
-        return dfJoueursForme
  
 class PasDeMatchError(Exception):  
     """
