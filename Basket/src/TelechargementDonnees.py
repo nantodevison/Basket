@@ -163,6 +163,7 @@ class JourneeSiteNba(object):
             dfStats.columns=nomsColonnesStat
             dfStats.drop('nom.1', axis=1, inplace=True)
             dfStats.drop(dfStats.loc[dfStats.minute=='240:00'].index, inplace=True)
+        dfStats.drop(dfStats.loc[dfStats.nom=='-'].index, inplace=True)
         
                 
     def ajoutAttributs(self,dfStatEquipe):
