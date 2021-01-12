@@ -213,22 +213,29 @@ class JourneeSiteNba(object):
   
 class JoueursSiteNba(object):  
     """
-    classes pour récupérer les joueurs depuis le site de la nba
+    classes pour récupérer les joueurs depuis le site de la nba (France ou USA)
     le principe : 
     1. connexion au site
+<<<<<<< HEAD
     2. balayer les lettres iinitiales des noms (France)
     2. acceder à liste deroulante et choisir All ('USA')
     3. concatener (France) puis mettre en forme un df
+=======
+    2. acceder à liste deroulante et choisir All ('USA')
+    3. mettre en forme la df
+>>>>>>> refs/heads/pageJoueurUSA
     """
     
     def __init__(self, typeSource='France'):
         """
         Attributes : 
+            typeSource : STring : 'France' ou 'USA' : définis les url et refrences au WebElements utiles pour creer la df des joueurs
             driver : driver Selenium pour firefox. cf CreationDriverFirefox()
             urlPageJoueurs : url de la page des joueurs
-            nomClassDivContainer : nom de la div qui contient les lettres a faire defiler
+            nomWebElement : nom de la div ou du select qui contient les lettres a faire defiler
             dfJoueurs : dataframe descriptives des joueurs (nom, equipe, taille, poids, position, experience, pays, date_entree_nba
         """
+<<<<<<< HEAD
         with DriverFirefox() as d :
             self.driver=d.driver
             self.urlPageJoueurs='https://www.nba.com/players' if typeSource=='USA' else 'https://fr.global.nba.com/playerindex/'
@@ -272,11 +279,20 @@ class JoueursSiteNba(object):
         dfJoueurs['poids']=dfJoueurs.poids.str.split().apply(lambda x : round(int(x[0])/2.2046,1))
         dfJoueurs['nom_simple']=dfJoueurs.nom.apply(lambda x : re.sub(' |-|\.|\'','',x).lower())
         return dfJoueurs
+=======
+        self.urlPageJoueurs='https://www.nba.com/players' if typeSource=='USA' else 'toto'
+        self.nomWebElement='Page Number Selection Drown Down List' if typeSource=='USA' else 'toto'
+        self.driver=CreationDriverFirefox()
+        self.driver.get(self.urlPageJoueurs)
+        self.gererCookieJoueurs()
+        self.dfJoueurs=self.obtenirDfBaseUSA()
+>>>>>>> refs/heads/pageJoueurUSA
     
-    def getlisteBouttonLettre(self):
+    def obtenirDfBaseUSA(self):
         """
         obetnir le container 
         """
+<<<<<<< HEAD
         containerBouttonLettre=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                     By.XPATH, f"//div[@class='{self.refWebElement}']")))
         listBouttonLettre=WebDriverWait(containerBouttonLettre, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
@@ -298,12 +314,38 @@ class JoueursSiteNba(object):
             time.sleep(3)
             dico[i]=pd.read_html(self.driver.page_source)
         dfJoueurs=pd.concat([v[0] for v in dico.values()])
+=======
+        select = Select(WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+                    By.XPATH, f"//select[@title='{self.nomWebElement}']"))))
+        time.sleep(3)
+        select.select_by_value('-1')
+        time.sleep(3)
+        dfJoueurs=pd.read_html(self.driver.page_source)[0]
+>>>>>>> refs/heads/pageJoueurUSA
         return dfJoueurs
     
+<<<<<<< HEAD
     def miseEnFormeDfJoueursFrance(self,dfJoueurs ):
+=======
+    def gererCookieJoueurs(self):
         """
-        modification des noms d'attributs, et certains type
+        si sur la page joueur un cookie apparait je veux pouvoir le clicker
         """
+        time.sleep(5)
+        try : 
+            boutonCookie=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                    By.XPATH, f"//button[@id='onetrust-accept-btn-handler']")))
+            boutonCookie.click()
+            time.sleep(3)
+        except TimeoutException : 
+            pass
+        
+    def miseEnFormeUSA(self):
+>>>>>>> refs/heads/pageJoueurUSA
+        """
+        transformer la df des joueurs du site nba USA pour pouvoir joindre avec des noms du site france et inserer dans la table Joueurs
+        """
+<<<<<<< HEAD
         dfJoueursForme=dfJoueurs.drop('Unnamed: 1',axis=1).rename(
             columns={'Joueur':'nom','Équipe':'equipe','POS':'id_position_terrain','Taille':'taille',
                      'OUEST':'poids', 'EXP':'experience','Pays':'pays'})
@@ -314,6 +356,15 @@ class JoueursSiteNba(object):
         dfJoueurs.reset_index(drop=True, inplace=True)
         return dfJoueursForme
     
+=======
+        self.dfJoueurs.rename(columns={'Player':'nom','Position':'id_position_terrain','Height':'taille','Weight':'poids'},inplace=True)
+        self.dfJoueurs.rename(columns={'Player':'nom','Position':'id_position_terrain','Height':'taille','Weight':'poids'},inplace=True)
+        self.dfJoueurs['taille']=self.dfJoueurs.taille.str.split('-').apply(lambda x : round((int(x[0])/3.2808)+((int(x[1])/0.39370)/100),2))
+        self.dfJoueurs['poids']=self.dfJoueurs.poids.str.split().apply(lambda x : round(int(x[0])/2.2046,1))
+        self.dfJoueurs['nom_simple']=self.dfJoueurs.nom.apply(lambda x : re.sub(' |-|\.|\'','',x).lower())
+        
+        
+>>>>>>> refs/heads/pageJoueurUSA
  
 class PasDeMatchError(Exception):  
     """
