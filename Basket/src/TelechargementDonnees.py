@@ -43,6 +43,10 @@ class DriverFirefox(object):
     """
     ouvrir un driver Selenium
     """
+    def __init__(self):
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(20)
+        time.sleep(5)
    
     def __enter__(self):
         self.driver = webdriver.Firefox()
