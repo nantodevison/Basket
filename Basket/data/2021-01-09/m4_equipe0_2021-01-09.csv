@@ -1,0 +1,13 @@
+nom,position,minute,points,rebonds,passes_dec,steal,contres,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,ball_perdu,faute_p,plus_moins,dnp,blesse,score_ttfl
+Cedi Osman,F,0 days 00:30:41,9.0,5.0,2.0,0.0,0.0,4.0,13.0,30.8,1.0,8.0,12.5,0.0,0.0,0.0,2.0,3.0,5.0,4.0,-5.0,False,False,14.0
+Larry Nance Jr.,F,0 days 00:39:41,17.0,3.0,2.0,4.0,1.0,6.0,11.0,54.5,3.0,6.0,50.0,2.0,2.0,100.0,0.0,3.0,3.0,2.0,-9.0,False,False,33.0
+Andre Drummond,C,0 days 00:41:17,26.0,24.0,3.0,1.0,1.0,11.0,23.0,47.8,0.0,1.0,0.0,4.0,5.0,80.0,5.0,19.0,6.0,4.0,-2.0,False,False,54.0
+Isaac Okoro,G,0 days 00:33:33,4.0,2.0,1.0,0.0,0.0,2.0,9.0,22.2,0.0,1.0,0.0,0.0,4.0,0.0,0.0,2.0,1.0,4.0,-22.0,False,False,6.0
+Damyean Dotson,G,0 days 00:41:03,21.0,2.0,8.0,1.0,1.0,8.0,17.0,47.1,2.0,7.0,28.6,3.0,3.0,100.0,0.0,2.0,0.0,1.0,-2.0,False,False,42.0
+Lamar Stevens,,0 days 00:11:36,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,-14.0,False,False,1.0
+Dean Wade,,0 days 00:14:35,7.0,3.0,0.0,0.0,0.0,3.0,3.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,3.0,0.0,0.0,5.0,False,False,14.0
+JaVale McGee,,0 days 00:17:21,4.0,5.0,0.0,0.0,0.0,1.0,6.0,16.7,0.0,0.0,0.0,2.0,2.0,100.0,4.0,1.0,0.0,1.0,-2.0,False,False,7.0
+Thon Maker,,0 days 00:10:11,2.0,2.0,0.0,0.0,1.0,1.0,4.0,25.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,1.0,1.0,False,False,4.0
+Marques Bolden,,,,,,,,,,,,,,,,,,,,,,True,False,
+Darius Garland,,,,,,,,,,,,,,,,,,,,,,True,True,
+Collin Sexton,,,,,,,,,,,,,,,,,,,,,,True,True,

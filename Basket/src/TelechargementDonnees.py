@@ -25,6 +25,20 @@ nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
 dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe")
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
+def gererCookie(driver):
+    """
+    si sur la page joueur un cookie apparait je veux pouvoir le clicker
+    """
+    time.sleep(5)
+    try : 
+        boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                By.XPATH, f"//button[@id='onetrust-accept-btn-handler']")))
+        boutonCookie.click()
+        time.sleep(3)
+    except TimeoutException : 
+        pass
+
+
 class DriverFirefox(object):
     """
     ouvrir un driver Selenium
@@ -64,7 +78,7 @@ class JourneeSiteNba(object):
             with DriverFirefox() as d : 
                 self.driver=d.driver
                 self.dossierDate=os.path.join(self.dossierExportCsv,self.dateJournee)
-        self.dicoJournee=self.dicoMatchs()
+                self.dicoJournee=self.dicoMatchs()
         
     def __str__(self):
         return '\n'.join([f'match {i} \n'+ v['match'].to_string(columns=['equipe', 'final'], index=False,
@@ -112,7 +126,11 @@ class JourneeSiteNba(object):
                 elementStatButton=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                     By.XPATH, "//a[@class='pills-button pills-button__right ng-binding']")))
                 #changer d'euipe et stocker
-                elementStatButton.click()
+                try :
+                    elementStatButton.click()
+                except ElementClickInterceptedException : 
+                    gererCookie(self.driver)
+                    time.sleep(3)
                 self.driver.implicitly_wait(20)
                 dicoJournee[e]['stats_e1']=pd.read_html(self.driver.page_source)[2]
             self.miseEnFormeDf(dicoJournee) 
@@ -162,7 +180,7 @@ class JourneeSiteNba(object):
         if dfStats.columns.tolist() != nomsColonnesStat : #sinon nrmalement ça veut dire que la mise en forme a été faite avant
             dfStats.columns=nomsColonnesStat
             dfStats.drop('nom.1', axis=1, inplace=True)
-            dfStats.drop(dfStats.loc[dfStats.minute=='240:00'].index, inplace=True)
+            dfStats.drop(dfStats.loc[dfStats.minute=='240:00'].index, inplace=True) #va foirer si prolongation, alors on met la ligne suivante pour etre sur
         dfStats.drop(dfStats.loc[dfStats.nom=='-'].index, inplace=True)
         
                 
@@ -294,7 +312,7 @@ class JoueursSiteNba(object):
             try : 
                 e.click()
             except ElementClickInterceptedException : 
-                self.gererCookieJoueurs()
+                gererCookie(self.driver)
                 e.click()
             time.sleep(3)
             dico[i]=pd.read_html(self.driver.page_source)
