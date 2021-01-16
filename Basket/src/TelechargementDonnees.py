@@ -16,13 +16,13 @@ import time, os, re
 import pandas as pd
 import numpy as np
 
-urlSiteNbaScore='https://fr.global.nba.com/scores/'
+urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'nom.1', 'position', 'minute', 'points', 'rebonds', 'passes_dec', 'steal', 
  'contres', 'tir_reussi', 'tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt', 
  'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc', 'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 
  'plus_moins']
 nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
-dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe")
+dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP")
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
 def gererCookie(driver):
@@ -38,6 +38,11 @@ def gererCookie(driver):
     except TimeoutException : 
         pass
 
+def simplifierNomJoueur(nom):
+    """
+    simplifier un nom (prenom+nom) de joueur pour n'avoir aucun espace aucun caracteres special, tout lie
+    """
+    return re.sub(' |-|\.|\'','',nom).lower()
 
 class DriverFirefox(object):
     """
@@ -75,7 +80,7 @@ class JourneeSiteNba(object):
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
         self.dateJournee=dateJournee
-        self.urlDateJournee=fr'{urlSiteNbaScore}#!/{self.dateJournee}'
+        self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         self.sourceDonnees=sourceDonnees
         self.dossierExportCsv=dossierExportCsv
         if self.sourceDonnees=='internet' : 
@@ -97,10 +102,11 @@ class JourneeSiteNba(object):
         """
         self.driver.get(self.urlDateJournee)
         time.sleep(10)
+        gererCookie(self.driver)
         #recuperer la liste des hyperliens qui ont le mot "feuille" dedans
         try :
             #containerScore=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH,f"//div[@class='snapshot-footer']"))) #si besoin que la ligne dessous ne fonctionne pas
-            elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, f"//a[@class='sib3-game-url stats-boxscore game-status-3']")))
+            elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.LINK_TEXT, 'BOX SCORE')))
         except TimeoutException :
             raise PasDeMatchError(self.dateJournee)
         return [p.get_attribute("href") for p in elementsScore]
@@ -195,7 +201,7 @@ class JourneeSiteNba(object):
            dfStatEquipe : df de stats des equipes issues du dico des matchs et stats mis en forme issu sde miseEnFormeDf()
         """
         dfStatEquipe['dnp']=dfStatEquipe.minute.apply(lambda x : any([e in x for e in dnpTupleTexte])  or x=='00:00')
-        dfStatEquipe['blesse']=dfStatEquipe.minute.apply(lambda x : "Injury / Illness" in x)
+        dfStatEquipe['blesse']=dfStatEquipe.minute.apply(lambda x : "Injury/Illness" in x)
         #passer les valeurs des joueurs n'ayant pas joues a NaN
         dfStatEquipe.loc[dfStatEquipe.dnp,
             [c for c in dfStatEquipe.columns if c not in ('nom','dnp','blesse')]]=np.NaN
@@ -293,7 +299,7 @@ class JoueursSiteNba(object):
         dfJoueurs.rename(columns={'Player':'nom','Position':'id_position_terrain','Height':'taille','Weight':'poids'},inplace=True)
         dfJoueurs['taille']=dfJoueurs.taille.str.split('-').apply(lambda x : round((int(x[0])/3.2808)+((int(x[1])/0.39370)/100),2))
         dfJoueurs['poids']=dfJoueurs.poids.str.split().apply(lambda x : round(int(x[0])/2.2046,1))
-        dfJoueurs['nom_simple']=dfJoueurs.nom.apply(lambda x : re.sub(' |-|\.|\'','',x).lower())
+        dfJoueurs['nom_simple']=dfJoueurs.nom.apply(lambda x : simplifierNomJoueur(x))
         return dfJoueurs
     
     def getlisteBouttonLettre(self):
