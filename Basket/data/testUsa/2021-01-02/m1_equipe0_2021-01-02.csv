@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Reggie Bullock,0 days 00:33:20,2.0,6.0,33.3,2.0,5.0,40.0,0.0,1.0,0.0,0.0,7.0,7.0,1.0,1.0,0.0,1.0,4.0,6.0,6.0,False,False,reggiebullock,18.0
+Julius Randle,0 days 00:37:01,5.0,16.0,31.3,2.0,5.0,40.0,0.0,0.0,0.0,0.0,11.0,11.0,8.0,2.0,0.0,4.0,3.0,12.0,6.0,False,False,juliusrandle,28.0
+Mitchell Robinson,0 days 00:29:09,8.0,10.0,80.0,0.0,0.0,0.0,0.0,0.0,0.0,6.0,3.0,9.0,1.0,0.0,2.0,0.0,3.0,16.0,10.0,False,False,mitchellrobinson,34.0
+RJ Barrett,0 days 00:42:16,8.0,15.0,53.3,4.0,5.0,80.0,5.0,6.0,83.3,0.0,5.0,5.0,3.0,0.0,0.0,1.0,1.0,25.0,5.0,False,False,rjbarrett,44.0
+Elfrid Payton,0 days 00:33:42,8.0,17.0,47.1,0.0,1.0,0.0,3.0,4.0,75.0,3.0,5.0,8.0,5.0,0.0,0.0,3.0,0.0,19.0,6.0,False,False,elfridpayton,33.0
+Nerlens Noel,0 days 00:17:04,2.0,2.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,0.0,1.0,0.0,0.0,0.0,4.0,-8.0,False,False,nerlensnoel,13.0
+Immanuel Quickley,0 days 00:14:44,3.0,4.0,75.0,1.0,2.0,50.0,2.0,2.0,100.0,0.0,1.0,1.0,2.0,0.0,0.0,3.0,3.0,9.0,-4.0,False,False,immanuelquickley,15.0
+Kevin Knox II,0 days 00:15:21,0.0,4.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,1.0,0.0,1.0,0.0,-3.0,False,False,kevinknoxii,3.0
+Austin Rivers,0 days 00:17:23,6.0,9.0,66.7,3.0,6.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,2.0,0.0,0.0,3.0,1.0,15.0,2.0,False,False,austinrivers,25.0
+Ignas Brazdeikis,,,,,,,,,,,,,,,,,,,,,True,False,ignasbrazdeikis,
+Jared Harper,,,,,,,,,,,,,,,,,,,,,True,False,jaredharper,
+Theo Pinson,,,,,,,,,,,,,,,,,,,,,True,False,theopinson,

@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Andrew Wiggins,0 days 00:32:34,5.0,12.0,41.7,1.0,3.0,33.3,4.0,7.0,57.1,1.0,3.0,4.0,1.0,0.0,2.0,3.0,2.0,15.0,-26.0,False,False,andrewwiggins,27.0
+Draymond Green,0 days 00:17:38,0.0,3.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,4.0,4.0,4.0,1.0,0.0,1.0,4.0,0.0,-18.0,False,False,draymondgreen,7.0
+James Wiseman,0 days 00:19:00,2.0,8.0,25.0,0.0,2.0,0.0,4.0,4.0,100.0,0.0,5.0,5.0,0.0,0.0,2.0,1.0,4.0,8.0,-22.0,False,False,jameswiseman,16.0
+Kelly Oubre Jr.,0 days 00:28:07,4.0,12.0,33.3,0.0,4.0,0.0,2.0,3.0,66.7,0.0,4.0,4.0,0.0,0.0,1.0,2.0,2.0,10.0,-20.0,False,False,kellyoubrejr,16.0
+Stephen Curry,0 days 00:33:38,9.0,20.0,45.0,4.0,12.0,33.3,4.0,4.0,100.0,0.0,8.0,8.0,5.0,0.0,0.0,1.0,1.0,26.0,-27.0,False,False,stephencurry,52.0
+Juan Toscano-Anderson,0 days 00:17:16,1.0,2.0,50.0,0.0,1.0,0.0,3.0,3.0,100.0,0.0,3.0,3.0,3.0,0.0,1.0,1.0,1.0,5.0,-10.0,False,False,juantoscanoanderson,15.0
+Kevon Looney,0 days 00:12:04,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,3.0,2.0,-8.0,False,False,kevonlooney,5.0
+Kent Bazemore,0 days 00:17:15,3.0,4.0,75.0,2.0,3.0,66.7,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,0.0,2.0,2.0,8.0,-5.0,False,False,kentbazemore,14.0
+Eric Paschall,0 days 00:16:56,5.0,7.0,71.4,0.0,1.0,0.0,3.0,3.0,100.0,0.0,4.0,4.0,1.0,0.0,1.0,1.0,1.0,13.0,5.0,False,False,ericpaschall,25.0
+Damion Lee,0 days 00:16:13,0.0,3.0,0.0,0.0,3.0,0.0,2.0,2.0,100.0,1.0,6.0,7.0,1.0,0.0,0.0,0.0,4.0,2.0,-8.0,False,False,damionlee,12.0
+Mychal Mulder,0 days 00:10:29,1.0,3.0,33.3,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,2.0,1.0,False,False,mychalmulder,4.0
+Brad Wanamaker,0 days 00:15:29,0.0,3.0,0.0,0.0,1.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,1.0,1.0,1.0,3.0,3.0,2.0,8.0,False,False,bradwanamaker,4.0
+Jordan Poole,0 days 00:03:21,0.0,1.0,0.0,0.0,1.0,0.0,5.0,5.0,100.0,0.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,5.0,5.0,False,False,jordanpoole,13.0

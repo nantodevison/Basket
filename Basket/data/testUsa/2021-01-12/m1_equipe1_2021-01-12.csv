@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Kevin Durant,0 days 00:35:53,12.0,18.0,66.7,4.0,7.0,57.1,6.0,7.0,85.7,0.0,9.0,9.0,13.0,0.0,0.0,7.0,4.0,34.0,15.0,False,False,kevindurant,69.0
+Jeff Green,0 days 00:24:33,3.0,5.0,60.0,2.0,3.0,66.7,0.0,0.0,0.0,1.0,1.0,2.0,0.0,1.0,0.0,4.0,2.0,8.0,0.0,False,False,jeffgreen,11.0
+Jarrett Allen,0 days 00:35:47,3.0,6.0,50.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,5.0,5.0,3.0,1.0,2.0,2.0,1.0,6.0,18.0,False,False,jarrettallen,16.0
+Joe Harris,0 days 00:30:40,6.0,9.0,66.7,3.0,5.0,60.0,0.0,0.0,0.0,1.0,2.0,3.0,4.0,3.0,0.0,1.0,3.0,15.0,16.0,False,False,joeharris,32.0
+Bruce Brown,0 days 00:25:56,8.0,11.0,72.7,0.0,2.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,3.0,0.0,3.0,2.0,2.0,16.0,9.0,False,False,brucebrown,33.0
+Taurean Prince,0 days 00:22:30,3.0,6.0,50.0,1.0,4.0,25.0,0.0,0.0,0.0,1.0,4.0,5.0,1.0,0.0,1.0,1.0,1.0,7.0,-12.0,False,False,taureanprince,17.0
+Caris LeVert,0 days 00:25:48,8.0,15.0,53.3,2.0,5.0,40.0,2.0,3.0,66.7,3.0,2.0,5.0,6.0,0.0,0.0,1.0,2.0,20.0,-1.0,False,False,carislevert,39.0
+Timothe Luwawu-Cabarrot,0 days 00:22:51,3.0,6.0,50.0,3.0,5.0,60.0,2.0,4.0,50.0,1.0,1.0,2.0,0.0,1.0,0.0,0.0,2.0,11.0,2.0,False,False,timotheluwawucabarrot,23.0
+Landry Shamet,0 days 00:16:02,2.0,3.0,66.7,1.0,1.0,100.0,0.0,0.0,0.0,0.0,4.0,4.0,1.0,0.0,0.0,0.0,1.0,5.0,-17.0,False,False,landryshamet,12.0
+Chris Chiozza,,,,,,,,,,,,,,,,,,,,,True,False,chrischiozza,
+DeAndre Jordan,,,,,,,,,,,,,,,,,,,,,True,False,deandrejordan,
+Rodions Kurucs,,,,,,,,,,,,,,,,,,,,,True,False,rodionskurucs,
+Reggie Perry,,,,,,,,,,,,,,,,,,,,,True,False,reggieperry,

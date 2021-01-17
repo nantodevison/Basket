@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Isaac Okoro,0 days 00:41:39,0.0,4.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,1.0,0.0,2.0,4.0,0.0,16.0,False,False,isaacokoro,1.0
+Kevin Love,0 days 00:37:33,4.0,12.0,33.3,3.0,8.0,37.5,4.0,5.0,80.0,1.0,8.0,9.0,3.0,0.0,0.0,3.0,1.0,15.0,14.0,False,False,kevinlove,33.0
+Andre Drummond,0 days 00:43:40,7.0,21.0,33.3,0.0,2.0,0.0,9.0,14.0,64.3,2.0,14.0,16.0,5.0,4.0,3.0,4.0,2.0,23.0,10.0,False,False,andredrummond,56.0
+Collin Sexton,0 days 00:45:14,15.0,23.0,65.2,2.0,3.0,66.7,0.0,1.0,0.0,0.0,2.0,2.0,3.0,3.0,0.0,4.0,5.0,32.0,9.0,False,False,collinsexton,47.0
+Darius Garland,0 days 00:43:59,9.0,14.0,64.3,3.0,3.0,100.0,0.0,0.0,0.0,2.0,3.0,5.0,12.0,2.0,1.0,2.0,3.0,21.0,19.0,False,False,dariusgarland,46.0
+Cedi Osman,0 days 00:25:56,7.0,12.0,58.3,4.0,7.0,57.1,4.0,6.0,66.7,0.0,4.0,4.0,0.0,1.0,0.0,0.0,1.0,22.0,-12.0,False,False,cediosman,42.0
+Larry Nance Jr.,0 days 00:24:31,0.0,3.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,2.0,5.0,7.0,2.0,2.0,0.0,1.0,1.0,0.0,-2.0,False,False,larrynancejr,9.0
+JaVale McGee,0 days 00:14:20,4.0,7.0,57.1,1.0,1.0,100.0,2.0,4.0,50.0,0.0,2.0,2.0,0.0,0.0,0.0,2.0,6.0,11.0,-1.0,False,False,javalemcgee,17.0
+Dante Exum,0 days 00:13:09,2.0,3.0,66.7,0.0,1.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,4.0,0.0,0.0,0.0,1.0,4.0,-8.0,False,False,danteexum,13.0
+Marques Bolden,,,,,,,,,,,,,,,,,,,,,True,False,marquesbolden,
+Damyean Dotson,,,,,,,,,,,,,,,,,,,,,True,False,damyeandotson,
+Thon Maker,,,,,,,,,,,,,,,,,,,,,True,False,thonmaker,
+Lamar Stevens,,,,,,,,,,,,,,,,,,,,,True,False,lamarstevens,
+Dean Wade,,,,,,,,,,,,,,,,,,,,,True,False,deanwade,

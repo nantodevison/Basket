@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Josh Okogie,0 days 00:26:59,1.0,2.0,50.0,0.0,0.0,0.0,1.0,1.0,100.0,1.0,2.0,3.0,4.0,0.0,3.0,0.0,5.0,3.0,0.0,False,False,joshokogie,14.0
+Juancho Hernangomez,0 days 00:28:57,2.0,7.0,28.6,1.0,6.0,16.7,0.0,0.0,0.0,0.0,8.0,8.0,0.0,0.0,0.0,0.0,0.0,5.0,7.0,False,False,juanchohernangomez,16.0
+Karl-Anthony Towns,0 days 00:34:25,8.0,17.0,47.1,1.0,4.0,25.0,8.0,8.0,100.0,4.0,10.0,14.0,3.0,0.0,2.0,1.0,2.0,25.0,5.0,False,False,karlanthonytowns,54.0
+Malik Beasley,0 days 00:33:56,11.0,23.0,47.8,4.0,11.0,36.4,2.0,3.0,66.7,2.0,4.0,6.0,5.0,1.0,1.0,1.0,0.0,28.0,-1.0,False,False,malikbeasley,53.0
+D'Angelo Russell,0 days 00:36:06,10.0,21.0,47.6,2.0,8.0,25.0,3.0,4.0,75.0,1.0,2.0,3.0,8.0,2.0,0.0,5.0,1.0,25.0,-11.0,False,False,dangelorussell,44.0
+Ricky Rubio,0 days 00:24:29,1.0,5.0,20.0,0.0,2.0,0.0,4.0,4.0,100.0,0.0,2.0,2.0,6.0,0.0,0.0,3.0,0.0,6.0,-16.0,False,False,rickyrubio,14.0
+Anthony Edwards,0 days 00:16:51,1.0,6.0,16.7,0.0,2.0,0.0,0.0,0.0,0.0,2.0,1.0,3.0,1.0,0.0,0.0,0.0,1.0,2.0,-3.0,False,False,anthonyedwards,4.0
+Jarred Vanderbilt,0 days 00:14:37,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,4.0,0.0,0.0,0.0,0.0,5.0,2.0,-14.0,False,False,jarredvanderbilt,7.0
+Naz Reid,0 days 00:13:35,3.0,6.0,50.0,1.0,3.0,33.3,2.0,2.0,100.0,1.0,2.0,3.0,0.0,0.0,0.0,2.0,2.0,9.0,-16.0,False,False,nazreid,15.0
+Jarrett Culver,0 days 00:10:05,1.0,2.0,50.0,0.0,1.0,0.0,0.0,2.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,2.0,2.0,-6.0,False,False,jarrettculver,7.0
+Ed Davis,,,,,,,,,,,,,,,,,,,,,True,False,eddavis,
+Jaden McDaniels,,,,,,,,,,,,,,,,,,,,,True,False,jadenmcdaniels,
+Jaylen Nowell,,,,,,,,,,,,,,,,,,,,,True,False,jaylennowell,

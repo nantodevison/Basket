@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Deni Avdija,0 days 00:15:31,0.0,1.0,0.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,3.0,1.0,-9.0,False,False,deniavdija,4.0
+Rui Hachimura,0 days 00:24:09,2.0,4.0,50.0,1.0,1.0,100.0,3.0,4.0,75.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,1.0,8.0,-13.0,False,False,ruihachimura,15.0
+Thomas Bryant,0 days 00:33:55,4.0,6.0,66.7,0.0,2.0,0.0,3.0,3.0,100.0,2.0,4.0,6.0,1.0,0.0,0.0,0.0,4.0,11.0,-14.0,False,False,thomasbryant,25.0
+Bradley Beal,0 days 00:38:15,20.0,35.0,57.1,7.0,10.0,70.0,13.0,15.0,86.7,4.0,3.0,7.0,5.0,1.0,0.0,4.0,3.0,60.0,-9.0,False,False,bradleybeal,99.0
+Russell Westbrook,0 days 00:38:57,8.0,18.0,44.4,3.0,6.0,50.0,1.0,4.0,25.0,0.0,8.0,8.0,12.0,3.0,1.0,6.0,4.0,20.0,-4.0,False,False,russellwestbrook,46.0
+Ish Smith,0 days 00:23:05,4.0,8.0,50.0,0.0,2.0,0.0,1.0,2.0,50.0,1.0,4.0,5.0,5.0,2.0,0.0,1.0,2.0,9.0,5.0,False,False,ishsmith,24.0
+Davis Bertans,0 days 00:32:58,6.0,15.0,40.0,4.0,12.0,33.3,1.0,1.0,100.0,1.0,3.0,4.0,1.0,2.0,0.0,2.0,3.0,17.0,1.0,False,False,davisbertans,32.0
+Jerome Robinson,0 days 00:05:06,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,-3.0,False,False,jeromerobinson,0.0
+Robin Lopez,0 days 00:14:05,1.0,3.0,33.3,0.0,1.0,0.0,3.0,4.0,75.0,1.0,1.0,2.0,1.0,0.0,0.0,0.0,1.0,5.0,9.0,False,False,robinlopez,12.0
+Raul Neto,0 days 00:11:34,2.0,4.0,50.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,3.0,5.0,10.0,False,False,raulneto,10.0
+Anthony Gill,0 days 00:02:25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,2.0,False,False,anthonygill,1.0
+Isaac Bonga,,,,,,,,,,,,,,,,,,,,,True,False,isaacbonga,
+Troy Brown Jr.,,,,,,,,,,,,,,,,,,,,,True,False,troybrownjr,
+Garrison Mathews,,,,,,,,,,,,,,,,,,,,,True,False,garrisonmathews,
+Moritz Wagner,,,,,,,,,,,,,,,,,,,,,True,False,moritzwagner,

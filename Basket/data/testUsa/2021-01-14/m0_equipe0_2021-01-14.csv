@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Duncan Robinson,0 days 00:33:57,9.0,14.0,64.3,4.0,8.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,0.0,3.0,3.0,22.0,-19.0,False,False,duncanrobinson,34.0
+Kelly Olynyk,0 days 00:38:52,5.0,13.0,38.5,1.0,7.0,14.3,1.0,2.0,50.0,2.0,4.0,6.0,4.0,1.0,0.0,2.0,2.0,12.0,-9.0,False,False,kellyolynyk,27.0
+Precious Achiuwa,0 days 00:27:24,4.0,6.0,66.7,0.0,0.0,0.0,2.0,6.0,33.3,5.0,6.0,11.0,2.0,0.0,0.0,2.0,1.0,10.0,-18.0,False,False,preciousachiuwa,29.0
+Tyler Herro,0 days 00:31:51,7.0,16.0,43.8,1.0,2.0,50.0,2.0,3.0,66.7,0.0,6.0,6.0,3.0,1.0,0.0,3.0,1.0,17.0,-15.0,False,False,tylerherro,27.0
+Gabe Vincent,0 days 00:34:35,6.0,17.0,35.3,4.0,11.0,36.4,5.0,6.0,83.3,0.0,2.0,2.0,8.0,0.0,0.0,5.0,3.0,21.0,-9.0,False,False,gabevincent,38.0
+Andre Iguodala,0 days 00:25:00,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,8.0,0.0,0.0,2.0,1.0,2.0,-11.0,False,False,andreiguodala,12.0
+Chris Silva,0 days 00:20:36,4.0,6.0,66.7,0.0,0.0,0.0,5.0,6.0,83.3,1.0,3.0,4.0,1.0,1.0,1.0,3.0,5.0,13.0,1.0,False,False,chrissilva,25.0
+Max Strus,0 days 00:27:45,4.0,8.0,50.0,2.0,6.0,33.3,1.0,3.0,33.3,1.0,6.0,7.0,1.0,1.0,0.0,0.0,3.0,11.0,-5.0,False,False,maxstrus,29.0
+Bam Adebayo,,,,,,,,,,,,,,,,,,,,,True,False,bamadebayo,
+Avery Bradley,,,,,,,,,,,,,,,,,,,,,True,False,averybradley,
+Jimmy Butler,,,,,,,,,,,,,,,,,,,,,True,False,jimmybutler,
+Meyers Leonard,,,,,,,,,,,,,,,,,,,,,True,True,meyersleonard,

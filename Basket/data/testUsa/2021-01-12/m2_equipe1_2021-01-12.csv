@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Cedi Osman,0 days 00:37:43,7.0,15.0,46.7,0.0,6.0,0.0,3.0,3.0,100.0,0.0,4.0,4.0,6.0,0.0,1.0,2.0,3.0,17.0,-29.0,False,False,cediosman,34.0
+Larry Nance Jr.,0 days 00:29:54,2.0,11.0,18.2,1.0,5.0,20.0,1.0,2.0,50.0,3.0,4.0,7.0,0.0,1.0,0.0,2.0,1.0,6.0,-24.0,False,False,larrynancejr,12.0
+JaVale McGee,0 days 00:20:57,4.0,8.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,7.0,9.0,3.0,0.0,2.0,2.0,2.0,8.0,-10.0,False,False,javalemcgee,20.0
+Isaac Okoro,0 days 00:35:32,4.0,13.0,30.8,2.0,6.0,33.3,1.0,2.0,50.0,2.0,1.0,3.0,3.0,2.0,0.0,1.0,3.0,11.0,-28.0,False,False,isaacokoro,21.0
+Damyean Dotson,0 days 00:30:50,5.0,11.0,45.5,1.0,3.0,33.3,0.0,2.0,0.0,0.0,2.0,2.0,3.0,0.0,0.0,3.0,1.0,11.0,-24.0,False,False,damyeandotson,17.0
+Yogi Ferrell,0 days 00:23:43,4.0,12.0,33.3,2.0,5.0,40.0,0.0,0.0,0.0,2.0,3.0,5.0,4.0,1.0,0.0,0.0,2.0,10.0,-10.0,False,False,yogiferrell,21.0
+Thon Maker,0 days 00:09:01,3.0,5.0,60.0,0.0,0.0,0.0,3.0,3.0,100.0,1.0,1.0,2.0,0.0,1.0,1.0,0.0,1.0,9.0,-5.0,False,False,thonmaker,17.0
+Lamar Stevens,0 days 00:23:00,4.0,8.0,50.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,3.0,3.0,2.0,1.0,0.0,0.0,0.0,9.0,-7.0,False,False,lamarstevens,18.0
+Marques Bolden,0 days 00:10:03,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,2.0,0.0,0.0,0.0,2.0,0.0,0.0,-5.0,False,False,marquesbolden,-1.0
+Dean Wade,0 days 00:19:17,2.0,6.0,33.3,2.0,5.0,40.0,0.0,0.0,0.0,0.0,3.0,3.0,2.0,1.0,0.0,0.0,0.0,6.0,-8.0,False,False,deanwade,15.0
+Andre Drummond,,,,,,,,,,,,,,,,,,,,,True,True,andredrummond,
+Collin Sexton,,,,,,,,,,,,,,,,,,,,,True,True,collinsexton,

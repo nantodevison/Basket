@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Harrison Barnes,0 days 00:30:31,6.0,8.0,75.0,2.0,2.0,100.0,7.0,10.0,70.0,0.0,4.0,4.0,8.0,1.0,0.0,3.0,3.0,21.0,-15.0,False,False,harrisonbarnes,47.0
+Marvin Bagley III,0 days 00:29:16,6.0,9.0,66.7,1.0,3.0,33.3,2.0,5.0,40.0,2.0,2.0,4.0,2.0,0.0,1.0,0.0,3.0,15.0,-13.0,False,False,marvinbagleyiii,33.0
+Richaun Holmes,0 days 00:23:33,5.0,7.0,71.4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,3.0,0.0,4.0,10.0,-4.0,False,False,richaunholmes,19.0
+Buddy Hield,0 days 00:32:27,6.0,14.0,42.9,3.0,9.0,33.3,0.0,0.0,0.0,0.0,5.0,5.0,6.0,1.0,0.0,1.0,3.0,15.0,-18.0,False,False,buddyhield,33.0
+De'Aaron Fox,0 days 00:24:54,9.0,11.0,81.8,0.0,1.0,0.0,5.0,7.0,71.4,0.0,1.0,1.0,3.0,2.0,1.0,4.0,1.0,23.0,-8.0,False,False,deaaronfox,41.0
+Tyrese Haliburton,0 days 00:29:01,5.0,10.0,50.0,5.0,7.0,71.4,0.0,0.0,0.0,0.0,2.0,2.0,8.0,2.0,1.0,1.0,0.0,15.0,-15.0,False,False,tyresehaliburton,34.0
+Cory Joseph,0 days 00:22:51,2.0,4.0,50.0,2.0,3.0,66.7,0.0,0.0,0.0,0.0,2.0,2.0,3.0,0.0,1.0,0.0,2.0,6.0,-21.0,False,False,coryjoseph,15.0
+Nemanja Bjelica,0 days 00:09:49,1.0,4.0,25.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,0.0,2.0,-16.0,False,False,nemanjabjelica,3.0
+Glenn Robinson III,0 days 00:17:10,3.0,5.0,60.0,1.0,3.0,33.3,2.0,2.0,100.0,0.0,2.0,2.0,1.0,0.0,0.0,0.0,2.0,9.0,-5.0,False,False,glennrobinsoniii,18.0
+Kyle Guy,0 days 00:05:45,1.0,3.0,33.3,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,3.0,3.0,False,False,kyleguy,5.0
+Justin James,0 days 00:05:45,1.0,3.0,33.3,0.0,1.0,0.0,0.0,4.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,2.0,3.0,False,False,justinjames,8.0
+Jahmi'us Ramsey,0 days 00:05:08,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,1.0,1.0,0.0,0.0,1.0,False,False,jahmiusramsey,4.0
+Robert Woodard II,0 days 00:03:50,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,3.0,False,False,robertwoodardii,4.0
+Hassan Whiteside,,,,,,,,,,,,,,,,,,,,,True,False,hassanwhiteside,

@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Bol Bol,0 days 00:09:33,2.0,4.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,1.0,2.0,4.0,1.0,False,False,bolbol,6.0
+Paul Millsap,0 days 00:23:11,4.0,7.0,57.1,2.0,4.0,50.0,2.0,2.0,100.0,3.0,1.0,4.0,4.0,3.0,1.0,1.0,1.0,12.0,0.0,False,False,paulmillsap,30.0
+Nikola Jokic,0 days 00:35:54,8.0,16.0,50.0,0.0,4.0,0.0,7.0,7.0,100.0,1.0,13.0,14.0,10.0,3.0,0.0,3.0,4.0,23.0,10.0,False,False,nikolajokic,58.0
+Will Barton,0 days 00:32:02,6.0,15.0,40.0,3.0,8.0,37.5,2.0,3.0,66.7,1.0,3.0,4.0,3.0,1.0,1.0,0.0,4.0,17.0,5.0,False,False,willbarton,34.0
+Jamal Murray,0 days 00:37:28,6.0,18.0,33.3,1.0,8.0,12.5,4.0,6.0,66.7,2.0,7.0,9.0,6.0,2.0,0.0,3.0,3.0,17.0,8.0,False,False,jamalmurray,39.0
+JaMychal Green,0 days 00:28:05,5.0,10.0,50.0,3.0,4.0,75.0,2.0,2.0,100.0,3.0,6.0,9.0,0.0,0.0,0.0,1.0,2.0,15.0,12.0,False,False,jamychalgreen,29.0
+PJ Dozier,0 days 00:22:59,4.0,6.0,66.7,0.0,0.0,0.0,2.0,3.0,66.7,0.0,6.0,6.0,2.0,0.0,0.0,1.0,1.0,10.0,2.0,False,False,pjdozier,22.0
+Monte Morris,0 days 00:32:03,5.0,11.0,45.5,1.0,5.0,20.0,0.0,0.0,0.0,0.0,2.0,2.0,3.0,2.0,1.0,2.0,1.0,11.0,10.0,False,False,montemorris,21.0
+Isaiah Hartenstein,0 days 00:06:43,0.0,0.0,0.0,0.0,0.0,0.0,2.0,4.0,50.0,0.0,1.0,1.0,0.0,0.0,1.0,0.0,1.0,2.0,4.0,False,False,isaiahhartenstein,8.0
+Facundo Campazzo,0 days 00:12:02,1.0,3.0,33.3,1.0,3.0,33.3,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,4.0,3.0,-2.0,False,False,facundocampazzo,5.0
+Vlatko Cancar,,,,,,,,,,,,,,,,,,,,,True,False,vlatkocancar,
+R.J. Hampton,,,,,,,,,,,,,,,,,,,,,True,False,rjhampton,
+Gary Harris,,,,,,,,,,,,,,,,,,,,,True,False,garyharris,
+Markus Howard,,,,,,,,,,,,,,,,,,,,,True,False,markushoward,
+Zeke Nnaji,,,,,,,,,,,,,,,,,,,,,True,False,zekennaji,

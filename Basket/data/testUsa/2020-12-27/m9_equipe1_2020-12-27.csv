@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+LeBron James,0 days 00:26:12,6.0,13.0,46.2,1.0,5.0,20.0,5.0,7.0,71.4,0.0,9.0,9.0,5.0,1.0,0.0,4.0,1.0,18.0,16.0,False,False,lebronjames,40.0
+Kyle Kuzma,0 days 00:29:09,8.0,12.0,66.7,4.0,6.0,66.7,0.0,0.0,0.0,1.0,2.0,3.0,3.0,0.0,3.0,1.0,1.0,20.0,38.0,False,False,kylekuzma,38.0
+Marc Gasol,0 days 00:20:39,4.0,4.0,100.0,3.0,3.0,100.0,1.0,1.0,100.0,2.0,5.0,7.0,8.0,0.0,4.0,3.0,2.0,12.0,24.0,False,False,marcgasol,36.0
+Kentavious Caldwell-Pope,0 days 00:23:14,3.0,3.0,100.0,0.0,0.0,0.0,2.0,3.0,66.7,0.0,2.0,2.0,2.0,1.0,0.0,0.0,1.0,8.0,29.0,False,False,kentaviouscaldwellpope,19.0
+Dennis Schroder,0 days 00:25:14,5.0,10.0,50.0,0.0,3.0,0.0,1.0,1.0,100.0,0.0,4.0,4.0,4.0,1.0,0.0,3.0,3.0,11.0,35.0,False,False,dennisschroder,21.0
+Wesley Matthews,0 days 00:17:53,2.0,4.0,50.0,0.0,2.0,0.0,0.0,1.0,0.0,0.0,1.0,1.0,2.0,0.0,1.0,1.0,1.0,4.0,16.0,False,False,wesleymatthews,10.0
+Montrezl Harrell,0 days 00:19:41,6.0,10.0,60.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,1.0,1.0,2.0,12.0,12.0,False,False,montrezlharrell,19.0
+Alex Caruso,0 days 00:10:31,3.0,4.0,75.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,1.0,7.0,4.0,False,False,alexcaruso,13.0
+Markieff Morris,0 days 00:15:06,3.0,7.0,42.9,1.0,4.0,25.0,0.0,0.0,0.0,1.0,5.0,6.0,1.0,0.0,2.0,1.0,3.0,7.0,1.0,False,False,markieffmorris,18.0
+Talen Horton-Tucker,0 days 00:20:48,4.0,12.0,33.3,2.0,5.0,40.0,2.0,2.0,100.0,0.0,2.0,2.0,3.0,2.0,1.0,0.0,2.0,12.0,5.0,False,False,talenhortontucker,23.0
+Quinn Cook,0 days 00:08:33,2.0,5.0,40.0,0.0,3.0,0.0,1.0,1.0,100.0,0.0,1.0,1.0,2.0,0.0,0.0,0.0,0.0,5.0,0.0,False,False,quinncook,11.0
+Kostas Antetokounmpo,0 days 00:07:40,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,4.0,0.0,0.0,2.0,2.0,1.0,0.0,0.0,False,False,kostasantetokounmpo,2.0
+Alfonzo McKinnie,0 days 00:07:40,3.0,3.0,100.0,0.0,0.0,0.0,2.0,2.0,100.0,1.0,1.0,2.0,0.0,0.0,0.0,1.0,1.0,8.0,0.0,False,False,alfonzomckinnie,14.0
+Jared Dudley,0 days 00:07:40,1.0,1.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,False,False,jareddudley,7.0

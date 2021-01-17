@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Brandon Ingram,0 days 00:28:14,6.0,11.0,54.5,1.0,5.0,20.0,0.0,0.0,0.0,0.0,6.0,6.0,6.0,1.0,0.0,4.0,0.0,13.0,-25.0,False,False,brandoningram,28.0
+Zion Williamson,0 days 00:28:49,9.0,13.0,69.2,0.0,0.0,0.0,2.0,6.0,33.3,1.0,1.0,2.0,0.0,1.0,0.0,1.0,1.0,20.0,-27.0,False,False,zionwilliamson,33.0
+Steven Adams,0 days 00:23:10,5.0,5.0,100.0,0.0,0.0,0.0,1.0,2.0,50.0,3.0,5.0,8.0,1.0,0.0,1.0,4.0,1.0,11.0,-15.0,False,False,stevenadams,24.0
+Eric Bledsoe,0 days 00:24:13,3.0,5.0,60.0,0.0,2.0,0.0,1.0,1.0,100.0,0.0,0.0,0.0,2.0,1.0,0.0,0.0,0.0,7.0,-18.0,False,False,ericbledsoe,14.0
+Lonzo Ball,0 days 00:23:05,3.0,12.0,25.0,1.0,7.0,14.3,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,3.0,2.0,7.0,-22.0,False,False,lonzoball,6.0
+JJ Redick,0 days 00:17:34,1.0,5.0,20.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,1.0,0.0,1.0,3.0,2.0,-11.0,False,False,jjredick,2.0
+Josh Hart,0 days 00:21:56,1.0,2.0,50.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,6.0,6.0,0.0,0.0,0.0,0.0,1.0,3.0,-20.0,False,False,joshhart,12.0
+Nicolo Melli,0 days 00:15:41,2.0,4.0,50.0,1.0,3.0,33.3,0.0,0.0,0.0,1.0,7.0,8.0,1.0,0.0,0.0,2.0,2.0,5.0,2.0,False,False,nicolomelli,15.0
+Jaxson Hayes,0 days 00:11:46,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,4.0,6.0,1.0,1.0,2.0,0.0,0.0,0.0,-14.0,False,False,jaxsonhayes,10.0
+Nickeil Alexander-Walker,0 days 00:21:30,4.0,10.0,40.0,0.0,1.0,0.0,3.0,3.0,100.0,0.0,0.0,0.0,4.0,1.0,0.0,1.0,4.0,11.0,-9.0,False,False,nickeilalexanderwalker,17.0
+Kira Lewis Jr.,0 days 00:09:38,2.0,7.0,28.6,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,4.0,10.0,False,False,kiralewisjr,5.0
+Sindarius Thornwell,0 days 00:07:17,1.0,2.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,2.0,12.0,False,False,sindariusthornwell,4.0
+Willy Hernangomez,0 days 00:07:07,0.0,1.0,0.0,0.0,0.0,0.0,1.0,4.0,25.0,0.0,4.0,4.0,1.0,0.0,0.0,0.0,0.0,1.0,12.0,False,False,willyhernangomez,9.0
+Naji Marshall,,,,,,,,,,,,,,,,,,,,,True,False,najimarshall,

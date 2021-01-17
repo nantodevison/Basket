@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Kyle Anderson,0 days 00:23:38,2.0,8.0,25.0,2.0,2.0,100.0,1.0,2.0,50.0,0.0,7.0,7.0,5.0,0.0,0.0,0.0,2.0,7.0,3.0,False,False,kyleanderson,19.0
+Brandon Clarke,0 days 00:33:49,9.0,15.0,60.0,0.0,1.0,0.0,1.0,2.0,50.0,3.0,6.0,9.0,3.0,3.0,0.0,0.0,1.0,19.0,-1.0,False,False,brandonclarke,40.0
+Jonas Valanciunas,0 days 00:30:13,11.0,19.0,57.9,0.0,1.0,0.0,2.0,2.0,100.0,8.0,8.0,16.0,1.0,0.0,2.0,1.0,5.0,24.0,4.0,False,False,jonasvalanciunas,48.0
+Dillon Brooks,0 days 00:27:37,4.0,15.0,26.7,1.0,5.0,20.0,0.0,0.0,0.0,0.0,2.0,2.0,6.0,0.0,0.0,3.0,4.0,9.0,3.0,False,False,dillonbrooks,12.0
+Tyus Jones,0 days 00:27:31,4.0,12.0,33.3,1.0,5.0,20.0,0.0,0.0,0.0,1.0,2.0,3.0,7.0,1.0,0.0,1.0,0.0,9.0,-1.0,False,False,tyusjones,20.0
+Desmond Bane,0 days 00:16:34,1.0,4.0,25.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,3.0,3.0,0.0,0.0,0.0,0.0,2.0,3.0,3.0,False,False,desmondbane,7.0
+De'Anthony Melton,0 days 00:24:46,7.0,12.0,58.3,1.0,4.0,25.0,0.0,0.0,0.0,0.0,1.0,1.0,4.0,2.0,1.0,1.0,1.0,15.0,7.0,False,False,deanthonymelton,28.0
+Xavier Tillman,0 days 00:17:47,6.0,8.0,75.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,2.0,5.0,3.0,2.0,0.0,0.0,4.0,12.0,7.0,False,False,xaviertillman,26.0
+Grayson Allen,0 days 00:26:28,6.0,10.0,60.0,3.0,5.0,60.0,5.0,5.0,100.0,0.0,0.0,0.0,2.0,2.0,2.0,1.0,2.0,20.0,16.0,False,False,graysonallen,37.0
+Tim Frazier,0 days 00:11:37,0.0,3.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,0.0,3.0,0.0,14.0,False,False,timfrazier,2.0
+Gorgui Dieng,,,,,,,,,,,,,,,,,,,,,True,False,gorguidieng,
+John Konchar,,,,,,,,,,,,,,,,,,,,,True,False,johnkonchar,
+Sean McDermott,,,,,,,,,,,,,,,,,,,,,True,False,seanmcdermott,

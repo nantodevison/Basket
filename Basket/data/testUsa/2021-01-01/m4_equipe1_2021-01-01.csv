@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Khris Middleton,0 days 00:25:20,6.0,10.0,60.0,2.0,2.0,100.0,0.0,0.0,0.0,0.0,2.0,2.0,6.0,3.0,1.0,2.0,2.0,14.0,20.0,False,False,khrismiddleton,28.0
+Giannis Antetokounmpo,0 days 00:27:46,9.0,19.0,47.4,1.0,5.0,20.0,10.0,18.0,55.6,1.0,11.0,12.0,8.0,2.0,2.0,2.0,4.0,29.0,31.0,False,False,giannisantetokounmpo,73.0
+Brook Lopez,0 days 00:15:56,3.0,7.0,42.9,3.0,6.0,50.0,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,1.0,0.0,3.0,9.0,13.0,False,False,brooklopez,19.0
+Donte DiVincenzo,0 days 00:19:21,4.0,5.0,80.0,3.0,4.0,75.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0,11.0,20.0,False,False,dontedivincenzo,20.0
+Jrue Holiday,0 days 00:25:56,4.0,9.0,44.4,3.0,6.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,4.0,3.0,0.0,0.0,2.0,11.0,27.0,False,False,jrueholiday,24.0
+Bobby Portis,0 days 00:25:12,4.0,6.0,66.7,2.0,2.0,100.0,3.0,4.0,75.0,2.0,10.0,12.0,1.0,0.0,2.0,2.0,2.0,13.0,9.0,False,False,bobbyportis,34.0
+D.J. Augustin,0 days 00:18:49,0.0,4.0,0.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,2.0,0.0,0.0,14.0,False,False,djaugustin,2.0
+Thanasis Antetokounmpo,0 days 00:15:07,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,2.0,1.0,0.0,2.0,2.0,0.0,-11.0,False,False,thanasisantetokounmpo,2.0
+Pat Connaughton,0 days 00:15:33,3.0,5.0,60.0,3.0,3.0,100.0,2.0,2.0,100.0,1.0,4.0,5.0,1.0,1.0,0.0,0.0,1.0,11.0,12.0,False,False,patconnaughton,24.0
+Bryn Forbes,0 days 00:22:04,6.0,9.0,66.7,4.0,6.0,66.7,2.0,2.0,100.0,0.0,0.0,0.0,0.0,1.0,0.0,2.0,1.0,18.0,9.0,False,False,brynforbes,28.0
+Jordan Nwora,0 days 00:09:57,2.0,4.0,50.0,0.0,1.0,0.0,3.0,4.0,75.0,0.0,3.0,3.0,0.0,2.0,0.0,1.0,1.0,7.0,2.0,False,False,jordannwora,16.0
+Sam Merrill,0 days 00:09:32,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,2.0,1.0,0.0,2.0,False,False,sammerrill,-1.0
+D.J. Wilson,0 days 00:09:27,1.0,4.0,25.0,1.0,3.0,33.3,0.0,0.0,0.0,0.0,2.0,2.0,1.0,1.0,0.0,1.0,0.0,3.0,2.0,False,False,djwilson,7.0

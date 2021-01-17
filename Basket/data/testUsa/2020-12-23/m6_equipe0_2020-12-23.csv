@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+De'Andre Hunter,0 days 00:25:54,5.0,6.0,83.3,1.0,1.0,100.0,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,0.0,2.0,3.0,11.0,40.0,False,False,deandrehunter,18.0
+Danilo Gallinari,0 days 00:24:26,4.0,6.0,66.7,1.0,2.0,50.0,4.0,4.0,100.0,0.0,4.0,4.0,3.0,0.0,0.0,3.0,2.0,13.0,31.0,False,False,danilogallinari,25.0
+John Collins,0 days 00:18:03,6.0,10.0,60.0,0.0,2.0,0.0,2.0,2.0,100.0,0.0,4.0,4.0,2.0,0.0,2.0,0.0,4.0,14.0,21.0,False,False,johncollins,28.0
+Cam Reddish,0 days 00:23:46,6.0,11.0,54.5,1.0,3.0,33.3,2.0,2.0,100.0,1.0,5.0,6.0,0.0,2.0,0.0,1.0,3.0,15.0,27.0,False,False,camreddish,28.0
+Trae Young,0 days 00:25:58,10.0,12.0,83.3,5.0,6.0,83.3,12.0,14.0,85.7,2.0,4.0,6.0,7.0,0.0,0.0,4.0,1.0,37.0,30.0,False,False,traeyoung,74.0
+Bogdan Bogdanovic,0 days 00:24:56,5.0,12.0,41.7,3.0,8.0,37.5,2.0,3.0,66.7,0.0,7.0,7.0,2.0,1.0,0.0,2.0,2.0,15.0,0.0,False,False,bogdanbogdanovic,32.0
+Solomon Hill,0 days 00:28:24,0.0,3.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,0.0,1.0,3.0,2.0,0.0,-8.0,False,False,solomonhill,1.0
+Kevin Huerter,0 days 00:27:03,4.0,10.0,40.0,2.0,6.0,33.3,1.0,2.0,50.0,0.0,2.0,2.0,4.0,1.0,0.0,0.0,2.0,11.0,0.0,False,False,kevinhuerter,24.0
+Bruno Fernando,0 days 00:18:08,2.0,3.0,66.7,0.0,0.0,0.0,1.0,2.0,50.0,3.0,4.0,7.0,1.0,2.0,0.0,3.0,3.0,5.0,-1.0,False,False,brunofernando,15.0
+Brandon Goodwin,0 days 00:13:14,1.0,4.0,25.0,1.0,3.0,33.3,0.0,0.0,0.0,0.0,1.0,1.0,4.0,0.0,0.0,1.0,4.0,3.0,-16.0,False,False,brandongoodwin,8.0
+Nathan Knight,0 days 00:05:04,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,3.0,0.0,0.0,0.0,2.0,2.0,0.0,-12.0,False,False,nathanknight,-1.0
+Skylar Mays,0 days 00:05:04,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,-12.0,False,False,skylarmays,0.0

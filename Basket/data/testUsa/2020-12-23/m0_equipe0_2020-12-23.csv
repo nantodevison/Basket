@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Gordon Hayward,0 days 00:36:13,11.0,18.0,61.1,4.0,8.0,50.0,2.0,2.0,100.0,0.0,4.0,4.0,7.0,1.0,0.0,3.0,4.0,28.0,-2.0,False,False,gordonhayward,51.0
+P.J. Washington,0 days 00:21:23,1.0,5.0,20.0,0.0,1.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,2.0,0.0,1.0,0.0,1.0,4.0,-17.0,False,False,pjwashington,9.0
+Cody Zeller,0 days 00:18:57,3.0,6.0,50.0,0.0,2.0,0.0,0.0,1.0,0.0,1.0,2.0,3.0,0.0,3.0,1.0,1.0,1.0,6.0,-10.0,False,False,codyzeller,15.0
+Terry Rozier,0 days 00:37:31,15.0,23.0,65.2,10.0,16.0,62.5,2.0,4.0,50.0,1.0,2.0,3.0,2.0,2.0,1.0,3.0,5.0,42.0,-4.0,False,False,terryrozier,74.0
+Devonte' Graham,0 days 00:37:07,4.0,13.0,30.8,2.0,9.0,22.2,0.0,0.0,0.0,2.0,1.0,3.0,10.0,0.0,0.0,2.0,1.0,10.0,-7.0,False,False,devontegraham,25.0
+LaMelo Ball,0 days 00:15:48,0.0,5.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,3.0,2.0,0.0,3.0,2.0,0.0,2.0,False,False,lameloball,1.0
+Miles Bridges,0 days 00:22:05,3.0,10.0,30.0,0.0,5.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,1.0,1.0,0.0,0.0,1.0,6.0,6.0,False,False,milesbridges,15.0
+Bismack Biyombo,0 days 00:24:21,5.0,5.0,100.0,0.0,0.0,0.0,1.0,5.0,20.0,1.0,3.0,4.0,0.0,0.0,1.0,2.0,1.0,11.0,0.0,False,False,bismackbiyombo,24.0
+Cody Martin,0 days 00:21:01,2.0,3.0,66.7,0.0,0.0,0.0,1.0,1.0,100.0,1.0,4.0,5.0,4.0,0.0,0.0,0.0,1.0,5.0,2.0,False,False,codymartin,16.0
+Jalen McDaniels,0 days 00:05:34,1.0,2.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,2.0,-5.0,False,False,jalenmcdaniels,3.0
+Vernon Carey Jr.,,,,,,,,,,,,,,,,,,,,,True,False,vernoncareyjr,
+Caleb Martin,,,,,,,,,,,,,,,,,,,,,True,False,calebmartin,
+Malik Monk,,,,,,,,,,,,,,,,,,,,,True,False,malikmonk,
+Nick Richards,,,,,,,,,,,,,,,,,,,,,True,False,nickrichards,

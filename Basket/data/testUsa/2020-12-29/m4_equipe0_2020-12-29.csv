@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Patrick Williams,0 days 00:20:21,5.0,10.0,50.0,2.0,3.0,66.7,0.0,0.0,0.0,1.0,0.0,1.0,2.0,0.0,0.0,1.0,3.0,12.0,1.0,False,False,patrickwilliams,17.0
+Lauri Markkanen,0 days 00:19:15,3.0,8.0,37.5,1.0,2.0,50.0,2.0,3.0,66.7,1.0,3.0,4.0,0.0,0.0,0.0,1.0,2.0,9.0,-2.0,False,False,laurimarkkanen,15.0
+Wendell Carter Jr.,0 days 00:34:11,5.0,8.0,62.5,0.0,1.0,0.0,0.0,2.0,0.0,0.0,12.0,12.0,3.0,0.0,0.0,2.0,5.0,10.0,14.0,False,False,wendellcarterjr,28.0
+Zach LaVine,0 days 00:38:17,6.0,15.0,40.0,3.0,7.0,42.9,8.0,9.0,88.9,2.0,3.0,5.0,6.0,4.0,0.0,3.0,2.0,23.0,11.0,False,False,zachlavine,48.0
+Coby White,0 days 00:36:57,6.0,14.0,42.9,2.0,5.0,40.0,4.0,4.0,100.0,0.0,5.0,5.0,6.0,0.0,0.0,2.0,0.0,18.0,10.0,False,False,cobywhite,34.0
+Otto Porter Jr.,0 days 00:29:21,4.0,10.0,40.0,3.0,7.0,42.9,5.0,6.0,83.3,1.0,2.0,3.0,1.0,0.0,0.0,2.0,4.0,16.0,-3.0,False,False,ottoporterjr,29.0
+Garrett Temple,0 days 00:28:36,4.0,10.0,40.0,2.0,6.0,33.3,2.0,4.0,50.0,0.0,1.0,1.0,2.0,1.0,0.0,0.0,3.0,12.0,14.0,False,False,garretttemple,24.0
+Tomas Satoransky,0 days 00:20:06,4.0,7.0,57.1,2.0,4.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,6.0,2.0,0.0,2.0,0.0,10.0,-2.0,False,False,tomassatoransky,23.0
+Chandler Hutchison,0 days 00:06:25,1.0,4.0,25.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,0.0,0.0,1.0,1.0,2.0,-2.0,False,False,chandlerhutchison,3.0
+Daniel Gafford,0 days 00:06:31,0.0,1.0,0.0,0.0,0.0,0.0,3.0,4.0,75.0,0.0,1.0,1.0,0.0,0.0,1.0,0.0,3.0,3.0,-1.0,False,False,danielgafford,8.0
+Ryan Arcidiacono,,,,,,,,,,,,,,,,,,,,,True,False,ryanarcidiacono,
+Cristiano Felicio,,,,,,,,,,,,,,,,,,,,,True,False,cristianofelicio,
+Luke Kornet,,,,,,,,,,,,,,,,,,,,,True,False,lukekornet,
+Denzel Valentine,,,,,,,,,,,,,,,,,,,,,True,False,denzelvalentine,
+Thaddeus Young,,,,,,,,,,,,,,,,,,,,,True,False,thaddeusyoung,

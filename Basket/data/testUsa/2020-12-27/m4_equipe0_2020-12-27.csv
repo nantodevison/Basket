@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Danny Green,0 days 00:17:30,1.0,2.0,50.0,0.0,1.0,0.0,2.0,2.0,100.0,1.0,2.0,3.0,1.0,0.0,1.0,1.0,1.0,4.0,-4.0,False,False,dannygreen,11.0
+Tobias Harris,0 days 00:28:21,5.0,10.0,50.0,4.0,6.0,66.7,2.0,2.0,100.0,0.0,9.0,9.0,5.0,3.0,0.0,3.0,1.0,16.0,-16.0,False,False,tobiasharris,38.0
+Dwight Howard,0 days 00:15:00,4.0,4.0,100.0,0.0,0.0,0.0,1.0,2.0,50.0,1.0,2.0,3.0,0.0,0.0,0.0,3.0,4.0,9.0,-14.0,False,False,dwighthoward,15.0
+Seth Curry,0 days 00:24:26,2.0,7.0,28.6,2.0,5.0,40.0,2.0,2.0,100.0,0.0,1.0,1.0,4.0,0.0,0.0,2.0,2.0,8.0,-7.0,False,False,sethcurry,15.0
+Ben Simmons,0 days 00:28:26,5.0,8.0,62.5,0.0,0.0,0.0,5.0,7.0,71.4,0.0,6.0,6.0,4.0,2.0,2.0,6.0,2.0,15.0,-21.0,False,False,bensimmons,32.0
+Tony Bradley,0 days 00:17:25,2.0,7.0,28.6,0.0,0.0,0.0,0.0,1.0,0.0,4.0,4.0,8.0,1.0,0.0,2.0,0.0,2.0,4.0,-5.0,False,False,tonybradley,13.0
+Shake Milton,0 days 00:22:30,2.0,6.0,33.3,1.0,3.0,33.3,1.0,2.0,50.0,0.0,1.0,1.0,2.0,0.0,0.0,1.0,2.0,6.0,-22.0,False,False,shakemilton,11.0
+Furkan Korkmaz,0 days 00:16:40,1.0,8.0,12.5,0.0,5.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,2.0,1.0,0.0,1.0,0.0,4.0,-23.0,False,False,furkankorkmaz,9.0
+Tyrese Maxey,0 days 00:21:40,3.0,8.0,37.5,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,1.0,1.0,6.0,-14.0,False,False,tyresemaxey,7.0
+Mike Scott,0 days 00:18:37,4.0,8.0,50.0,3.0,7.0,42.9,1.0,2.0,50.0,2.0,1.0,3.0,0.0,1.0,0.0,3.0,2.0,12.0,-8.0,False,False,mikescott,22.0
+Matisse Thybulle,0 days 00:08:15,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,-4.0,False,False,matissethybulle,1.0
+Isaiah Joe,0 days 00:07:04,1.0,2.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,2.0,6.0,False,False,isaiahjoe,6.0
+Terrance Ferguson,0 days 00:07:04,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,6.0,False,False,terranceferguson,1.0
+Dakota Mathias,0 days 00:07:04,3.0,6.0,50.0,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,0.0,0.0,0.0,0.0,8.0,6.0,False,False,dakotamathias,15.0
+Joel Embiid,,,,,,,,,,,,,,,,,,,,,True,True,joelembiid,

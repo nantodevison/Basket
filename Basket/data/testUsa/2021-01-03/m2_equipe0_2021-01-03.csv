@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+LeBron James,0 days 00:32:00,9.0,16.0,56.3,3.0,6.0,50.0,1.0,3.0,33.3,0.0,13.0,13.0,8.0,1.0,0.0,2.0,2.0,22.0,19.0,False,False,lebronjames,53.0
+Anthony Davis,0 days 00:32:12,6.0,15.0,40.0,0.0,2.0,0.0,5.0,6.0,83.3,2.0,7.0,9.0,1.0,3.0,3.0,3.0,0.0,17.0,5.0,False,False,anthonydavis,35.0
+Marc Gasol,0 days 00:23:40,2.0,6.0,33.3,0.0,3.0,0.0,3.0,4.0,75.0,3.0,3.0,6.0,4.0,1.0,0.0,0.0,2.0,7.0,3.0,False,False,marcgasol,23.0
+Kyle Kuzma,0 days 00:30:03,4.0,9.0,44.4,3.0,7.0,42.9,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,2.0,3.0,4.0,11.0,7.0,False,False,kylekuzma,20.0
+Dennis Schroder,0 days 00:31:39,4.0,13.0,30.8,0.0,4.0,0.0,3.0,4.0,75.0,0.0,1.0,1.0,5.0,0.0,0.0,0.0,1.0,11.0,3.0,False,False,dennisschroder,20.0
+Wesley Matthews,0 days 00:27:15,5.0,7.0,71.4,4.0,6.0,66.7,0.0,0.0,0.0,1.0,0.0,1.0,1.0,2.0,0.0,0.0,3.0,14.0,3.0,False,False,wesleymatthews,27.0
+Montrezl Harrell,0 days 00:20:50,7.0,11.0,63.6,0.0,0.0,0.0,2.0,2.0,100.0,4.0,5.0,9.0,0.0,2.0,0.0,1.0,2.0,16.0,12.0,False,False,montrezlharrell,31.0
+Talen Horton-Tucker,0 days 00:23:39,3.0,9.0,33.3,1.0,4.0,25.0,0.0,0.0,0.0,2.0,4.0,6.0,2.0,0.0,0.0,1.0,1.0,7.0,11.0,False,False,talenhortontucker,15.0
+Markieff Morris,0 days 00:14:21,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,10.0,False,False,markieffmorris,2.0
+Alfonzo McKinnie,0 days 00:01:27,1.0,1.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,-1.0,False,False,alfonzomckinnie,5.0
+Jared Dudley,0 days 00:01:27,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,-1.0,False,False,jareddudley,1.0
+Quinn Cook,0 days 00:01:27,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-1.0,False,False,quinncook,0.0

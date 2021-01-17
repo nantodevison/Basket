@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Taurean Prince,0 days 00:19:39,3.0,9.0,33.3,1.0,5.0,20.0,1.0,1.0,100.0,0.0,0.0,0.0,2.0,0.0,1.0,0.0,2.0,8.0,13.0,False,False,taureanprince,14.0
+Jeff Green,0 days 00:19:05,1.0,3.0,33.3,0.0,1.0,0.0,0.0,0.0,0.0,0.0,5.0,5.0,0.0,0.0,0.0,0.0,3.0,2.0,11.0,False,False,jeffgreen,7.0
+Jarrett Allen,0 days 00:31:57,8.0,9.0,88.9,0.0,0.0,0.0,3.0,7.0,42.9,5.0,13.0,18.0,1.0,3.0,2.0,0.0,1.0,19.0,20.0,False,False,jarrettallen,57.0
+Bruce Brown,0 days 00:23:06,3.0,5.0,60.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,6.0,6.0,5.0,0.0,0.0,1.0,1.0,6.0,20.0,False,False,brucebrown,18.0
+Kyrie Irving,0 days 00:29:35,12.0,19.0,63.2,5.0,7.0,71.4,0.0,0.0,0.0,0.0,6.0,6.0,5.0,3.0,0.0,2.0,3.0,29.0,22.0,False,False,kyrieirving,53.0
+Timothe Luwawu-Cabarrot,0 days 00:24:20,5.0,9.0,55.6,1.0,5.0,20.0,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,0.0,1.0,2.0,11.0,13.0,False,False,timotheluwawucabarrot,20.0
+Caris LeVert,0 days 00:21:27,9.0,18.0,50.0,2.0,5.0,40.0,4.0,4.0,100.0,0.0,1.0,1.0,5.0,2.0,0.0,2.0,1.0,24.0,16.0,False,False,carislevert,39.0
+Joe Harris,0 days 00:23:05,4.0,7.0,57.1,2.0,4.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,2.0,0.0,10.0,17.0,False,False,joeharris,15.0
+DeAndre Jordan,0 days 00:08:53,2.0,2.0,100.0,0.0,0.0,0.0,1.0,1.0,100.0,2.0,2.0,4.0,1.0,0.0,1.0,1.0,5.0,5.0,7.0,False,False,deandrejordan,13.0
+Tyler Johnson,0 days 00:18:25,2.0,5.0,40.0,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,7.0,2.0,0.0,0.0,1.0,6.0,12.0,False,False,tylerjohnson,19.0
+Landry Shamet,0 days 00:07:10,1.0,3.0,33.3,1.0,3.0,33.3,2.0,2.0,100.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,5.0,7.0,False,False,landryshamet,11.0
+Reggie Perry,0 days 00:07:10,2.0,4.0,50.0,0.0,1.0,0.0,1.0,1.0,100.0,0.0,5.0,5.0,1.0,0.0,0.0,3.0,3.0,5.0,7.0,False,False,reggieperry,10.0
+Chris Chiozza,0 days 00:06:08,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0,0.0,0.0,0.0,5.0,False,False,chrischiozza,3.0
+Rodions Kurucs,,,,,,,,,,,,,,,,,,,,,True,True,rodionskurucs,

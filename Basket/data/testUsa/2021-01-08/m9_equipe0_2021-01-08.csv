@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+OG Anunoby,0 days 00:28:36,2.0,8.0,25.0,0.0,4.0,0.0,4.0,6.0,66.7,0.0,2.0,2.0,2.0,2.0,0.0,3.0,5.0,8.0,17.0,False,False,oganunoby,17.0
+Pascal Siakam,0 days 00:33:09,7.0,11.0,63.6,1.0,2.0,50.0,2.0,2.0,100.0,3.0,6.0,9.0,12.0,1.0,1.0,2.0,5.0,17.0,17.0,False,False,pascalsiakam,45.0
+Alex Len,0 days 00:04:44,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-12.0,False,False,alexlen,0.0
+Norman Powell,0 days 00:26:42,6.0,8.0,75.0,4.0,5.0,80.0,6.0,6.0,100.0,0.0,2.0,2.0,0.0,2.0,0.0,1.0,0.0,22.0,4.0,False,False,normanpowell,40.0
+Fred VanVleet,0 days 00:33:14,13.0,22.0,59.1,5.0,9.0,55.6,3.0,3.0,100.0,1.0,2.0,3.0,7.0,1.0,0.0,3.0,1.0,34.0,13.0,False,False,fredvanvleet,58.0
+Chris Boucher,0 days 00:29:12,9.0,12.0,75.0,2.0,4.0,50.0,3.0,5.0,60.0,4.0,6.0,10.0,2.0,1.0,3.0,0.0,2.0,23.0,14.0,False,False,chrisboucher,54.0
+Yuta Watanabe,0 days 00:19:10,1.0,5.0,20.0,1.0,2.0,50.0,0.0,0.0,0.0,2.0,5.0,7.0,0.0,0.0,1.0,0.0,1.0,3.0,16.0,False,False,yutawatanabe,10.0
+Terence Davis,0 days 00:22:16,7.0,13.0,53.8,4.0,8.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,3.0,0.0,0.0,1.0,1.0,18.0,25.0,False,False,terencedavis,30.0
+Malachi Flynn,0 days 00:16:47,5.0,6.0,83.3,2.0,3.0,66.7,0.0,0.0,0.0,0.0,5.0,5.0,2.0,0.0,0.0,1.0,3.0,12.0,6.0,False,False,malachiflynn,25.0
+Stanley Johnson,0 days 00:15:29,0.0,2.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,3.0,4.0,1.0,0.0,0.0,0.0,1.0,0.0,11.0,False,False,stanleyjohnson,4.0
+DeAndre' Bembry,0 days 00:03:50,1.0,2.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,1.0,0.0,2.0,-3.0,False,False,deandrebembry,3.0
+Jalen Harris,0 days 00:02:17,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,-1.0,False,False,jalenharris,0.0
+Paul Watson,0 days 00:02:17,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,-1.0,False,False,paulwatson,4.0
+Matt Thomas,0 days 00:02:17,1.0,1.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,-1.0,False,False,mattthomas,5.0
+Aron Baynes,,,,,,,,,,,,,,,,,,,,,True,False,aronbaynes,

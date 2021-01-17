@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Danuel House Jr.,0 days 00:28:56,1.0,9.0,11.1,0.0,5.0,0.0,1.0,2.0,50.0,0.0,4.0,4.0,6.0,0.0,0.0,0.0,5.0,3.0,-9.0,False,False,danuelhousejr,13.0
+P.J. Tucker,0 days 00:26:59,3.0,4.0,75.0,3.0,4.0,75.0,0.0,0.0,0.0,0.0,3.0,3.0,4.0,2.0,0.0,0.0,2.0,9.0,-9.0,False,False,pjtucker,24.0
+Christian Wood,0 days 00:36:49,9.0,20.0,45.0,4.0,5.0,80.0,1.0,2.0,50.0,0.0,3.0,3.0,1.0,2.0,2.0,0.0,1.0,23.0,-2.0,False,False,christianwood,36.0
+David Nwaba,0 days 00:31:58,5.0,11.0,45.5,1.0,3.0,33.3,3.0,5.0,60.0,1.0,4.0,5.0,1.0,2.0,0.0,1.0,2.0,14.0,12.0,False,False,davidnwaba,28.0
+James Harden,0 days 00:31:30,10.0,16.0,62.5,5.0,9.0,55.6,9.0,9.0,100.0,0.0,6.0,6.0,8.0,1.0,0.0,5.0,2.0,34.0,-12.0,False,False,jamesharden,66.0
+Sterling Brown,0 days 00:30:40,5.0,8.0,62.5,2.0,5.0,40.0,0.0,0.0,0.0,1.0,3.0,4.0,2.0,1.0,0.0,0.0,3.0,12.0,-18.0,False,False,sterlingbrown,26.0
+Jae'Sean Tate,0 days 00:25:27,2.0,6.0,33.3,1.0,3.0,33.3,0.0,0.0,0.0,2.0,5.0,7.0,2.0,0.0,1.0,3.0,5.0,5.0,-15.0,False,False,jaeseantate,13.0
+Bruno Caboclo,0 days 00:19:31,3.0,9.0,33.3,0.0,3.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,0.0,0.0,0.0,4.0,3.0,6.0,-12.0,False,False,brunocaboclo,8.0
+Brodric Thomas,0 days 00:08:10,1.0,3.0,33.3,0.0,2.0,0.0,3.0,5.0,60.0,0.0,0.0,0.0,1.0,0.0,0.0,2.0,2.0,5.0,0.0,False,False,brodricthomas,10.0
+DeMarcus Cousins,,,,,,,,,,,,,,,,,,,,,True,False,demarcuscousins,
+Eric Gordon,,,,,,,,,,,,,,,,,,,,,True,False,ericgordon,
+Mason Jones,,,,,,,,,,,,,,,,,,,,,True,False,masonjones,
+John Wall,,,,,,,,,,,,,,,,,,,,,True,False,johnwall,

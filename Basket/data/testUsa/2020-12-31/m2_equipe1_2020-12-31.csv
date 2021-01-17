@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Dwayne Bacon,0 days 00:27:31,4.0,9.0,44.4,1.0,3.0,33.3,1.0,2.0,50.0,0.0,3.0,3.0,1.0,0.0,0.0,2.0,1.0,10.0,-27.0,False,False,dwaynebacon,16.0
+Aaron Gordon,0 days 00:20:49,1.0,8.0,12.5,0.0,4.0,0.0,4.0,5.0,80.0,0.0,3.0,3.0,1.0,0.0,2.0,2.0,0.0,6.0,-23.0,False,False,aarongordon,13.0
+Nikola Vucevic,0 days 00:23:47,8.0,15.0,53.3,3.0,6.0,50.0,0.0,0.0,0.0,2.0,8.0,10.0,3.0,0.0,0.0,0.0,3.0,19.0,-29.0,False,False,nikolavucevic,39.0
+Evan Fournier,0 days 00:07:48,1.0,3.0,33.3,0.0,2.0,0.0,1.0,1.0,100.0,0.0,1.0,1.0,2.0,0.0,0.0,0.0,1.0,3.0,-11.0,False,False,evanfournier,8.0
+Markelle Fultz,0 days 00:24:12,4.0,11.0,36.4,0.0,1.0,0.0,1.0,1.0,100.0,0.0,2.0,2.0,4.0,1.0,1.0,2.0,3.0,9.0,-31.0,False,False,markellefultz,14.0
+Michael Carter-Williams,0 days 00:26:51,3.0,11.0,27.3,0.0,2.0,0.0,4.0,4.0,100.0,2.0,4.0,6.0,1.0,0.0,1.0,0.0,1.0,10.0,-14.0,False,False,michaelcarterwilliams,19.0
+Chuma Okeke,0 days 00:17:14,2.0,4.0,50.0,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,1.0,6.0,-1.0,False,False,chumaokeke,11.0
+Khem Birch,0 days 00:24:13,2.0,7.0,28.6,0.0,0.0,0.0,2.0,2.0,100.0,4.0,3.0,7.0,1.0,1.0,1.0,2.0,2.0,6.0,5.0,False,False,khembirch,13.0
+Cole Anthony,0 days 00:30:20,5.0,18.0,27.8,1.0,4.0,25.0,5.0,5.0,100.0,1.0,6.0,7.0,2.0,0.0,0.0,2.0,2.0,16.0,-4.0,False,False,coleanthony,24.0
+Karim Mane,0 days 00:18:45,0.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,4.0,0.0,0.0,0.0,0.0,1.0,0.0,10.0,False,False,karimmane,1.0
+Gary Clark,0 days 00:09:57,1.0,2.0,50.0,0.0,1.0,0.0,1.0,1.0,100.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,False,False,garyclark,7.0
+Jordan Bone,0 days 00:08:33,2.0,4.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,0.0,0.0,0.0,4.0,5.0,False,False,jordanbone,8.0
+Mo Bamba,,,,,,,,,,,,,,,,,,,,,True,False,mobamba,

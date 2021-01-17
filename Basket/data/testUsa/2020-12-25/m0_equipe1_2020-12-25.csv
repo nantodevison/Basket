@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Jimmy Butler,0 days 00:16:13,2.0,7.0,28.6,0.0,1.0,0.0,0.0,0.0,0.0,3.0,3.0,6.0,5.0,1.0,0.0,1.0,0.0,4.0,-8.0,False,False,jimmybutler,13.0
+Bam Adebayo,0 days 00:28:13,5.0,9.0,55.6,0.0,0.0,0.0,7.0,8.0,87.5,0.0,4.0,4.0,2.0,2.0,1.0,3.0,2.0,17.0,9.0,False,False,bamadebayo,32.0
+Meyers Leonard,0 days 00:19:48,3.0,5.0,60.0,3.0,5.0,60.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,0.0,1.0,5.0,9.0,1.0,False,False,meyersleonard,17.0
+Duncan Robinson,0 days 00:32:02,8.0,14.0,57.1,7.0,13.0,53.8,0.0,0.0,0.0,0.0,5.0,5.0,0.0,0.0,0.0,1.0,3.0,23.0,5.0,False,False,duncanrobinson,42.0
+Tyler Herro,0 days 00:32:20,3.0,10.0,30.0,2.0,4.0,50.0,3.0,3.0,100.0,0.0,2.0,2.0,3.0,1.0,0.0,3.0,1.0,11.0,0.0,False,False,tylerherro,17.0
+Goran Dragic,0 days 00:27:08,6.0,11.0,54.5,0.0,4.0,0.0,6.0,7.0,85.7,0.0,2.0,2.0,9.0,4.0,0.0,3.0,1.0,18.0,21.0,False,False,gorandragic,42.0
+Andre Iguodala,0 days 00:26:14,2.0,5.0,40.0,2.0,5.0,40.0,0.0,0.0,0.0,0.0,7.0,7.0,3.0,1.0,0.0,2.0,3.0,6.0,17.0,False,False,andreiguodala,19.0
+Precious Achiuwa,0 days 00:19:28,5.0,7.0,71.4,0.0,0.0,0.0,1.0,2.0,50.0,1.0,2.0,3.0,2.0,0.0,1.0,1.0,6.0,11.0,4.0,False,False,preciousachiuwa,21.0
+Avery Bradley,0 days 00:28:28,4.0,7.0,57.1,2.0,5.0,40.0,2.0,3.0,66.7,0.0,2.0,2.0,4.0,2.0,0.0,2.0,2.0,12.0,23.0,False,False,averybradley,27.0
+Maurice Harkless,0 days 00:09:29,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,2.0,0.0,-7.0,False,False,mauriceharkless,2.0
+KZ Okpala,0 days 00:00:19,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,kzokpala,0.0
+Chris Silva,0 days 00:00:19,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,chrissilva,0.0
+Udonis Haslem,,,,,,,,,,,,,,,,,,,,,True,False,udonishaslem,
+Kendrick Nunn,,,,,,,,,,,,,,,,,,,,,True,False,kendricknunn,
+Kelly Olynyk,,,,,,,,,,,,,,,,,,,,,True,False,kellyolynyk,

@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Jimmy Butler,0 days 00:36:01,10.0,18.0,55.6,0.0,1.0,0.0,6.0,6.0,100.0,3.0,7.0,10.0,9.0,2.0,1.0,0.0,1.0,26.0,11.0,False,False,jimmybutler,57.0
+Kelly Olynyk,0 days 00:31:34,7.0,15.0,46.7,4.0,11.0,36.4,0.0,0.0,0.0,1.0,5.0,6.0,5.0,1.0,1.0,2.0,2.0,18.0,3.0,False,False,kellyolynyk,39.0
+Bam Adebayo,0 days 00:21:26,2.0,4.0,50.0,0.0,0.0,0.0,5.0,7.0,71.4,1.0,15.0,16.0,4.0,0.0,1.0,4.0,5.0,9.0,4.0,False,False,bamadebayo,33.0
+Duncan Robinson,0 days 00:34:34,2.0,8.0,25.0,2.0,8.0,25.0,1.0,2.0,50.0,0.0,5.0,5.0,2.0,0.0,1.0,0.0,1.0,7.0,10.0,False,False,duncanrobinson,21.0
+Tyler Herro,0 days 00:37:11,12.0,20.0,60.0,1.0,5.0,20.0,6.0,8.0,75.0,0.0,9.0,9.0,2.0,0.0,0.0,3.0,3.0,31.0,-2.0,False,False,tylerherro,56.0
+Precious Achiuwa,0 days 00:12:40,3.0,4.0,75.0,0.0,0.0,0.0,1.0,1.0,100.0,0.0,2.0,2.0,0.0,0.0,0.0,2.0,4.0,7.0,5.0,False,False,preciousachiuwa,10.0
+Goran Dragic,0 days 00:19:34,7.0,10.0,70.0,7.0,9.0,77.8,0.0,0.0,0.0,2.0,0.0,2.0,5.0,0.0,0.0,3.0,4.0,21.0,4.0,False,False,gorandragic,38.0
+Avery Bradley,0 days 00:18:36,2.0,8.0,25.0,1.0,5.0,20.0,0.0,0.0,0.0,1.0,2.0,3.0,1.0,0.0,0.0,1.0,2.0,5.0,-10.0,False,False,averybradley,9.0
+Andre Iguodala,0 days 00:13:45,1.0,3.0,33.3,1.0,2.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,2.0,0.0,1.0,0.0,1.0,3.0,-12.0,False,False,andreiguodala,9.0
+KZ Okpala,0 days 00:07:06,0.0,2.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,2.0,1.0,0.0,0.0,0.0,1.0,0.0,2.0,False,False,kzokpala,2.0
+Meyers Leonard,0 days 00:07:33,0.0,1.0,0.0,0.0,1.0,0.0,1.0,2.0,50.0,0.0,4.0,4.0,1.0,0.0,0.0,1.0,0.0,1.0,5.0,False,False,meyersleonard,7.0
+Maurice Harkless,,,,,,,,,,,,,,,,,,,,,True,False,mauriceharkless,
+Udonis Haslem,,,,,,,,,,,,,,,,,,,,,True,False,udonishaslem,
+Kendrick Nunn,,,,,,,,,,,,,,,,,,,,,True,False,kendricknunn,
+Chris Silva,,,,,,,,,,,,,,,,,,,,,True,False,chrissilva,

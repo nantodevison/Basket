@@ -1,0 +1,14 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Khris Middleton,0 days 00:29:49,9.0,17.0,52.9,2.0,6.0,33.3,0.0,1.0,0.0,1.0,9.0,10.0,3.0,1.0,0.0,3.0,3.0,20.0,16.0,False,False,khrismiddleton,39.0
+Giannis Antetokounmpo,0 days 00:27:17,8.0,16.0,50.0,2.0,4.0,50.0,4.0,7.0,57.1,0.0,6.0,6.0,4.0,1.0,2.0,4.0,5.0,22.0,4.0,False,False,giannisantetokounmpo,42.0
+Brook Lopez,0 days 00:28:23,2.0,6.0,33.3,1.0,4.0,25.0,1.0,1.0,100.0,2.0,1.0,3.0,3.0,3.0,1.0,0.0,1.0,6.0,14.0,False,False,brooklopez,19.0
+Donte DiVincenzo,0 days 00:26:02,4.0,7.0,57.1,1.0,3.0,33.3,0.0,0.0,0.0,0.0,4.0,4.0,3.0,2.0,0.0,1.0,1.0,9.0,20.0,False,False,dontedivincenzo,21.0
+Jrue Holiday,0 days 00:29:35,3.0,10.0,30.0,0.0,4.0,0.0,5.0,5.0,100.0,1.0,2.0,3.0,3.0,2.0,1.0,1.0,1.0,11.0,-2.0,False,False,jrueholiday,24.0
+D.J. Augustin,0 days 00:20:35,2.0,6.0,33.3,1.0,3.0,33.3,3.0,3.0,100.0,0.0,0.0,0.0,4.0,2.0,0.0,2.0,0.0,8.0,8.0,False,False,djaugustin,16.0
+Bobby Portis,0 days 00:24:38,9.0,13.0,69.2,2.0,3.0,66.7,0.0,0.0,0.0,2.0,3.0,5.0,0.0,0.0,1.0,1.0,3.0,20.0,14.0,False,False,bobbyportis,33.0
+Thanasis Antetokounmpo,0 days 00:10:35,1.0,2.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,4.0,1.0,5.0,2.0,0.0,0.0,2.0,1.0,2.0,-2.0,False,False,thanasisantetokounmpo,7.0
+Pat Connaughton,0 days 00:18:12,3.0,4.0,75.0,1.0,2.0,50.0,0.0,0.0,0.0,1.0,3.0,4.0,0.0,2.0,2.0,0.0,2.0,7.0,18.0,False,False,patconnaughton,19.0
+Bryn Forbes,0 days 00:16:54,4.0,7.0,57.1,3.0,4.0,75.0,3.0,3.0,100.0,0.0,2.0,2.0,1.0,2.0,0.0,0.0,0.0,14.0,26.0,False,False,brynforbes,27.0
+Sam Merrill,0 days 00:03:02,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,-3.0,False,False,sammerrill,2.0
+D.J. Wilson,0 days 00:03:02,1.0,2.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,-3.0,False,False,djwilson,4.0
+Jordan Nwora,0 days 00:01:57,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,jordannwora,0.0

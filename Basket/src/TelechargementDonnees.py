@@ -10,19 +10,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException
 from selenium.webdriver.support.ui import Select
 import time, os, re
 import pandas as pd
 import numpy as np
 
 urlSiteNbaScore='https://www.nba.com/games'
-nomsColonnesStat=['nom', 'nom.1', 'position', 'minute', 'points', 'rebonds', 'passes_dec', 'steal', 
- 'contres', 'tir_reussi', 'tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt', 
- 'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc', 'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 
- 'plus_moins']
+nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
+ 'rebonds_o', 'rebonds_d', 'rebonds', 'passes_dec', 'steal','contres','ball_perdu', 'faute_p','points', 'plus_moins']
 nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
-dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP")
+dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP","NWT","DND")
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
 def gererCookie(driver):
@@ -47,16 +45,24 @@ def simplifierNomJoueur(nom):
 class DriverFirefox(object):
     """
     ouvrir un driver Selenium
+    on peut le faire de façon automatisee via un context manager (par defaut), ou se le garder ouvert
+    avec attribut typeConn != 'Auto'
+    attribut : 
+        typeConn : string : ouverture dans context manager ou non. default='Auto' i.e context manager
     """
-    def __init__(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(20)
-        time.sleep(5)
+    def __init__(self, typeConn='Auto'):
+        """
+        on ne cree le self.driver 'en dur' que sur demande explicite
+        """
+        if typeConn!='Auto' :
+            self.driver = webdriver.Firefox()
+            self.driver.implicitly_wait(20)
+            time.sleep(2)
    
     def __enter__(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(20)
-        time.sleep(5)
+        time.sleep(2)
         return self
 
     def __exit__(self,*args):
@@ -101,13 +107,13 @@ class JourneeSiteNba(object):
             listePage : liste des urls concernants les matchs d'uen journee
         """
         self.driver.get(self.urlDateJournee)
-        time.sleep(10)
+        time.sleep(2)
         gererCookie(self.driver)
         #recuperer la liste des hyperliens qui ont le mot "feuille" dedans
         try :
-            #containerScore=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH,f"//div[@class='snapshot-footer']"))) #si besoin que la ligne dessous ne fonctionne pas
             elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.LINK_TEXT, 'BOX SCORE')))
-        except TimeoutException :
+        except TimeoutException as e :
+            print(e)
             raise PasDeMatchError(self.dateJournee)
         return [p.get_attribute("href") for p in elementsScore]
     
@@ -116,34 +122,28 @@ class JourneeSiteNba(object):
         en fonction de la source, creer les dfs des matchs et stats, dans un dico
         """
         dicoJournee={}
-        if self.sourceDonnees=='internet' : 
-            for e,p in enumerate(self.getListFeuilleDeMatch()) :
+        if self.sourceDonnees=='internet' :
+
+            for e,p in enumerate(self.getListFeuilleDeMatch()) : 
                 print(e,p)
-                #ouvrir la page
                 self.driver.get(p)
-                #rafraichier le driver
-                self.driver.refresh()
-                time.sleep(5)
+                time.sleep(2)
                 self.driver.implicitly_wait(20)
-                dicoJournee[e]={'match':pd.read_html(self.driver.page_source)[0]}
-                time.sleep(5)
+                #sur l'onglet box-score on recupere les stats des equipes
+                dfsEquipes=pd.read_html(self.driver.page_source)
+                dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
+                dicoJournee[e]['stats_e1']=dfsEquipes[1]
+                time.sleep(2)
                 self.driver.implicitly_wait(20)
-                dicoJournee[e]['stats_e0']=pd.read_html(self.driver.page_source)[2]
+                #bascule sur l'onglet summary er recuperer les stats de matchs: 
+                elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
+                self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
+                time.sleep(2)
                 self.driver.implicitly_wait(20)
-                time.sleep(5)
-                #naviguer dans les elemnts pour atteindre le boutton de changement d'equipe
-                ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
-                elementStatButton=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                    By.XPATH, "//a[@class='pills-button pills-button__right ng-binding']")))
-                #changer d'euipe et stocker
-                try :
-                    elementStatButton.click()
-                except ElementClickInterceptedException : 
-                    gererCookie(self.driver)
-                    time.sleep(3)
-                self.driver.implicitly_wait(20)
-                dicoJournee[e]['stats_e1']=pd.read_html(self.driver.page_source)[2]
-            self.miseEnFormeDf(dicoJournee) 
+                dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
+            self.miseEnFormeDf(dicoJournee)
+        
+        # A REPRENDRE SI BESOIN
         elif self.sourceDonnees=='csv' :
             dossierCsvEnCours=os.path.join(self.dossierExportCsv,self.dateJournee)
             with os.scandir(dossierCsvEnCours) as it:
@@ -187,11 +187,9 @@ class JourneeSiteNba(object):
         """
         modifier les noms des colonnes, supprimer les inutiles, supprimer la ligne de fin
         """
-        if dfStats.columns.tolist() != nomsColonnesStat : #sinon nrmalement ça veut dire que la mise en forme a été faite avant
-            dfStats.columns=nomsColonnesStat
-            dfStats.drop('nom.1', axis=1, inplace=True)
-            dfStats.drop(dfStats.loc[dfStats.minute=='240:00'].index, inplace=True) #va foirer si prolongation, alors on met la ligne suivante pour etre sur
-        dfStats.drop(dfStats.loc[dfStats.nom=='-'].index, inplace=True)
+        dfStats.drop(dfStats.tail(1).index,inplace=True)
+        dfStats.columns=nomsColonnesStat
+        dfStats.loc[dfStats.head(5).index,'nom']=dfStats.head(5).nom.str[:-1]
         
                 
     def ajoutAttributs(self,dfStatEquipe):
@@ -213,6 +211,8 @@ class JourneeSiteNba(object):
                     pd.to_timedelta('00:'+x) if not pd.isnull(x) else pd.to_timedelta(x,unit='S'))
         #simplifier les noms en enlevant les espaces en trop
         dfStatEquipe['nom']=dfStatEquipe.nom.apply(lambda x : ' '.join(x.split()))
+        #ajouter l'attribut de nom simplifie
+        dfStatEquipe['nom_simple']=dfStatEquipe.nom.apply(lambda x : simplifierNomJoueur(x))
         #score ttfl
         dfStatEquipe.loc[~dfStatEquipe.dnp,'score_ttfl']=dfStatEquipe.loc[~dfStatEquipe.dnp].apply(lambda x : sum([x[c] for c in ('points', 'rebonds', 'passes_dec', 'steal','contres', 'tir_reussi',
                                     'trois_pt_r','lanc_frc_r')]) - (x['ball_perdu']+(x['tir_tentes']-x['tir_reussi'])+
@@ -245,41 +245,32 @@ class JoueursSiteNba(object):
     classes pour récupérer les joueurs depuis le site de la nba
     le principe : 
     1. connexion au site
-    2. balayer les lettres iinitiales des noms (France)
     2. acceder à liste deroulante et choisir All ('USA')
     3. concatener (France) puis mettre en forme un df
     """
     
-    def __init__(self, typeSource='France'):
+    def __init__(self, urlPageJoueurs='https://www.nba.com/players',refWebElement='Page Number Selection Drown Down List',
+                 typeExport='All'):
         """
         Attributes : 
             driver : driver Selenium pour firefox. cf CreationDriverFirefox()
             urlPageJoueurs : url de la page des joueurs
-            nomClassDivContainer : nom de la div qui contient les lettres a faire defiler
+            refWebElement : nom de l'element qui permet d'afficher tous les joueurs
             dfJoueurs : dataframe descriptives des joueurs (nom, equipe, taille, poids, position, experience, pays, date_entree_nba
+            typeExport = string : pour pouvoir utiliser la classe pour balayer tous les joueurs à la suite ou un seul
         """
         with DriverFirefox() as d :
             self.driver=d.driver
-            self.urlPageJoueurs='https://www.nba.com/players' if typeSource=='USA' else 'https://fr.global.nba.com/playerindex/'
-            self.refWebElement='Page Number Selection Drown Down List' if typeSource=='USA' else 'hidden-sm col-sm-9 col-lg-10 letters-wrap'
+            self.urlPageJoueurs=urlPageJoueurs
+            self.refWebElement=refWebElement
             self.driver.get(self.urlPageJoueurs)
-            self.gererCookieJoueurs()
-            self.dfJoueurs=self.miseEnFormeUSA(self.obtenirDfBaseUSA()) if typeSource=='USA' else self.miseEnFormeDfJoueursFrance(self.creerDfJoueursFrance())
-    
-    def gererCookieJoueurs(self):
-        """
-        si sur la page joueur un cookie apparait je veux pouvoir le clicker
-        """
-        time.sleep(5)
-        try : 
-            boutonCookie=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                    By.XPATH, f"//button[@id='onetrust-accept-btn-handler']")))
-            boutonCookie.click()
-            time.sleep(3)
-        except TimeoutException : 
-            pass
+            gererCookie(self.driver)
+            if typeExport=='All' : 
+                self.dfJoueurs=self.miseEnForme(self.obtenirlistLinkJoueurs())
+            else : 
+                self.dfJoueurs=pd.DataFrame(self.attributJoueur(self.urlPageJoueurs), index=[0])
 
-    def obtenirDfBaseUSA(self):
+    def obtenirlistLinkJoueurs(self):
         """
         obetnir le container 
         """
@@ -288,66 +279,56 @@ class JoueursSiteNba(object):
         time.sleep(3)
         select.select_by_value('-1')
         time.sleep(3)
-        dfJoueurs=pd.read_html(self.driver.page_source)[0]
-        return dfJoueurs
+        #recupérer la liste des liens vers les pages des joueurs
+        listLinkGeneral=self.driver.find_element_by_xpath("//td[@class='primary text PlayerList_primaryCol__1tWZA']")
+        listLinkJoueurs=[a.get_attribute("href") for a in listLinkGeneral.find_elements_by_xpath("//a[@class='flex items-center t6']")]
+        return listLinkJoueurs
     
-    def miseEnFormeUSA(self,dfJoueurs):
+    def attributJoueur(self,linkJoueur, refDivCarac='PlayerSummary_playerInfo__1L8sx',
+                       refParagrapheCarac='PlayerSummary_playerInfoValue__mSfou', refElementNom='flex flex-col mb-2 text-white'):
         """
-        transformer la df des joueurs du site nba USA pour pouvoir joindre avec des noms du site france et inserer dans la table Joueurs
+        à partir d'un lien qui pointe vers une page liee à un joueur, retourner un dico des caracteristique
+        in : 
+            refDivCarac : nom de la div qui contient toute ls caracteristiques
+            refParagrapheCarac : nom des balises p qui contiennentt les carac
+            refElementNom : nom de la div dqui contient le nom et prenom
         """
-        dfJoueurs.rename(columns={'Player':'nom','Position':'id_position_terrain','Height':'taille','Weight':'poids'},inplace=True)
-        dfJoueurs.rename(columns={'Player':'nom','Position':'id_position_terrain','Height':'taille','Weight':'poids'},inplace=True)
-        dfJoueurs['taille']=dfJoueurs.taille.str.split('-').apply(lambda x : round((int(x[0])/3.2808)+((int(x[1])/0.39370)/100),2))
-        dfJoueurs['poids']=dfJoueurs.poids.str.split().apply(lambda x : round(int(x[0])/2.2046,1))
-        dfJoueurs['nom_simple']=dfJoueurs.nom.apply(lambda x : simplifierNomJoueur(x))
-        return dfJoueurs
-    
-    def getlisteBouttonLettre(self):
-        """
-        obetnir le container 
-        """
-        containerBouttonLettre=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                    By.XPATH, f"//div[@class='{self.refWebElement}']")))
-        listBouttonLettre=WebDriverWait(containerBouttonLettre, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
-                    By.XPATH, ".//*")))
-        return listBouttonLettre
+        dicoCaracJoueur={}
+        self.driver.get(linkJoueur)
+        time.sleep(3)
+        #trouver toute les caracteristiques (car les nom sde classe sont les mêmes pour tous)
+        elements=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, f"//div[@class='{refDivCarac}']/p[@class='{refParagrapheCarac}']")))
+        #self.driver.find_elements_by_xpath(f"//div[@class='{refDivCarac}']/p[@class='{refParagrapheCarac}']")
+        try : 
+            nomPosition=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH, f"//div[@class='{refElementNom}']")))
+            #self.driver.find_element_by_xpath(f"//div[@class='{refElementNom}']")
+            listeCaracNomPosition=[e.text for e in nomPosition.find_elements_by_xpath(".//*")]
+            dicoCaracJoueur['taille']=[float(re.sub('(\(|\)|m)','',re.search('(\([1-2]\.[0-9]{2}m\))',e.text).group(1))) for i,e in enumerate(elements) if i==0][0]
+            dicoCaracJoueur['poids']=[float(re.sub('(\(|\)|kg)','',re.search('(\([0-9]{1,3}kg\))',e.text).group(1))) for i,e in enumerate(elements) if i==1][0]
+            dicoCaracJoueur['date_entree_nba']=pd.to_datetime(f"{[2020-int(e.text.split()[0]) if e.text != 'Rookie' else 2020 for i,e in enumerate(elements) if i==7][0]  }-10-01")
+            dicoCaracJoueur['date_naissance']=pd.to_datetime([e.text for e in elements if re.match('[a-z]{0,12} [0-9]{1,2}, [0-9]{4}',e.text.lower())][0])
+            dicoCaracJoueur['nom']=' '.join(listeCaracNomPosition[-2:])
+            dicoCaracJoueur['nom_simple']=simplifierNomJoueur(' '.join(listeCaracNomPosition[-2:]))
+            dicoCaracJoueur['id_position_terrain']='-'.join([e[0] if e in ('Center','Guard', 'Forward') else 'NC' for e in listeCaracNomPosition[0].split(' | ')[-1].split('-')])
+        except Exception as x :
+            print (x, linkJoueur)
+        
+        return dicoCaracJoueur
 
-    def creerDfJoueursFrance(self):
+    def miseEnForme(self,listLinkJoueurs):
         """
-        à partir du driver de la classe, creer une df en balyant la page contenant le nom des joueurs
+        parcourir la liste des liens vers les joueurs, appeker la fonction de recup des infos et concatener
         """
-        listBouttonLettre=self.getlisteBouttonLettre()
-        dico={}
-        for i,e in enumerate(listBouttonLettre) : 
-            try : 
-                e.click()
-            except ElementClickInterceptedException : 
-                gererCookie(self.driver)
-                e.click()
-            time.sleep(3)
-            dico[i]=pd.read_html(self.driver.page_source)
-        dfJoueurs=pd.concat([v[0] for v in dico.values()])
-        return dfJoueurs
-    
-    def miseEnFormeDfJoueursFrance(self,dfJoueurs ):
-        """
-        modification des noms d'attributs, et certains type
-        """
-        dfJoueursForme=dfJoueurs.drop('Unnamed: 1',axis=1).rename(
-            columns={'Joueur':'nom','Équipe':'equipe','POS':'id_position_terrain','Taille':'taille',
-                     'OUEST':'poids', 'EXP':'experience','Pays':'pays'})
-        dfJoueursForme['poids']=dfJoueursForme.poids.apply(lambda x : float(x[:-3]))
-        dfJoueursForme['date_entree_nba']=dfJoueursForme['experience'].apply(lambda x : pd.to_datetime('2020-10-01') - 
-                                          pd.to_timedelta(x*365.25, unit='D')).dt.date
-        dfJoueursForme['nom']=dfJoueursForme.nom.apply(lambda x : ' '.join(x.split()))
-        dfJoueurs.reset_index(drop=True, inplace=True)
-        return dfJoueursForme
+        dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(listLinkJoueurs)], axis=0)
+        return dfCaracJoueurs
     
  
 class PasDeMatchError(Exception):  
     """
     erreur levee si pas de match à une date donnee
     """ 
-    def __init__(self,dateJournee):
+    def __init__(self, dateJournee):
         self.dateJournee=dateJournee
-        super().__init__(f'Pas de match le {dateJournee}')
+        
+    def __str__(self): 
+        return "Pas de match le : %s" % self.dateJournee

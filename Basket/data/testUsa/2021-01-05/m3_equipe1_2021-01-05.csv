@@ -1,0 +1,16 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Kawhi Leonard,0 days 00:37:14,13.0,22.0,59.1,1.0,3.0,33.3,3.0,3.0,100.0,2.0,1.0,3.0,10.0,2.0,1.0,0.0,1.0,30.0,14.0,False,False,kawhileonard,56.0
+Nicolas Batum,0 days 00:35:49,8.0,12.0,66.7,2.0,5.0,40.0,3.0,3.0,100.0,1.0,8.0,9.0,3.0,1.0,1.0,2.0,2.0,21.0,17.0,False,False,nicolasbatum,45.0
+Serge Ibaka,0 days 00:25:18,1.0,7.0,14.3,0.0,2.0,0.0,1.0,2.0,50.0,1.0,4.0,5.0,1.0,1.0,2.0,1.0,1.0,3.0,10.0,False,False,sergeibaka,10.0
+Luke Kennard,0 days 00:37:51,3.0,10.0,30.0,1.0,5.0,20.0,2.0,2.0,100.0,1.0,5.0,6.0,4.0,0.0,0.0,3.0,1.0,9.0,0.0,False,False,lukekennard,19.0
+Patrick Beverley,0 days 00:32:37,7.0,10.0,70.0,6.0,9.0,66.7,0.0,0.0,0.0,1.0,7.0,8.0,8.0,0.0,2.0,1.0,5.0,20.0,8.0,False,False,patrickbeverley,50.0
+Lou Williams,0 days 00:21:17,5.0,13.0,38.5,2.0,5.0,40.0,3.0,3.0,100.0,0.0,2.0,2.0,2.0,1.0,0.0,1.0,2.0,15.0,3.0,False,False,louwilliams,24.0
+Reggie Jackson,0 days 00:15:58,3.0,7.0,42.9,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,2.0,3.0,8.0,-21.0,False,False,reggiejackson,11.0
+Ivica Zubac,0 days 00:18:42,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,7.0,8.0,0.0,1.0,0.0,2.0,0.0,2.0,-18.0,False,False,ivicazubac,10.0
+Terance Mann,0 days 00:08:38,0.0,2.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,0.0,1.0,1.0,1.0,0.0,-20.0,False,False,terancemann,2.0
+Amir Coffey,0 days 00:00:05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-3.0,False,False,amircoffey,0.0
+Patrick Patterson,0 days 00:06:31,2.0,2.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.0,-5.0,False,False,patrickpatterson,8.0
+Paul George,,,,,,,,,,,,,,,,,,,,,True,True,paulgeorge,
+Mfiondu Kabengele,,,,,,,,,,,,,,,,,,,,,True,False,mfiondukabengele,
+Marcus Morris Sr.,,,,,,,,,,,,,,,,,,,,,True,True,marcusmorrissr,
+Daniel Oturu,,,,,,,,,,,,,,,,,,,,,True,False,danieloturu,

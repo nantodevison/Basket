@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Paul George,0 days 00:24:09,4.0,13.0,30.8,0.0,6.0,0.0,7.0,8.0,87.5,0.0,2.0,2.0,4.0,0.0,0.0,4.0,1.0,15.0,-22.0,False,False,paulgeorge,26.0
+Nicolas Batum,0 days 00:21:30,2.0,4.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,1.0,0.0,0.0,1.0,2.0,4.0,-17.0,False,False,nicolasbatum,11.0
+Serge Ibaka,0 days 00:19:32,6.0,11.0,54.5,0.0,4.0,0.0,1.0,2.0,50.0,1.0,8.0,9.0,1.0,0.0,1.0,0.0,2.0,13.0,-14.0,False,False,sergeibaka,31.0
+Luke Kennard,0 days 00:29:00,3.0,11.0,27.3,1.0,6.0,16.7,0.0,0.0,0.0,0.0,2.0,2.0,1.0,1.0,0.0,2.0,2.0,7.0,-29.0,False,False,lukekennard,10.0
+Patrick Beverley,0 days 00:21:55,0.0,2.0,0.0,0.0,2.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,0.0,0.0,0.0,1.0,4.0,2.0,-23.0,False,False,patrickbeverley,5.0
+Ivica Zubac,0 days 00:16:28,3.0,4.0,75.0,0.0,0.0,0.0,4.0,4.0,100.0,1.0,1.0,2.0,0.0,0.0,0.0,0.0,1.0,10.0,-33.0,False,False,ivicazubac,18.0
+Lou Williams,0 days 00:09:00,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,-24.0,False,False,louwilliams,-2.0
+Reggie Jackson,0 days 00:20:54,3.0,6.0,50.0,2.0,5.0,40.0,0.0,0.0,0.0,0.0,3.0,3.0,1.0,0.0,0.0,2.0,0.0,8.0,-21.0,False,False,reggiejackson,15.0
+Patrick Patterson,0 days 00:08:51,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,-26.0,False,False,patrickpatterson,1.0
+Terance Mann,0 days 00:23:51,2.0,8.0,25.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,2.0,0.0,0.0,1.0,2.0,4.0,-29.0,False,False,terancemann,6.0
+Amir Coffey,0 days 00:17:39,0.0,5.0,0.0,0.0,2.0,0.0,1.0,2.0,50.0,1.0,0.0,1.0,2.0,0.0,0.0,0.0,1.0,1.0,-8.0,False,False,amircoffey,3.0
+Mfiondu Kabengele,0 days 00:15:11,1.0,3.0,33.3,1.0,3.0,33.3,2.0,2.0,100.0,0.0,2.0,2.0,0.0,1.0,0.0,0.0,2.0,5.0,-5.0,False,False,mfiondukabengele,12.0
+Daniel Oturu,0 days 00:12:00,2.0,4.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,1.0,1.0,2.0,4.0,-4.0,False,False,danieloturu,7.0
+Kawhi Leonard,,,,,,,,,,,,,,,,,,,,,True,True,kawhileonard,

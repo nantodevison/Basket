@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Mikal Bridges,0 days 00:36:16,4.0,10.0,40.0,4.0,8.0,50.0,2.0,2.0,100.0,0.0,1.0,1.0,2.0,0.0,1.0,0.0,3.0,14.0,-3.0,False,False,mikalbridges,26.0
+Jae Crowder,0 days 00:29:18,1.0,5.0,20.0,0.0,4.0,0.0,2.0,2.0,100.0,0.0,3.0,3.0,4.0,0.0,0.0,1.0,4.0,4.0,-11.0,False,False,jaecrowder,13.0
+Deandre Ayton,0 days 00:37:30,10.0,13.0,76.9,0.0,1.0,0.0,2.0,2.0,100.0,2.0,9.0,11.0,1.0,0.0,2.0,4.0,3.0,22.0,-11.0,False,False,deandreayton,42.0
+Devin Booker,0 days 00:34:55,9.0,17.0,52.9,3.0,7.0,42.9,1.0,2.0,50.0,0.0,2.0,2.0,2.0,0.0,0.0,8.0,4.0,22.0,-13.0,False,False,devinbooker,28.0
+Chris Paul,0 days 00:32:27,6.0,12.0,50.0,1.0,2.0,50.0,8.0,8.0,100.0,1.0,4.0,5.0,6.0,0.0,1.0,2.0,2.0,21.0,-4.0,False,False,chrispaul,41.0
+Cameron Payne,0 days 00:15:33,1.0,3.0,33.3,0.0,1.0,0.0,0.0,0.0,0.0,1.0,3.0,4.0,3.0,1.0,0.0,2.0,1.0,2.0,7.0,False,False,cameronpayne,8.0
+Cameron Johnson,0 days 00:22:19,3.0,9.0,33.3,3.0,8.0,37.5,0.0,0.0,0.0,0.0,4.0,4.0,2.0,0.0,0.0,0.0,0.0,9.0,14.0,False,False,cameronjohnson,20.0
+Jevon Carter,0 days 00:14:52,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,2.0,0.0,0.0,0.0,2.0,0.0,12.0,False,False,jevoncarter,4.0
+Langston Galloway,0 days 00:06:56,2.0,3.0,66.7,2.0,2.0,100.0,3.0,3.0,100.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,9.0,10.0,False,False,langstongalloway,16.0
+Frank Kaminsky,0 days 00:09:55,1.0,3.0,33.3,0.0,1.0,0.0,1.0,2.0,50.0,3.0,1.0,4.0,2.0,0.0,0.0,0.0,1.0,3.0,14.0,False,False,frankkaminsky,11.0
+Ty-Shon Alexander,,,,,,,,,,,,,,,,,,,,,True,False,tyshonalexander,
+Damian Jones,,,,,,,,,,,,,,,,,,,,,True,False,damianjones,
+E'Twaun Moore,,,,,,,,,,,,,,,,,,,,,True,False,etwaunmoore,
+Dario Saric,,,,,,,,,,,,,,,,,,,,,True,True,dariosaric,

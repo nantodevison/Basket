@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Jayson Tatum,0 days 00:37:04,11.0,24.0,45.8,3.0,11.0,27.3,3.0,5.0,60.0,0.0,6.0,6.0,2.0,1.0,1.0,3.0,1.0,28.0,4.0,False,False,jaysontatum,49.0
+Tristan Thompson,0 days 00:25:35,2.0,4.0,50.0,0.0,0.0,0.0,1.0,2.0,50.0,1.0,8.0,9.0,2.0,1.0,2.0,3.0,2.0,5.0,-2.0,False,False,tristanthompson,18.0
+Daniel Theis,0 days 00:23:58,1.0,2.0,50.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,5.0,6.0,0.0,0.0,3.0,2.0,3.0,2.0,-9.0,False,False,danieltheis,10.0
+Jaylen Brown,0 days 00:37:34,12.0,21.0,57.1,1.0,7.0,14.3,0.0,0.0,0.0,2.0,7.0,9.0,2.0,3.0,2.0,4.0,3.0,25.0,-9.0,False,False,jaylenbrown,47.0
+Marcus Smart,0 days 00:38:11,5.0,14.0,35.7,3.0,6.0,50.0,0.0,3.0,0.0,0.0,3.0,3.0,9.0,3.0,0.0,4.0,3.0,13.0,-1.0,False,False,marcussmart,29.0
+Payton Pritchard,0 days 00:16:00,0.0,3.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,2.0,2.0,0.0,0.0,1.0,False,False,paytonpritchard,4.0
+Grant Williams,0 days 00:19:23,4.0,6.0,66.7,0.0,1.0,0.0,0.0,0.0,0.0,2.0,2.0,4.0,0.0,0.0,0.0,0.0,4.0,8.0,-3.0,False,False,grantwilliams,15.0
+Robert Williams III,0 days 00:11:21,0.0,2.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,4.0,5.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,False,False,robertwilliamsiii,5.0
+Jeff Teague,0 days 00:20:09,4.0,5.0,80.0,1.0,1.0,100.0,3.0,4.0,75.0,0.0,1.0,1.0,3.0,2.0,0.0,1.0,3.0,12.0,5.0,False,False,jeffteague,25.0
+Carsen Edwards,0 days 00:04:28,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,-2.0,False,False,carsenedwards,-2.0
+Semi Ojeleye,0 days 00:06:17,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,semiojeleye,1.0
+Tacko Fall,,,,,,,,,,,,,,,,,,,,,True,False,tackofall,
+Aaron Nesmith,,,,,,,,,,,,,,,,,,,,,True,False,aaronnesmith,
+Tremont Waters,,,,,,,,,,,,,,,,,,,,,True,False,tremontwaters,
