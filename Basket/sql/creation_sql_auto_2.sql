@@ -245,4 +245,13 @@ INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure
 
 --recuperer les noms de joueurs blesse dont la date de debut de blessure est antérieure à une date et qui n'ont pas guéri 
 select b.*,j.nom from donnees_source.joueur j JOIN donnees_source.blessure b ON j.id_joueur=b.id_joueur ;
+
+/*==============================
+ * RECUPERER LE CONTRAT LE PLUS RECENT
+ ===============================* 
+ */
+
+SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
+ FROM donnees_source.contrat
+ ORDER BY id_joueur, date_debut_contrat desc
  

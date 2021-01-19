@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Bojan Bogdanovic,0 days 00:33:43,6.0,13.0,46.2,5.0,9.0,55.6,0.0,2.0,0.0,1.0,2.0,3.0,3.0,0.0,0.0,4.0,1.0,17.0,-4.0,False,False,bojanbogdanovic,29.0
+Royce O'Neale,0 days 00:34:28,2.0,4.0,50.0,2.0,3.0,66.7,2.0,2.0,100.0,0.0,5.0,5.0,3.0,1.0,0.0,1.0,4.0,8.0,-2.0,False,False,royceoneale,21.0
+Rudy Gobert,0 days 00:32:57,4.0,5.0,80.0,0.0,0.0,0.0,7.0,13.0,53.8,4.0,9.0,13.0,1.0,0.0,2.0,1.0,3.0,15.0,8.0,False,False,rudygobert,46.0
+Donovan Mitchell,0 days 00:37:56,7.0,20.0,35.0,0.0,7.0,0.0,4.0,4.0,100.0,1.0,2.0,3.0,7.0,1.0,2.0,4.0,4.0,18.0,-6.0,False,False,donovanmitchell,32.0
+Mike Conley,0 days 00:30:45,6.0,13.0,46.2,2.0,7.0,28.6,0.0,4.0,0.0,0.0,3.0,3.0,8.0,1.0,0.0,1.0,2.0,14.0,17.0,False,False,mikeconley,35.0
+Jordan Clarkson,0 days 00:29:41,9.0,13.0,69.2,4.0,8.0,50.0,1.0,1.0,100.0,0.0,3.0,3.0,1.0,2.0,1.0,1.0,1.0,23.0,-1.0,False,False,jordanclarkson,43.0
+Derrick Favors,0 days 00:15:19,1.0,2.0,50.0,0.0,0.0,0.0,1.0,1.0,100.0,0.0,1.0,1.0,1.0,2.0,1.0,0.0,2.0,3.0,-7.0,False,False,derrickfavors,9.0
+Georges Niang,0 days 00:13:41,4.0,6.0,66.7,2.0,3.0,66.7,1.0,1.0,100.0,1.0,2.0,3.0,0.0,0.0,0.0,1.0,3.0,11.0,8.0,False,False,georgesniang,19.0
+Miye Oni,0 days 00:11:30,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,1.0,0.0,7.0,False,False,miyeoni,2.0
+Udoka Azubuike,,,,,,,,,,,,,,,,,,,,,True,False,udokaazubuike,
+Jarrell Brantley,,,,,,,,,,,,,,,,,,,,,True,False,jarrellbrantley,
+Shaquille Harrison,,,,,,,,,,,,,,,,,,,,,True,False,shaquilleharrison,

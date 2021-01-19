@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Andrew Wiggins,0 days 00:31:47,7.0,11.0,63.6,3.0,5.0,60.0,1.0,3.0,33.3,0.0,3.0,3.0,1.0,1.0,0.0,0.0,4.0,18.0,-8.0,False,False,andrewwiggins,34.0
+Draymond Green,0 days 00:30:54,3.0,6.0,50.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,8.0,8.0,9.0,1.0,0.0,3.0,5.0,7.0,-8.0,False,False,draymondgreen,24.0
+James Wiseman,0 days 00:12:51,2.0,4.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,1.0,1.0,5.0,5.0,4.0,-19.0,False,False,jameswiseman,4.0
+Kelly Oubre Jr.,0 days 00:37:05,9.0,18.0,50.0,2.0,8.0,25.0,3.0,4.0,75.0,2.0,2.0,4.0,0.0,2.0,2.0,0.0,2.0,23.0,5.0,False,False,kellyoubrejr,43.0
+Stephen Curry,0 days 00:35:37,8.0,22.0,36.4,3.0,12.0,25.0,7.0,7.0,100.0,0.0,1.0,1.0,7.0,1.0,0.0,4.0,2.0,26.0,-3.0,False,False,stephencurry,44.0
+Kevon Looney,0 days 00:19:21,3.0,3.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,1.0,5.0,6.0,1.0,0.0,0.0,0.0,3.0,7.0,12.0,False,False,kevonlooney,18.0
+Kent Bazemore,0 days 00:12:41,1.0,3.0,33.3,1.0,3.0,33.3,1.0,2.0,50.0,0.0,1.0,1.0,2.0,0.0,0.0,0.0,1.0,4.0,2.0,False,False,kentbazemore,11.0
+Damion Lee,0 days 00:18:05,1.0,3.0,33.3,1.0,3.0,33.3,0.0,0.0,0.0,0.0,1.0,1.0,2.0,1.0,0.0,0.0,2.0,3.0,10.0,False,False,damionlee,9.0
+Jordan Poole,0 days 00:05:23,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,10.0,False,False,jordanpoole,1.0
+Eric Paschall,0 days 00:19:16,8.0,11.0,72.7,0.0,1.0,0.0,3.0,4.0,75.0,1.0,3.0,4.0,3.0,1.0,0.0,0.0,1.0,19.0,1.0,False,False,ericpaschall,37.0
+Brad Wanamaker,0 days 00:16:59,2.0,5.0,40.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,5.0,0.0,0.0,1.0,2.0,4.0,8.0,False,False,bradwanamaker,9.0
+Mychal Mulder,,,,,,,,,,,,,,,,,,,,,True,False,mychalmulder,

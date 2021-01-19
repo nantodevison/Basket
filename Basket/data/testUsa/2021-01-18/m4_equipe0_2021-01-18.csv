@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Khris Middleton,0 days 00:36:14,10.0,20.0,50.0,0.0,5.0,0.0,5.0,6.0,83.3,2.0,2.0,4.0,4.0,4.0,0.0,2.0,4.0,25.0,5.0,False,False,khrismiddleton,46.0
+Giannis Antetokounmpo,0 days 00:39:48,13.0,26.0,50.0,2.0,6.0,33.3,6.0,8.0,75.0,1.0,11.0,12.0,7.0,2.0,0.0,1.0,1.0,34.0,-12.0,False,False,giannisantetokounmpo,68.0
+Brook Lopez,0 days 00:33:36,5.0,11.0,45.5,2.0,8.0,25.0,3.0,4.0,75.0,1.0,6.0,7.0,0.0,1.0,2.0,1.0,2.0,15.0,-12.0,False,False,brooklopez,35.0
+Donte DiVincenzo,0 days 00:31:20,3.0,9.0,33.3,2.0,5.0,40.0,0.0,0.0,0.0,1.0,0.0,1.0,2.0,1.0,0.0,0.0,0.0,8.0,-12.0,False,False,dontedivincenzo,14.0
+Jrue Holiday,0 days 00:37:20,8.0,16.0,50.0,2.0,4.0,50.0,4.0,4.0,100.0,2.0,2.0,4.0,6.0,0.0,0.0,0.0,2.0,22.0,3.0,False,False,jrueholiday,40.0
+D.J. Augustin,0 days 00:19:05,0.0,7.0,0.0,0.0,3.0,0.0,2.0,2.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,8.0,False,False,djaugustin,0.0
+Bobby Portis,0 days 00:14:25,2.0,4.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,5.0,7.0,0.0,1.0,0.0,0.0,2.0,4.0,10.0,False,False,bobbyportis,12.0
+Pat Connaughton,0 days 00:17:35,3.0,5.0,60.0,3.0,5.0,60.0,0.0,0.0,0.0,2.0,4.0,6.0,2.0,0.0,0.0,1.0,1.0,9.0,11.0,False,False,patconnaughton,22.0
+Bryn Forbes,0 days 00:10:37,2.0,7.0,28.6,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,4.0,-11.0,False,False,brynforbes,3.0
+Thanasis Antetokounmpo,,,,,,,,,,,,,,,,,,,,,True,False,thanasisantetokounmpo,
+Torrey Craig,,,,,,,,,,,,,,,,,,,,,True,False,torreycraig,
+Sam Merrill,,,,,,,,,,,,,,,,,,,,,True,False,sammerrill,
+Jordan Nwora,,,,,,,,,,,,,,,,,,,,,True,False,jordannwora,
+D.J. Wilson,,,,,,,,,,,,,,,,,,,,,True,False,djwilson,

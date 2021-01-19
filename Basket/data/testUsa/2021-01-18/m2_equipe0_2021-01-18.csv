@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+DeMar DeRozan,0 days 00:32:17,6.0,9.0,66.7,0.0,0.0,0.0,8.0,8.0,100.0,1.0,5.0,6.0,11.0,2.0,0.0,4.0,0.0,20.0,9.0,False,False,demarderozan,46.0
+Keldon Johnson,0 days 00:24:32,3.0,6.0,50.0,1.0,4.0,25.0,3.0,4.0,75.0,0.0,4.0,4.0,1.0,0.0,0.0,2.0,2.0,10.0,-2.0,False,False,keldonjohnson,21.0
+LaMarcus Aldridge,0 days 00:24:15,10.0,17.0,58.8,0.0,1.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,1.0,1.0,1.0,1.0,0.0,22.0,0.0,False,False,lamarcusaldridge,32.0
+Lonnie Walker IV,0 days 00:27:35,2.0,7.0,28.6,1.0,5.0,20.0,0.0,0.0,0.0,0.0,5.0,5.0,2.0,0.0,0.0,2.0,4.0,5.0,9.0,False,False,lonniewalkeriv,12.0
+Dejounte Murray,0 days 00:31:32,4.0,9.0,44.4,1.0,3.0,33.3,0.0,0.0,0.0,0.0,9.0,9.0,11.0,0.0,1.0,1.0,3.0,9.0,14.0,False,False,dejountemurray,31.0
+Patty Mills,0 days 00:23:59,8.0,11.0,72.7,5.0,7.0,71.4,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,1.0,21.0,12.0,False,False,pattymills,35.0
+Devin Vassell,0 days 00:26:22,2.0,7.0,28.6,2.0,5.0,40.0,0.0,0.0,0.0,2.0,5.0,7.0,4.0,2.0,1.0,0.0,2.0,6.0,17.0,False,False,devinvassell,22.0
+Rudy Gay,0 days 00:23:30,8.0,17.0,47.1,5.0,8.0,62.5,0.0,0.0,0.0,3.0,4.0,7.0,1.0,1.0,0.0,0.0,1.0,21.0,24.0,False,False,rudygay,37.0
+Jakob Poeltl,0 days 00:21:32,5.0,7.0,71.4,0.0,0.0,0.0,1.0,2.0,50.0,6.0,1.0,7.0,1.0,0.0,3.0,2.0,4.0,11.0,20.0,False,False,jakobpoeltl,25.0
+Trey Lyles,0 days 00:02:13,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,False,False,treylyles,0.0
+Tre Jones,0 days 00:02:13,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,False,False,trejones,0.0
+Luka Samanic,,,,,,,,,,,,,,,,,,,,,True,True,lukasamanic,

@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Kevin Durant,0 days 00:40:02,16.0,26.0,61.5,5.0,8.0,62.5,5.0,5.0,100.0,0.0,4.0,4.0,5.0,2.0,2.0,6.0,0.0,42.0,10.0,False,False,kevindurant,68.0
+Jeff Green,0 days 00:29:40,4.0,6.0,66.7,1.0,2.0,50.0,1.0,2.0,50.0,1.0,3.0,4.0,0.0,0.0,0.0,1.0,0.0,10.0,7.0,False,False,jeffgreen,19.0
+DeAndre Jordan,0 days 00:23:04,0.0,2.0,0.0,0.0,0.0,0.0,2.0,2.0,100.0,0.0,5.0,5.0,3.0,1.0,1.0,1.0,1.0,2.0,-3.0,False,False,deandrejordan,11.0
+Joe Harris,0 days 00:30:28,6.0,11.0,54.5,4.0,9.0,44.4,1.0,1.0,100.0,0.0,5.0,5.0,0.0,0.0,0.0,0.0,2.0,17.0,3.0,False,False,joeharris,33.0
+James Harden,0 days 00:39:47,8.0,18.0,44.4,3.0,10.0,30.0,13.0,15.0,86.7,1.0,11.0,12.0,14.0,4.0,1.0,9.0,3.0,32.0,7.0,False,False,jamesharden,77.0
+Bruce Brown,0 days 00:23:30,3.0,4.0,75.0,1.0,2.0,50.0,0.0,0.0,0.0,1.0,4.0,5.0,1.0,1.0,0.0,1.0,5.0,7.0,1.0,False,False,brucebrown,17.0
+Landry Shamet,0 days 00:16:37,2.0,4.0,50.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,1.0,0.0,0.0,1.0,5.0,1.0,False,False,landryshamet,9.0
+Timothe Luwawu-Cabarrot,0 days 00:24:06,1.0,4.0,25.0,1.0,2.0,50.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,1.0,1.0,3.0,7.0,False,False,timotheluwawucabarrot,4.0
+Reggie Perry,0 days 00:12:45,2.0,3.0,66.7,0.0,0.0,0.0,0.0,0.0,0.0,1.0,2.0,3.0,1.0,0.0,1.0,0.0,1.0,4.0,2.0,False,False,reggieperry,10.0
+Chris Chiozza,,,,,,,,,,,,,,,,,,,,,True,False,chrischiozza,
+Nicolas Claxton,,,,,,,,,,,,,,,,,,,,,True,True,nicolasclaxton,
+Tyler Johnson,,,,,,,,,,,,,,,,,,,,,True,False,tylerjohnson,

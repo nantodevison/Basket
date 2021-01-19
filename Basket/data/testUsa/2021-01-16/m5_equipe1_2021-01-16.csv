@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Derrick Jones Jr.,0 days 00:34:07,5.0,12.0,41.7,0.0,4.0,0.0,0.0,0.0,0.0,5.0,4.0,9.0,0.0,2.0,0.0,2.0,3.0,10.0,15.0,False,False,derrickjonesjr,21.0
+Robert Covington,0 days 00:27:58,1.0,13.0,7.7,1.0,7.0,14.3,0.0,0.0,0.0,2.0,8.0,10.0,3.0,1.0,1.0,1.0,3.0,3.0,0.0,False,False,robertcovington,13.0
+Enes Kanter,0 days 00:28:33,5.0,9.0,55.6,0.0,0.0,0.0,2.0,2.0,100.0,6.0,9.0,15.0,3.0,2.0,5.0,0.0,4.0,12.0,16.0,False,False,eneskanter,40.0
+CJ McCollum,0 days 00:18:43,6.0,11.0,54.5,4.0,7.0,57.1,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,1.0,16.0,-6.0,False,False,cjmccollum,26.0
+Damian Lillard,0 days 00:42:44,10.0,23.0,43.5,4.0,12.0,33.3,12.0,12.0,100.0,0.0,7.0,7.0,7.0,1.0,0.0,3.0,3.0,36.0,18.0,False,False,damianlillard,69.0
+Carmelo Anthony,0 days 00:28:40,4.0,11.0,36.4,1.0,3.0,33.3,2.0,4.0,50.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,3.0,11.0,-3.0,False,False,carmeloanthony,18.0
+Rodney Hood,0 days 00:13:08,1.0,6.0,16.7,1.0,2.0,50.0,0.0,0.0,0.0,1.0,2.0,3.0,1.0,0.0,0.0,0.0,0.0,3.0,-7.0,False,False,rodneyhood,5.0
+Harry Giles III,0 days 00:11:22,1.0,2.0,50.0,0.0,0.0,0.0,1.0,2.0,50.0,2.0,3.0,5.0,1.0,0.0,0.0,0.0,1.0,3.0,-3.0,False,False,harrygilesiii,11.0
+Gary Trent Jr.,0 days 00:26:33,7.0,14.0,50.0,4.0,8.0,50.0,0.0,0.0,0.0,1.0,2.0,3.0,1.0,0.0,0.0,1.0,2.0,18.0,-1.0,False,False,garytrentjr,29.0
+Anfernee Simons,0 days 00:08:12,0.0,2.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,False,False,anferneesimons,1.0
+CJ Elleby,,,,,,,,,,,,,,,,,,,,,True,True,cjelleby,
+Nassir Little,,,,,,,,,,,,,,,,,,,,,True,False,nassirlittle,
