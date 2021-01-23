@@ -191,7 +191,9 @@ INSERT INTO donnees_source.enum_periode_match (id_periode, nom_periode)
 --remplir la table d'enumeration des types de blessure
 INSERT INTO donnees_source.enum_type_blessure (id_type_blessure, nom_blessure)
  VALUES (0, 'inconnue'),
-		(1, 'ligaments croise genou') ;
+		(1, 'ligaments croise genou'),
+		(2, 'entorse genou')
+		(99,'NC');
 		
 --remplir la table d'enumeration des types de contrat
 INSERT INTO donnees_source.enum_type_contrat (id_type_contrat, nom_type_contrat)
@@ -236,6 +238,16 @@ INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure
  SELECT id_joueur, 1,'2021-01-06' 
  FROM donnees_source.joueur j
  WHERE nom='Markelle Fultz' ;
+ 
+INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure)
+ SELECT id_joueur, 1,'2021-01-10' 
+ FROM donnees_source.joueur j
+ WHERE nom='Thomas Bryant' ;
+ 
+INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure)
+ SELECT id_joueur, 2,'2021-01-23' 
+ FROM donnees_source.joueur j
+ WHERE nom='Payton Pritchard' ;
  
 --remplissage auto dans un des notebook
 

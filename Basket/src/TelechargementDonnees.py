@@ -107,7 +107,7 @@ class JourneeSiteNba(object):
             listePage : liste des urls concernants les matchs d'uen journee
         """
         self.driver.get(self.urlDateJournee)
-        time.sleep(2)
+        time.sleep(3)
         gererCookie(self.driver)
         #recuperer la liste des hyperliens qui ont le mot "feuille" dedans
         try :

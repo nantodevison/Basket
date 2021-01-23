@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Danny Green,0 days 00:24:34,2.0,7.0,28.6,1.0,6.0,16.7,0.0,0.0,0.0,0.0,3.0,3.0,1.0,1.0,1.0,0.0,1.0,5.0,6.0,False,False,dannygreen,14.0
+Tobias Harris,0 days 00:41:24,10.0,12.0,83.3,3.0,3.0,100.0,0.0,0.0,0.0,1.0,7.0,8.0,3.0,0.0,1.0,3.0,0.0,23.0,15.0,False,False,tobiasharris,43.0
+Joel Embiid,0 days 00:30:13,11.0,15.0,73.3,2.0,2.0,100.0,14.0,15.0,93.3,3.0,8.0,11.0,3.0,1.0,0.0,5.0,5.0,38.0,13.0,False,False,joelembiid,72.0
+Seth Curry,0 days 00:27:02,6.0,10.0,60.0,3.0,5.0,60.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,2.0,4.0,15.0,18.0,False,False,sethcurry,22.0
+Ben Simmons,0 days 00:35:46,7.0,10.0,70.0,0.0,0.0,0.0,1.0,3.0,33.3,1.0,2.0,3.0,11.0,2.0,1.0,2.0,5.0,15.0,7.0,False,False,bensimmons,37.0
+Dwight Howard,0 days 00:17:47,0.0,2.0,0.0,0.0,0.0,0.0,3.0,4.0,75.0,4.0,8.0,12.0,0.0,3.0,2.0,5.0,2.0,3.0,-1.0,False,False,dwighthoward,17.0
+Shake Milton,0 days 00:18:28,2.0,7.0,28.6,0.0,2.0,0.0,2.0,2.0,100.0,0.0,0.0,0.0,2.0,1.0,0.0,1.0,3.0,6.0,-6.0,False,False,shakemilton,9.0
+Furkan Korkmaz,0 days 00:17:42,2.0,9.0,22.2,2.0,7.0,28.6,0.0,0.0,0.0,0.0,1.0,1.0,2.0,0.0,0.0,1.0,1.0,6.0,0.0,False,False,furkankorkmaz,10.0
+Matisse Thybulle,0 days 00:20:52,4.0,8.0,50.0,1.0,3.0,33.3,0.0,0.0,0.0,1.0,3.0,4.0,0.0,0.0,2.0,0.0,2.0,9.0,7.0,False,False,matissethybulle,18.0
+Tyrese Maxey,0 days 00:06:13,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,0.0,0.0,0.0,0.0,0.0,2.0,1.0,False,False,tyresemaxey,6.0
+Tony Bradley,,,,,,,,,,,,,,,,,,,,,True,False,tonybradley,
+Terrance Ferguson,,,,,,,,,,,,,,,,,,,,,True,False,terranceferguson,
+Isaiah Joe,,,,,,,,,,,,,,,,,,,,,True,False,isaiahjoe,
+Paul Reed,,,,,,,,,,,,,,,,,,,,,True,False,paulreed,

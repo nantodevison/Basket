@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Saddiq Bey,0 days 00:19:18,4.0,9.0,44.4,2.0,5.0,40.0,0.0,0.0,0.0,1.0,2.0,3.0,0.0,1.0,0.0,0.0,1.0,10.0,-9.0,False,False,saddiqbey,18.0
+Jerami Grant,0 days 00:35:20,3.0,19.0,15.8,2.0,9.0,22.2,3.0,4.0,75.0,2.0,7.0,9.0,3.0,2.0,1.0,2.0,5.0,11.0,-8.0,False,False,jeramigrant,24.0
+Mason Plumlee,0 days 00:19:28,2.0,5.0,40.0,0.0,0.0,0.0,3.0,4.0,75.0,1.0,4.0,5.0,2.0,0.0,1.0,4.0,6.0,7.0,3.0,False,False,masonplumlee,14.0
+Wayne Ellington,0 days 00:28:20,6.0,9.0,66.7,4.0,6.0,66.7,1.0,2.0,50.0,1.0,3.0,4.0,2.0,2.0,0.0,1.0,0.0,17.0,-14.0,False,False,wayneellington,35.0
+Delon Wright,0 days 00:35:41,3.0,8.0,37.5,1.0,2.0,50.0,3.0,4.0,75.0,1.0,6.0,7.0,6.0,0.0,1.0,3.0,2.0,10.0,-6.0,False,False,delonwright,25.0
+Isaiah Stewart,0 days 00:19:19,3.0,5.0,60.0,0.0,0.0,0.0,2.0,3.0,66.7,0.0,5.0,5.0,1.0,1.0,2.0,1.0,4.0,8.0,-2.0,False,False,isaiahstewart,20.0
+Josh Jackson,0 days 00:24:25,4.0,8.0,50.0,1.0,2.0,50.0,2.0,3.0,66.7,0.0,1.0,1.0,2.0,0.0,3.0,2.0,4.0,11.0,8.0,False,False,joshjackson,20.0
+Svi Mykhailiuk,0 days 00:17:53,4.0,6.0,66.7,3.0,4.0,75.0,4.0,6.0,66.7,0.0,4.0,4.0,3.0,1.0,0.0,2.0,3.0,15.0,13.0,False,False,svimykhailiuk,33.0
+Sekou Doumbouya,0 days 00:18:48,4.0,10.0,40.0,1.0,3.0,33.3,4.0,4.0,100.0,2.0,2.0,4.0,1.0,1.0,0.0,0.0,0.0,13.0,1.0,False,False,sekoudoumbouya,24.0
+Saben Lee,0 days 00:12:19,1.0,1.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,4.0,1.0,0.0,0.0,1.0,2.0,2.0,False,False,sabenlee,9.0
+Jahlil Okafor,0 days 00:09:10,3.0,6.0,50.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,2.0,6.0,-8.0,False,False,jahlilokafor,9.0
+Frank Jackson,,,,,,,,,,,,,,,,,,,,,True,False,frankjackson,
+Rodney McGruder,,,,,,,,,,,,,,,,,,,,,True,False,rodneymcgruder,
+Deividas Sirvydis,,,,,,,,,,,,,,,,,,,,,True,False,deividassirvydis,

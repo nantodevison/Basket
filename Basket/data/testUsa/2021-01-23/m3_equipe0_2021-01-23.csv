@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Andrew Wiggins,0 days 00:25:17,5.0,9.0,55.6,2.0,3.0,66.7,1.0,2.0,50.0,1.0,4.0,5.0,2.0,0.0,3.0,0.0,2.0,13.0,-27.0,False,False,andrewwiggins,29.0
+Draymond Green,0 days 00:24:43,2.0,9.0,22.2,0.0,3.0,0.0,0.0,0.0,0.0,1.0,3.0,4.0,6.0,0.0,0.0,2.0,2.0,4.0,-26.0,False,False,draymondgreen,10.0
+James Wiseman,0 days 00:24:47,7.0,15.0,46.7,0.0,2.0,0.0,1.0,3.0,33.3,0.0,5.0,5.0,0.0,0.0,2.0,1.0,2.0,15.0,-10.0,False,False,jameswiseman,25.0
+Kelly Oubre Jr.,0 days 00:24:20,2.0,8.0,25.0,0.0,2.0,0.0,1.0,2.0,50.0,0.0,2.0,2.0,1.0,0.0,0.0,1.0,3.0,5.0,-29.0,False,False,kellyoubrejr,7.0
+Stephen Curry,0 days 00:27:06,9.0,18.0,50.0,5.0,10.0,50.0,1.0,2.0,50.0,0.0,7.0,7.0,7.0,0.0,0.0,1.0,2.0,24.0,-24.0,False,False,stephencurry,49.0
+Kevon Looney,0 days 00:13:21,2.0,2.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,2.0,1.0,3.0,1.0,0.0,0.0,0.0,1.0,5.0,-2.0,False,False,kevonlooney,12.0
+Kent Bazemore,0 days 00:09:35,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,1.0,1.0,1.0,0.0,-4.0,False,False,kentbazemore,3.0
+Damion Lee,0 days 00:15:18,3.0,4.0,75.0,1.0,2.0,50.0,2.0,2.0,100.0,0.0,1.0,1.0,0.0,0.0,0.0,1.0,1.0,9.0,-10.0,False,False,damionlee,15.0
+Jordan Poole,0 days 00:18:18,3.0,7.0,42.9,1.0,4.0,25.0,3.0,3.0,100.0,0.0,3.0,3.0,4.0,2.0,0.0,1.0,0.0,10.0,10.0,False,False,jordanpoole,24.0
+Eric Paschall,0 days 00:13:33,2.0,6.0,33.3,0.0,2.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,0.0,0.0,3.0,4.0,4.0,2.0,False,False,ericpaschall,4.0
+Brad Wanamaker,0 days 00:13:33,1.0,4.0,25.0,0.0,2.0,0.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,3.0,-17.0,False,False,bradwanamaker,6.0
+Juan Toscano-Anderson,0 days 00:08:32,1.0,4.0,25.0,1.0,4.0,25.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,1.0,3.0,4.0,False,False,juantoscanoanderson,7.0
+Mychal Mulder,0 days 00:12:00,2.0,2.0,100.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,2.0,1.0,0.0,2.0,5.0,17.0,False,False,mychalmulder,13.0
+Nico Mannion,0 days 00:09:37,3.0,5.0,60.0,2.0,3.0,66.7,0.0,0.0,0.0,0.0,0.0,0.0,4.0,1.0,0.0,0.0,0.0,8.0,21.0,False,False,nicomannion,17.0
