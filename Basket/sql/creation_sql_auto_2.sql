@@ -61,7 +61,7 @@ CREATE TABLE donnees_source.match (
     equipe_domicile VARCHAR(3) NOT NULL,
     equipe_exterieure VARCHAR(3) NOT NULL,
     id_type_match INTEGER NOT NULL,
-    id_type_playoff INTEGER NOT NULL,
+    id_type_playoff INTEGER,
     PRIMARY KEY (id_match)
 );
 
@@ -94,10 +94,11 @@ CREATE TABLE donnees_source.stats_joueur (
 );
 
 CREATE TABLE donnees_source.score_match (
-    id_score_match BIGINT NOT NULL,
+    id_score_match SERIAL NOT NULL,
     id_match BIGINT NOT NULL,
     id_equipe VARCHAR(3) NOT NULL,
     id_periode VARCHAR NOT NULL,
+	score_periode integer not null,
     PRIMARY KEY (id_score_match)
 );
 
@@ -108,19 +109,19 @@ CREATE TABLE donnees_source.enum_periode_match (
 );
 
 CREATE TABLE donnees_source.enum_type_match (
-    id_type_match SERIAL NOT NULL,
+    id_type_match INTEGER NOT NULL,
     nom_type_match VARCHAR NOT NULL,
     PRIMARY KEY (id_type_match)
 );
 
 CREATE TABLE donnees_source.enum_type_playoffs (
-    id_type_playoffs SERIAL NOT NULL,
+    id_type_playoffs INTEGER NOT NULL,
     nom_type_playoffs VARCHAR NOT NULL,
     PRIMARY KEY (id_type_playoffs)
 );
 
 CREATE TABLE donnees_source.enum_type_blessure (
-    id_type_blessure SERIAL NOT NULL,
+    id_type_blessure INTEGER NOT NULL,
     nom_blessure VARCHAR NOT NULL,
     PRIMARY KEY (id_type_blessure)
 );
