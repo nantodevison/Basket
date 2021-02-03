@@ -1,0 +1,13 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+James Ennis III,0 days 00:21:30,3.0,7.0,42.9,2.0,2.0,100.0,0.0,0.0,0.0,3.0,2.0,5.0,2.0,2.0,1.0,1.0,2.0,8.0,10.0,False,False,jamesennisiii,18.0
+Gary Clark,0 days 00:35:26,4.0,7.0,57.1,4.0,7.0,57.1,2.0,2.0,100.0,1.0,3.0,4.0,2.0,0.0,0.0,0.0,2.0,14.0,-1.0,False,False,garyclark,30.0
+Nikola Vucevic,0 days 00:34:55,9.0,22.0,40.9,2.0,5.0,40.0,2.0,2.0,100.0,1.0,12.0,13.0,4.0,0.0,0.0,3.0,3.0,22.0,0.0,False,False,nikolavucevic,39.0
+Evan Fournier,0 days 00:32:47,7.0,16.0,43.8,3.0,8.0,37.5,4.0,7.0,57.1,0.0,3.0,3.0,6.0,1.0,0.0,4.0,1.0,21.0,-6.0,False,False,evanfournier,40.0
+Cole Anthony,0 days 00:32:37,6.0,13.0,46.2,2.0,4.0,50.0,0.0,0.0,0.0,2.0,3.0,5.0,6.0,1.0,1.0,2.0,2.0,14.0,0.0,False,False,coleanthony,28.0
+Terrence Ross,0 days 00:30:02,4.0,8.0,50.0,2.0,5.0,40.0,0.0,0.0,0.0,1.0,1.0,2.0,3.0,0.0,0.0,1.0,0.0,10.0,-11.0,False,False,terrenceross,19.0
+Dwayne Bacon,0 days 00:18:16,1.0,7.0,14.3,0.0,3.0,0.0,0.0,0.0,0.0,0.0,3.0,3.0,2.0,0.0,0.0,3.0,4.0,2.0,2.0,False,False,dwaynebacon,2.0
+Jordan Bone,0 days 00:15:23,3.0,5.0,60.0,2.0,4.0,50.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,3.0,8.0,-3.0,False,False,jordanbone,15.0
+Khem Birch,0 days 00:19:04,2.0,2.0,100.0,0.0,0.0,0.0,1.0,2.0,50.0,3.0,4.0,7.0,1.0,0.0,2.0,1.0,1.0,5.0,-6.0,False,False,khembirch,18.0
+Mo Bamba,,,,,,,,,,,,,,,,,,,,,True,False,mobamba,
+Aaron Gordon,,,,,,,,,,,,,,,,,,,,,True,True,aarongordon,
+Karim Mane,,,,,,,,,,,,,,,,,,,,,True,False,karimmane,

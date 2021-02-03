@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Kawhi Leonard,0 days 00:36:29,14.0,24.0,58.3,4.0,9.0,44.4,2.0,2.0,100.0,1.0,8.0,9.0,8.0,0.0,0.0,0.0,1.0,34.0,14.0,False,False,kawhileonard,66.0
+Nicolas Batum,0 days 00:35:48,3.0,7.0,42.9,1.0,5.0,20.0,0.0,0.0,0.0,0.0,3.0,3.0,2.0,1.0,0.0,0.0,1.0,7.0,12.0,False,False,nicolasbatum,17.0
+Serge Ibaka,0 days 00:22:22,7.0,8.0,87.5,2.0,2.0,100.0,1.0,2.0,50.0,2.0,4.0,6.0,1.0,0.0,0.0,1.0,2.0,17.0,11.0,False,False,sergeibaka,33.0
+Paul George,0 days 00:33:01,4.0,13.0,30.8,2.0,8.0,25.0,1.0,2.0,50.0,0.0,5.0,5.0,4.0,1.0,0.0,4.0,0.0,11.0,5.0,False,False,paulgeorge,22.0
+Patrick Beverley,0 days 00:13:03,2.0,7.0,28.6,1.0,5.0,20.0,2.0,2.0,100.0,1.0,3.0,4.0,3.0,2.0,0.0,0.0,1.0,7.0,8.0,False,False,patrickbeverley,20.0
+Luke Kennard,0 days 00:24:24,1.0,5.0,20.0,1.0,4.0,25.0,0.0,0.0,0.0,1.0,2.0,3.0,4.0,0.0,0.0,1.0,1.0,3.0,6.0,False,False,lukekennard,10.0
+Ivica Zubac,0 days 00:24:01,5.0,6.0,83.3,0.0,0.0,0.0,0.0,0.0,0.0,2.0,9.0,11.0,1.0,0.0,2.0,1.0,2.0,10.0,-3.0,False,False,ivicazubac,27.0
+Lou Williams,0 days 00:14:14,1.0,9.0,11.1,1.0,4.0,25.0,2.0,2.0,100.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,1.0,5.0,-2.0,False,False,louwilliams,5.0
+Patrick Patterson,0 days 00:12:12,0.0,4.0,0.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-4.0,False,False,patrickpatterson,-1.0
+Terance Mann,0 days 00:04:26,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,2.0,3.0,1.0,0.0,0.0,0.0,0.0,0.0,-1.0,False,False,terancemann,4.0
+Reggie Jackson,0 days 00:19:43,4.0,8.0,50.0,2.0,4.0,50.0,4.0,6.0,66.7,0.0,0.0,0.0,1.0,0.0,0.0,1.0,1.0,14.0,-6.0,False,False,reggiejackson,24.0
+Amir Coffey,0 days 00:00:18,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,amircoffey,1.0
+Mfiondu Kabengele,,,,,,,,,,,,,,,,,,,,,True,False,mfiondukabengele,
+Daniel Oturu,,,,,,,,,,,,,,,,,,,,,True,False,danieloturu,

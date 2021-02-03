@@ -15,6 +15,7 @@ from selenium.webdriver.support.ui import Select
 import time, os, re
 import pandas as pd
 import numpy as np
+from collections import Counter
 
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -74,26 +75,24 @@ class JourneeSiteNba(object):
     Resultats des matchs publies sur le site pour une date
     '''
 
-    def __init__(self, dateJournee, sourceDonnees='internet',dossierExportCsv=r'C:\Users\martin.schoreisz\git\Basket\Basket\data'):
+    def __init__(self, dateJournee, dossierExportCsv=r'C:\Users\martin.schoreisz\git\Basket\Basket\data'):
         '''
         Attributes
             dateJournee : string au format YYYY-MM-DD
             urlDateJournee : string : url de la date de la journee
             sourceDonnees : string : soure de la donnees : "internet" ou "csv" si la donnees a ete precedemment chargees depuis le site
-            driver : selenium driver firefox, uniquement si sourceDonnees='internet'
-            dossierDate : si on enregistre des csv (uniquement si sourceDonnees='internet') : dossier qui conteint les donnees de la journee
+            driver : selenium driver firefox
+            dossierDate : si on enregistre des csv dossier qui conteint les donnees de la journee
             dicoJournee : dico avec en cle un integer  et en value un dico de 3 clé : match, stats_eO et stat_e1 qui contein les dfs de donnees
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
         self.dateJournee=dateJournee
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
-        self.sourceDonnees=sourceDonnees
         self.dossierExportCsv=dossierExportCsv
-        if self.sourceDonnees=='internet' : 
-            with DriverFirefox() as d : 
-                self.driver=d.driver
-                self.dossierDate=os.path.join(self.dossierExportCsv,self.dateJournee)
-                self.dicoJournee=self.dicoMatchs()
+        with DriverFirefox() as d : 
+            self.driver=d.driver
+            self.dossierDate=os.path.join(self.dossierExportCsv,self.dateJournee)
+            self.dicoJournee=self.dicoMatchs()
         
     def __str__(self):
         return '\n'.join([f'match {i} \n'+ v['match'].to_string(columns=['equipe', 'final'], index=False,
@@ -122,41 +121,24 @@ class JourneeSiteNba(object):
         en fonction de la source, creer les dfs des matchs et stats, dans un dico
         """
         dicoJournee={}
-        if self.sourceDonnees=='internet' :
-
-            for e,p in enumerate(self.getListFeuilleDeMatch()) : 
-                print(e,p)
-                self.driver.get(p)
-                time.sleep(2)
-                self.driver.implicitly_wait(20)
-                #sur l'onglet box-score on recupere les stats des equipes
-                dfsEquipes=pd.read_html(self.driver.page_source)
-                dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
-                dicoJournee[e]['stats_e1']=dfsEquipes[1]
-                time.sleep(2)
-                self.driver.implicitly_wait(20)
-                #bascule sur l'onglet summary er recuperer les stats de matchs: 
-                elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
-                self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
-                time.sleep(2)
-                self.driver.implicitly_wait(20)
-                dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
-            self.miseEnFormeDf(dicoJournee)
-        
-        # A REPRENDRE SI BESOIN
-        elif self.sourceDonnees=='csv' :
-            dossierCsvEnCours=os.path.join(self.dossierExportCsv,self.dateJournee)
-            with os.scandir(dossierCsvEnCours) as it:
-                listEntry=[(entry.name[1],os.path.join(dossierCsvEnCours,entry.name),'match' if 'equipe' not in entry.name else f'stats_e{i%3-1}') 
-                           for i,entry in enumerate(it) if entry.name.endswith('.csv') and entry.is_file()]
-            dicoJournee={}
-            for i,e in enumerate(listEntry) :
-                a,b,c=e
-                if i%3==0 : 
-                    dicoJournee[int(a)]={c:pd.read_csv(b,index_col='Unnamed: 0')}
-                else : 
-                    dicoJournee[int(a)][c]=pd.read_csv(b,index_col='Unnamed: 0')  
-            #ICI IL FAUT REMETTRE EN FORME LE CSV
+        for e,p in enumerate(self.getListFeuilleDeMatch()) : 
+            print(e,p)
+            self.driver.get(p)
+            time.sleep(7)
+            self.driver.implicitly_wait(20)
+            #sur l'onglet box-score on recupere les stats des equipes
+            dfsEquipes=pd.read_html(self.driver.page_source)
+            dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
+            dicoJournee[e]['stats_e1']=dfsEquipes[1]
+            time.sleep(7)
+            self.driver.implicitly_wait(20)
+            #bascule sur l'onglet summary er recuperer les stats de matchs: 
+            elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
+            self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
+            time.sleep(7)
+            self.driver.implicitly_wait(20)
+            dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
+        self.miseEnFormeDf(dicoJournee)
         return dicoJournee
     
     def miseEnFormeDf(self, dicoJournee):
@@ -209,8 +191,9 @@ class JourneeSiteNba(object):
         #convertir le temps joue en format date
         dfStatEquipe['minute']=dfStatEquipe.minute.apply(lambda x : 
                     pd.to_timedelta('00:'+x) if not pd.isnull(x) else pd.to_timedelta(x,unit='S'))
-        #simplifier les noms en enlevant les espaces en trop
-        dfStatEquipe['nom']=dfStatEquipe.nom.apply(lambda x : ' '.join(x.split()))
+        #simplifier les noms car il le lit 2 fois (je crois que c'est du au differents liens de la page)
+        dfStatEquipe['nom']=dfStatEquipe.nom.apply(lambda x : x.split()[0]+' '+x.split()[1][:-2] if Counter(x)[' ']<=2 and x.split()[-1].lower() not in ('jr.', 'sr.', 'ii','iii','iv','v')  
+                                             else ' '.join(x.split()[:2]+[x.split()[2][:-2],]))
         #ajouter l'attribut de nom simplifie
         dfStatEquipe['nom_simple']=dfStatEquipe.nom.apply(lambda x : simplifierNomJoueur(x))
         #score ttfl

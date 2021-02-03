@@ -1,0 +1,15 @@
+nom,minute,tir_reussi,tir_tentes,pct_tir,trois_pt_r,trois_pt_t,pct_3_pt,lanc_frc_r,lanc_frc_t,pct_lfrc,rebonds_o,rebonds_d,rebonds,passes_dec,steal,contres,ball_perdu,faute_p,points,plus_moins,dnp,blesse,nom_simple,score_ttfl
+Jayson Tatum,0 days 00:31:19,10.0,21.0,47.6,3.0,6.0,50.0,1.0,2.0,50.0,0.0,4.0,4.0,5.0,0.0,1.0,2.0,2.0,24.0,15.0,False,False,jaysontatum,39.0
+Daniel Theis,0 days 00:28:15,8.0,12.0,66.7,1.0,2.0,50.0,2.0,2.0,100.0,1.0,2.0,3.0,3.0,3.0,3.0,1.0,4.0,19.0,21.0,False,False,danieltheis,38.0
+Tristan Thompson,0 days 00:17:22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,9.0,10.0,1.0,0.0,0.0,0.0,0.0,0.0,9.0,False,False,tristanthompson,11.0
+Jaylen Brown,0 days 00:29:49,10.0,21.0,47.6,2.0,3.0,66.7,4.0,6.0,66.7,0.0,5.0,5.0,2.0,2.0,0.0,2.0,1.0,26.0,17.0,False,False,jaylenbrown,41.0
+Marcus Smart,0 days 00:25:41,4.0,6.0,66.7,1.0,3.0,33.3,4.0,4.0,100.0,0.0,5.0,5.0,11.0,2.0,1.0,3.0,2.0,13.0,21.0,False,False,marcussmart,38.0
+Carsen Edwards,0 days 00:12:17,2.0,4.0,50.0,1.0,2.0,50.0,1.0,1.0,100.0,0.0,0.0,0.0,0.0,2.0,0.0,0.0,3.0,6.0,-4.0,False,False,carsenedwards,11.0
+Javonte Green,0 days 00:18:07,2.0,4.0,50.0,2.0,3.0,66.7,0.0,0.0,0.0,2.0,2.0,4.0,0.0,0.0,0.0,0.0,1.0,6.0,2.0,False,False,javontegreen,13.0
+Robert Williams III,0 days 00:09:53,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,3.0,4.0,0.0,0.0,1.0,1.0,1.0,0.0,-10.0,False,False,robertwilliamsiii,3.0
+Jeff Teague,0 days 00:22:18,3.0,8.0,37.5,0.0,1.0,0.0,2.0,2.0,100.0,0.0,2.0,2.0,4.0,0.0,0.0,0.0,0.0,8.0,-1.0,False,False,jeffteague,15.0
+Semi Ojeleye,0 days 00:16:08,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0,1.0,0.0,0.0,1.0,0.0,0.0,3.0,False,False,semiojeleye,2.0
+Aaron Nesmith,0 days 00:18:47,3.0,5.0,60.0,3.0,5.0,60.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,1.0,1.0,9.0,4.0,False,False,aaronnesmith,15.0
+Grant Williams,0 days 00:10:05,2.0,4.0,50.0,2.0,3.0,66.7,2.0,3.0,66.7,1.0,3.0,4.0,1.0,0.0,0.0,1.0,3.0,8.0,3.0,False,False,grantwilliams,18.0
+Tacko Fall,,,,,,,,,,,,,,,,,,,,,True,False,tackofall,
+Tremont Waters,,,,,,,,,,,,,,,,,,,,,True,False,tremontwaters,
