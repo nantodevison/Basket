@@ -53,6 +53,7 @@ CREATE TABLE donnees_source.contrat (
     montant_contrat INTEGER,
     PRIMARY KEY (id_contrat)
 );
+ALTER TABLE donnees_source.contrat ADD CONSTRAINT contrat_unique UNIQUE (id_equipe, id_joueur, date_debut_contrat);
 
 CREATE TABLE donnees_source.match (
     id_match SERIAL NOT NULL,
@@ -64,6 +65,7 @@ CREATE TABLE donnees_source.match (
     id_type_playoff INTEGER,
     PRIMARY KEY (id_match)
 );
+ALTER TABLE donnees_source."match" ADD CONSTRAINT match_unique UNIQUE (date_match, equipe_domicile, equipe_exterieure);
 
 CREATE TABLE donnees_source.stats_joueur (
     id_stats_joueurs SERIAL NOT NULL,
@@ -92,6 +94,7 @@ CREATE TABLE donnees_source.stats_joueur (
     score_ttfl INTEGER NOT NULL,
     PRIMARY KEY (id_stats_joueurs)
 );
+ALTER TABLE donnees_source.stats_joueur ADD CONSTRAINT stats_joueur_unique UNIQUE (id_match, id_joueur);
 
 CREATE TABLE donnees_source.score_match (
     id_score_match SERIAL NOT NULL,
@@ -101,6 +104,7 @@ CREATE TABLE donnees_source.score_match (
 	score_periode integer not null,
     PRIMARY KEY (id_score_match)
 );
+ALTER TABLE donnees_source.score_match ADD CONSTRAINT score_match_unique UNIQUE (id_match, id_equipe,id_periode);
 
 CREATE TABLE donnees_source.enum_periode_match (
     id_periode VARCHAR NOT NULL,

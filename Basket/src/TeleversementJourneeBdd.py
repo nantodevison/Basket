@@ -202,3 +202,14 @@ class JourneeBdd(JourneeSiteNba) :
         dfStatsJoueurs['id_match']=idMatchBdd
         self.dfStatsJoueurs=pd.concat([self.dfStatsJoueurs,dfStatsJoueurs])
         #dfStatsJoueursBdd.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+        
+        
+    def exporterVersBdd(self,listExport):
+        """
+        exporter les dfs ciblées vers la Bdd
+        in : 
+            listExport : list de string decrivant les attribut, ou 'all' pour tout.
+                         string possibles : dfMatchs, dfScoreMatch, dfNewContrat, 
+                                            dfContratJoueurChange, dfNouveauBlesse, dfJoueurRetourBlessure
+                                            dfStatsJoueurs
+        """
