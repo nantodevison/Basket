@@ -30,11 +30,35 @@ class JourneeBdd(JourneeSiteNba) :
         self.id_saison=id_saison
         self.id_type_match=id_type_match
         self.id_type_playoffs=id_type_playoffs
-        self.dfNewContrat=pd.DataFrame([])
-        self.dfContratJoueurChange=pd.DataFrame([])
-        self.dfNouveauBlesse=None
-        self.dfJoueurRetourBlessure=None
-        
+        self.dfMatchs,self.dfScoreMatch,self.dfNewContrat,self.dfContratJoueurChange=None,None, None, None
+        self.dfNouveauBlesse,self.dfJoueurRetourBlessure,self.dfStatsJoueurs=None, None, None
+     
+    def creerAttributsGlobaux(self):
+        """
+        faire appel aux fonctions en dessous pour obtenir les attributs descriptifs de la journee
+        """ 
+        dfJoueursBdd, dfContratBdd, dfJoueursBlessesBdd=self.telechargerDonnees()
+        self.verifJoueursInconnu(dfJoueursBdd)
+        if not self.dfJoueursInconnus.empty : 
+            dfJoueursBdd=self.ajoutJoueursInconnus()
+        for k,v in self.dicoJournee.items() : 
+            self.creerDfMatch(v['match'])
+            idMatchBdd=self.recupererIdMatch()
+            self.creerDfScoreMatch(v['match'],idMatchBdd)
+            for e,s in enumerate((v['stats_e0'], v['stats_e1'])) : 
+                #synthese et epuration des donnees de joueurs
+                idEquipe=v['match'].loc[e].equipe
+                dfJoueurActifBlesses=self.clearJoueursInactifs(s)
+                dfJoueursTot=self.creerDfJoueurFinale(dfJoueurActifBlesses,dfJoueursBdd)
+                #contrats
+                self.contratJoueursinconnus(dfJoueursTot,dfContratBdd,idEquipe)
+                self.modifContrats
+                #blessures
+                self.blessures(dfJoueursTot,dfJoueursBlessesBdd)
+                self.retourBlessures(dfJoueursTot,dfJoueursBlessesBdd)
+                #stats joueurs
+                self.creerStatsJoueurs(dfJoueursTot,idMatchBdd)
+       
     def telechargerDonnees(self) : 
         """
         recuperer la table des joueurs, contrat, blesses
@@ -65,9 +89,11 @@ class JourneeBdd(JourneeSiteNba) :
         """
         mettre en forme la df d'un match telechargee
         """
-        equipeExt=self.dicoJournee[0]['match'].iloc[0].equipe
-        equipeDom=self.dicoJournee[0]['match'].iloc[1].equipe
-        return pd.DataFrame({'id_saison':[self.id_saison],'date_match':[self.dateJournee],'equipe_domicile':[equipeDom],'equipe_exterieure':[equipeExt],'id_type_match':[self.id_type_match]})
+        equipeExt=dfMatch.iloc[0].equipe
+        equipeDom=dfMatch.iloc[1].equipe
+        self.dfMatchs=pd.concat([self.dfMatchs,pd.DataFrame({'id_saison':[self.id_saison],
+                        'date_match':[self.dateJournee],'equipe_domicile':[equipeDom],
+                        'equipe_exterieure':[equipeExt],'id_type_match':[self.id_type_match]})])
         
     def recupererIdMatch(self) :
         """
@@ -87,7 +113,7 @@ class JourneeBdd(JourneeSiteNba) :
         dfScoreMatch=dfMatch.melt(id_vars=['equipe'], value_vars=[c for c in dfMatch.columns if c !='equipe'],
                             var_name='id_periode', value_name='score_periode').sort_values('equipe')
         dfScoreMatch['id_match']=idMatchBdd
-        return dfScoreMatch
+        self.dfScoreMatch=pd.concat([self.dfScoreMatch,dfScoreMatch])
         
     def clearJoueursInactifs(self,dfStatsJoueurs) : 
         return dfStatsJoueurs.loc[(~dfStatsJoueurs['dnp']) | dfStatsJoueurs['blesse']].copy()
@@ -164,3 +190,15 @@ class JourneeBdd(JourneeSiteNba) :
             #il faut update la table avec la valeur de date en date_fin_blessurre
             #c.sqlAlchemyConn.execute(f"UPDATE donnees_source.blessure SET date_guerison = '{dateGuerison}' WHERE id_joueur=any(array{dfJoueurRetourBlessure.id_joueur.tolist()}) AND date_guerison is null")
             self.dfJoueurRetourBlessure=pd.concat([dfJoueurRetourBlessure, self.dfJoueurRetourBlessure])
+    
+    def creerStatsJoueurs(self,dfJoueursTot,idMatchBdd):
+        """
+        ajouter les stats des joueurs de chaque match a la df correspondante
+        """
+        dfStatsJoueurs=dfJoueursTot.loc[~dfJoueursTot['dnp']][['minute', 'points', 'rebonds', 'passes_dec', 'steal',
+                       'contres', 'tir_reussi', 'tir_tentes', 'pct_tir', 'trois_pt_r',
+                       'trois_pt_t', 'pct_3_pt', 'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
+                       'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 'plus_moins','score_ttfl', 'id_joueur']].copy()
+        dfStatsJoueurs['id_match']=idMatchBdd
+        self.dfStatsJoueurs=pd.concat([self.dfStatsJoueurs,dfStatsJoueurs])
+        #dfStatsJoueursBdd.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)

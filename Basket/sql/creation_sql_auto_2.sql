@@ -122,7 +122,8 @@ CREATE TABLE donnees_source.enum_type_playoffs (
 
 CREATE TABLE donnees_source.enum_type_blessure (
     id_type_blessure INTEGER NOT NULL,
-    nom_blessure VARCHAR NOT NULL,
+    nom_blessure VARCHAR NOT NULL
+	nom_blessure_anglais VARCHAR,
     PRIMARY KEY (id_type_blessure)
 );
 
@@ -190,11 +191,35 @@ INSERT INTO donnees_source.enum_periode_match (id_periode, nom_periode)
  		('final', 'score total') ;
 
 --remplir la table d'enumeration des types de blessure
-INSERT INTO donnees_source.enum_type_blessure (id_type_blessure, nom_blessure)
- VALUES (0, 'inconnue'),
-		(1, 'ligaments croise genou'),
-		(2, 'entorse genou')
-		(99,'NC');
+INSERT INTO donnees_source.enum_type_blessure (id_type_blessure, nom_blessure, nom_blessure_anglais)
+ VALUES (0, 'inconnue', NULL),
+		(1, 'ligaments croise genou', NULL),
+		(2, 'entorse genou', NULL),
+		(3, 'cheville', 'ankle'),
+		(4, 'genou', 'knee'),
+		(5,'poignet','wrist'),
+		(6,'pied','foot'),
+		(7,'hanche','hip'),
+		(8,'mollet','calf'),
+		(9,'talon d''achille','Achilles'),
+		(10,'Cuisse','Quadriceps'),
+		(11,'Abdomen','Abdomen'),
+		(12,'jambe','lower leg'),
+ 		(13,'pouce','thumb'),
+ 		(14,'epaule','shoulder'),
+ 		(15,'aine','groin'),
+ 		(16,'Covid-19','Covid-19'),
+ 		(17,'repos','rest'),
+ 		(18,'claquage','Hamstring'),
+ 		(19,'maladie','Illness'),
+		(20,'dos','Back'),
+ 		(21,'personel','Personal'),
+ 		(22,'comossion','Concussion'),
+ 		(23,'cuisse','Thigh'),
+ 		(24,'orteil','Toe'),
+ 		(25,'doigt','Finger'),
+		(26,'jambe','Leg'),
+		(99,'NC',NULL);
 		
 --remplir la table d'enumeration des types de contrat
 INSERT INTO donnees_source.enum_type_contrat (id_type_contrat, nom_type_contrat)
