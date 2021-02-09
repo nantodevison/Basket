@@ -56,7 +56,7 @@ CREATE TABLE donnees_source.contrat (
 ALTER TABLE donnees_source.contrat ADD CONSTRAINT contrat_unique UNIQUE (id_equipe, id_joueur, date_debut_contrat);
 
 CREATE TABLE donnees_source.match (
-    id_match SERIAL NOT NULL,
+    id_match INTEGER NOT NULL,
 	id_saison INTEGER NOT NULL,
     date_match DATE NOT NULL,
     equipe_domicile VARCHAR(3) NOT NULL,
@@ -151,6 +151,7 @@ CREATE TABLE donnees_source.blessure (
     date_guerison DATE ,
     PRIMARY KEY (id_blessure)
 );
+ALTER TABLE donnees_source.blessure ADD CONSTRAINT blessure_unique UNIQUE (id_joueur, date_blessure);
 
 CREATE TABLE donnees_source.saison (
     id_saison SERIAL NOT NULL,

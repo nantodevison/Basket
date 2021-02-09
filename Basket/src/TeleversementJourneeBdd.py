@@ -41,10 +41,11 @@ class JourneeBdd(JourneeSiteNba) :
         self.verifJoueursInconnu(dfJoueursBdd)
         if not self.dfJoueursInconnus.empty : 
             dfJoueursBdd=self.ajoutJoueursInconnus()
+        idMatchMaxBdd=self.recupererIdMatch()
+        self.modifCleDico(idMatchMaxBdd)
         for k,v in self.dicoJournee.items() : 
-            self.creerDfMatch(v['match'])
-            idMatchBdd=self.recupererIdMatch()
-            self.creerDfScoreMatch(v['match'],idMatchBdd)
+            self.creerDfMatch(v['match'], k)
+            self.creerDfScoreMatch(v['match'],k)
             for e,s in enumerate((v['stats_e0'], v['stats_e1'])) : 
                 #synthese et epuration des donnees de joueurs
                 idEquipe=v['match'].loc[e].equipe
@@ -57,7 +58,7 @@ class JourneeBdd(JourneeSiteNba) :
                 self.blessures(dfJoueursTot,dfJoueursBlessesBdd)
                 self.retourBlessures(dfJoueursTot,dfJoueursBlessesBdd)
                 #stats joueurs
-                self.creerStatsJoueurs(dfJoueursTot,idMatchBdd)
+                self.creerStatsJoueurs(dfJoueursTot,k)
        
     def telechargerDonnees(self) : 
         """
@@ -68,6 +69,22 @@ class JourneeBdd(JourneeSiteNba) :
             dfContratBdd=pd.read_sql("SELECT * FROM donnees_source.contrat WHERE date_fin_contrat IS null",c.sqlAlchemyConn)
             dfJoueursBlessesBdd=pd.read_sql("select * from donnees_source.blessure WHERE date_guerison IS NULL",c.sqlAlchemyConn)
         return dfJoueursBdd, dfContratBdd, dfJoueursBlessesBdd
+    
+    def recupererIdMatch(self) :
+        """
+        obtenir l'id du Match en cours de transfert
+        """
+        with ct.ConnexionBdd(self.bdd) as c:
+            idMatchBdd=c.sqlAlchemyConn.execute('SELECT max(id_match) FROM donnees_source."match"').fetchone()[0]
+        return idMatchBdd
+    
+    def modifCleDico(self, idMatchMaxBdd):
+        """
+        modfier le dioJournee pour remplacer la cle par la valeur de id_match
+        in :
+            idMatchMaxBdd : integer : max de l'id_match dans la bdd
+        """
+        self.dicoJournee={k+idMatchMaxBdd+1:v for k,v in self.dicoJournee.items()}
     
     def verifJoueursInconnu(self,dfJoueursBdd):
         """
@@ -85,23 +102,15 @@ class JourneeBdd(JourneeSiteNba) :
             dfJoueursBdd=pd.read_sql('select id_joueur, nom_simple from donnees_source.joueur',c.sqlAlchemyConn)
         return dfJoueursBdd
         
-    def creerDfMatch(self, dfMatch):
+    def creerDfMatch(self, dfMatch, id_match):
         """
         mettre en forme la df d'un match telechargee
         """
         equipeExt=dfMatch.iloc[0].equipe
         equipeDom=dfMatch.iloc[1].equipe
-        self.dfMatchs=pd.concat([self.dfMatchs,pd.DataFrame({'id_saison':[self.id_saison],
+        self.dfMatchs=pd.concat([self.dfMatchs,pd.DataFrame({'id_match':id_match,'id_saison':[self.id_saison],
                         'date_match':[self.dateJournee],'equipe_domicile':[equipeDom],
                         'equipe_exterieure':[equipeExt],'id_type_match':[self.id_type_match]})])
-        
-    def recupererIdMatch(self) :
-        """
-        obtenir l'id du Match en cours de transfert
-        """
-        with ct.ConnexionBdd(self.bdd) as c:
-            idMatchBdd=c.sqlAlchemyConn.execute("SELECT last_value FROM donnees_source.match_id_match_seq").fetchone()[0]
-        return idMatchBdd
     
     def creerDfScoreMatch(self,dfMatch,idMatchBdd) : 
         """
@@ -113,6 +122,7 @@ class JourneeBdd(JourneeSiteNba) :
         dfScoreMatch=dfMatch.melt(id_vars=['equipe'], value_vars=[c for c in dfMatch.columns if c !='equipe'],
                             var_name='id_periode', value_name='score_periode').sort_values('equipe')
         dfScoreMatch['id_match']=idMatchBdd
+        dfScoreMatch.rename(columns={'equipe':'id_equipe'}, inplace=True)
         self.dfScoreMatch=pd.concat([self.dfScoreMatch,dfScoreMatch])
         
     def clearJoueursInactifs(self,dfStatsJoueurs) : 
@@ -133,7 +143,6 @@ class JourneeBdd(JourneeSiteNba) :
         if not dfJoueurSansContrat.empty : #joueur sans contrat
             self.dfNewContrat=pd.concat([self.dfNewContrat,pd.DataFrame({'id_joueur':dfJoueurSansContrat.id_joueur.tolist(),
                                                                          'id_equipe':idEquipe,'date_debut_contrat':self.dateJournee})])
-            #dfNewContrat.to_sql('contrat',self.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
     
     def modifContrats(self,dfJoueursTot,dfContratBdd,idEquipe):
         """
@@ -143,21 +152,14 @@ class JourneeBdd(JourneeSiteNba) :
             dfContratBdd : df des contrats connus dans la Bdd
             idEquipe : integer : id de l'equipe de laBdd (character varying (3))
         """
-        #2.joueur avec contrat : 
         #jointure entre la table contratBdd et celle du match sur id_joueur pour comparer les equipes
         if not dfContratBdd.empty : 
             dfContratJoueurMatch=dfContratBdd.merge(dfJoueursTot[['id_joueur']], on='id_joueur')
             dfContratJoueurChange=dfContratJoueurMatch.loc[dfContratJoueurMatch.id_equipe!=idEquipe]
             if not dfContratJoueurChange.empty: #si un joueur a changé d'équipe
-                dateFinContrat=(pd.to_datetime(self.dateJournee)-pd.Timedelta(1,'day')).strftime('%Y-%m-%d')
-                print(dfContratJoueurChange.id_joueur, dateFinContrat)
-                #il faut update la table avec la valeur de date en date_fin_contrat
-                #self.sqlAlchemyConn.execute(f"UPDATE donnees_source.contrat SET date_fin_contrat = '{dateFinContrat}' WHERE id_contrat=any(array{dfContratJoueurChange.id_contrat.tolist()})")
-                #et inserer de nouvelle lignes
                 self.dfNewContrat=pd.concat([self.dfNewContrat,pd.DataFrame({'id_joueur':dfContratJoueurChange.id_joueur.tolist(),
                                                                              'id_equipe':idEquipe,'date_debut_contrat':self.dateJournee})])
                 self.dfContratJoueurChange=pd.concat([dfContratJoueurChange,self.dfContratJoueurChange])
-                #dfNewContrat.to_sql('contrat',self.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
             
     def blessures(self, dfJoueursTot,dfJoueursBlessesBdd):
         """
@@ -172,8 +174,7 @@ class JourneeBdd(JourneeSiteNba) :
         if not dfJoueursBlesses.empty : #si des joueurs blesses, verifier qu'ils ne sont pas déjà presents dans la base
             dfNouveauBlesse=dfJoueursBlesses.loc[~dfJoueursBlesses.id_joueur.isin(dfJoueursBlessesBdd.id_joueur.tolist())]
             if not dfNouveauBlesse.empty : 
-                dfNouveauBlesse=dfNouveauBlesse[['id_joueur']].assign(date_blessure=self.dateJournee, id_type_blessure=99)
-                #dfNouveauBlesse.to_sql('blessure', self.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)  
+                dfNouveauBlesse=dfNouveauBlesse[['id_joueur']].assign(date_blessure=self.dateJournee, id_type_blessure=99)  
                 self.dfNouveauBlesse=pd.concat([self.dfNouveauBlesse,dfNouveauBlesse])
         
     def retourBlessures(self,dfJoueursTot,dfJoueursBlessesBdd) : 
@@ -186,9 +187,6 @@ class JourneeBdd(JourneeSiteNba) :
         #checker si des joueurs ayant joué étaient noté blessé mais sont revenus
         dfJoueurRetourBlessure=dfJoueursTot.loc[(dfJoueursTot.id_joueur.isin(dfJoueursBlessesBdd.id_joueur.tolist())) & (~dfJoueursTot['blesse'])]
         if not dfJoueurRetourBlessure.empty : #si des retours
-            #dateGuerison=(pd.to_datetime(self.dateJournee)-pd.Timedelta(1,'day')).strftime('%Y-%m-%d')
-            #il faut update la table avec la valeur de date en date_fin_blessurre
-            #c.sqlAlchemyConn.execute(f"UPDATE donnees_source.blessure SET date_guerison = '{dateGuerison}' WHERE id_joueur=any(array{dfJoueurRetourBlessure.id_joueur.tolist()}) AND date_guerison is null")
             self.dfJoueurRetourBlessure=pd.concat([dfJoueurRetourBlessure, self.dfJoueurRetourBlessure])
     
     def creerStatsJoueurs(self,dfJoueursTot,idMatchBdd):
@@ -200,16 +198,35 @@ class JourneeBdd(JourneeSiteNba) :
                        'trois_pt_t', 'pct_3_pt', 'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
                        'rebonds_o', 'rebonds_d', 'ball_perdu', 'faute_p', 'plus_moins','score_ttfl', 'id_joueur']].copy()
         dfStatsJoueurs['id_match']=idMatchBdd
-        self.dfStatsJoueurs=pd.concat([self.dfStatsJoueurs,dfStatsJoueurs])
-        #dfStatsJoueursBdd.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+        #passage du timedelta en string pour import dans bdd ensuite
+        dfStatsJoueurs['minute']=dfStatsJoueurs.minute.apply(
+            lambda x: f'{x.components.hours:02d}:{x.components.minutes:02d}:{x.components.seconds:02d}'
+                      if not pd.isnull(x) else '')
+        self.dfStatsJoueurs=pd.concat([self.dfStatsJoueurs,dfStatsJoueurs])        
         
-        
-    def exporterVersBdd(self,listExport):
+    def exporterVersBdd(self,bdd='basket',listExport='all'):
         """
         exporter les dfs ciblées vers la Bdd
         in : 
+            bdd : string : raccourci de connexion vers la Bdd
             listExport : list de string decrivant les attribut, ou 'all' pour tout.
-                         string possibles : dfMatchs, dfScoreMatch, dfNewContrat, 
-                                            dfContratJoueurChange, dfNouveauBlesse, dfJoueurRetourBlessure
-                                            dfStatsJoueurs
+                         string possibles : match, contrat, blesse, stats
         """
+        dateVeille=(pd.to_datetime(self.dateJournee)-pd.Timedelta(1,'day')).strftime('%Y-%m-%d')
+        with ct.ConnexionBdd(bdd) as c :
+            if 'match' in listExport or listExport=='all':
+                self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+            if 'contrat' in listExport or listExport=='all':
+                if isinstance(self.dfNewContrat, pd.DataFrame) and not self.dfNewContrat.empty :
+                    self.dfNewContrat.to_sql('contrat',c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                if isinstance(self.dfContratJoueurChange, pd.DataFrame) and not self.dfContratJoueurChange.empty :
+                    c.sqlAlchemyConn.execute(f"UPDATE donnees_source.contrat SET date_fin_contrat = '{dateVeille}' WHERE id_contrat=any(array{self.dfContratJoueurChange.id_contrat.tolist()})")
+            if 'blesse' in listExport or listExport=='all':
+                if isinstance(self.dfNouveauBlesse, pd.DataFrame) and not self.dfNouveauBlesse.empty  :
+                    self.dfNouveauBlesse.to_sql('blessure', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                if isinstance(self.dfJoueurRetourBlessure, pd.DataFrame) and not self.dfJoueurRetourBlessure.empty :
+                    c.sqlAlchemyConn.execute(f"UPDATE donnees_source.blessure SET date_guerison = '{dateVeille}' WHERE id_joueur=any(array{self.dfJoueurRetourBlessure.id_joueur.tolist()}) AND date_guerison is null")
+            if 'stats' in listExport or listExport=='all':
+                self.dfStatsJoueurs.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+        
