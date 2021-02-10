@@ -224,6 +224,7 @@ INSERT INTO donnees_source.enum_type_blessure (id_type_blessure, nom_blessure, n
  		(24,'orteil','Toe'),
  		(25,'doigt','Finger'),
 		(26,'jambe','Leg'),
+		(27,'main','hand'),
 		(99,'NC',NULL);
 		
 --remplir la table d'enumeration des types de contrat
@@ -280,7 +281,23 @@ INSERT INTO donnees_source.blessure  (id_joueur, id_type_blessure, date_blessure
  FROM donnees_source.joueur j
  WHERE nom='Payton Pritchard' ;
  
---remplissage auto dans un des notebook
+--remplissage auto dans un des notebook, se basant sur les donnees de blesses de CBS SPORT, utilisant la requete suivante ( se base sur un travail precedent
+--d'identification des blesses inconnus
+WITH 
+tous_matchs_blesses_inconnus as(
+SELECT *
+ FROM public.blesses_inconnus_temp bi JOIN (SELECT s.*, m.date_match
+      FROM donnees_source.stat_nom s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
+      ON s.nom_simple=bi.nom_simple),
+blesses_inconnus_dernier_match AS (
+SELECT DISTINCT ON (id_joueur) id_joueur, "Injury", date_match, date_match+1 date_blessure
+ FROM tous_matchs_blesses_inconnus
+ ORDER BY id_joueur, date_match DESC),
+blesses_inconnus_insertion as(
+SELECT b.id_joueur,b.date_blessure,e.id_type_blessure
+ FROM blesses_inconnus_dernier_match b JOIN donnees_source.enum_type_blessure e ON b."Injury"=lower(e.nom_blessure_anglais))
+INSERT INTO donnees_source.blessure (id_joueur, date_blessure, id_type_blessure)
+ SELECT id_joueur, date_blessure, id_type_blessure FROM blesses_inconnus_insertion
 
  /* ========================
   * QUESTIONNER LA TABLE BLESSURE
@@ -297,4 +314,12 @@ select b.*,j.nom from donnees_source.joueur j JOIN donnees_source.blessure b ON 
 SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
  FROM donnees_source.contrat
  ORDER BY id_joueur, date_debut_contrat desc
+ 
+/*==============================
+ * VUES LES PLUS UTILES
+ ===============================* 
+ */
+CREATE OR REPLACE VIEW donnees_source.stat_nom AS 
+ SELECT s.*, j.nom, j.nom_simple
+  FROM donnees_source.stats_joueur s JOIN donnees_source.joueur j ON j.id_joueur=s.id_joueur
  

@@ -7,10 +7,88 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 '''
 
 import pandas as pd
-from TelechargementDonnees import JourneeSiteNba
+from datetime import date
+from TelechargementDonnees import JourneeSiteNba, Blessures
 import Connexion_Transfert as ct
 
+def miseAJourBlessesBdd(dfInjuries,sqlAlchemyConn):
+    """
+    mettre à jour les blesses de la Bdd qui presente un id_type_blessure à 99
+    et qui sont sur le site de CBS dans les blesses
+    in :
+        sqlAlchemyConn : connexion sqlAlchemy à la base
+        dfInjuries : dataframe des blesses issu de la classe Blessures du module TelechargementDonnees
+    """
+    rqtBlesseEnCoursBdd="""SELECT b.id_blessure, j.nom, j.nom_simple
+                             FROM donnees_source.blessure b JOIN donnees_source.joueur j ON b.id_joueur=j.id_joueur
+                             WHERE date_guerison IS NULL and id_type_blessure=99"""
+    blesseEnCoursBdd=pd.read_sql(rqtBlesseEnCoursBdd, sqlAlchemyConn)
+    #creer la df finale de MaJ
+    tempDfBlessePourMaJ=blesseEnCoursBdd.merge(dfInjuries, on='nom_simple')
+    #insrere cette df dans la base
+    if not tempDfBlessePourMaJ.empty : 
+        tempDfBlessePourMaJ.to_sql('blesses_temp', sqlAlchemyConn, schema='public', if_exists='replace', index=False)
+        #update la table
+        rqtUpdate="""UPDATE donnees_source.blessure b
+                      SET id_type_blessure=t.id_type_blessure
+                      FROM public.blesses_temp t
+                      WHERE b.id_blessure=t.id_blessure"""
+        sqlAlchemyConn.execute(rqtUpdate)
+        #drop la table temporaire
+        sqlAlchemyConn.execute("DROP TABLE IF EXISTS public.blesses_temp")
 
+def insererBlessesInconnusMatchBefore(dfInjuries,sqlAlchemyConn):
+    """
+    insrere dans la bdd les blesses non repertories dans les feuilles de matchs, mais qui ont daje joue
+    un match avant (i.e qu'on retrouve dans la table des stats joueurs)
+    in : 
+        sqlAlchemyConn : connexion sqlAlchemy à la base
+        dfInjuries : dataframe des blesses issu de la classe Blessures du module TelechargementDonnees
+    """
+    rqtBlesseEnCoursBdd="""SELECT b.id_blessure, j.nom, j.nom_simple
+                             FROM donnees_source.blessure b JOIN donnees_source.joueur j ON b.id_joueur=j.id_joueur
+                             WHERE date_guerison IS NULL and id_type_blessure!=99"""
+    blesseEnCoursBdd=pd.read_sql(rqtBlesseEnCoursBdd, sqlAlchemyConn)
+    dfInjuriesInconnu=dfInjuries.loc[~dfInjuries.nom_simple.isin(blesseEnCoursBdd.nom_simple.tolist())]
+    dfInjuriesInconnu.to_sql('blesses_inconnus_temp', sqlAlchemyConn, schema='public', if_exists='replace', index=False)
+    rqtBlessesInconnusAInserer="""WITH 
+                                tous_matchs_blesses_inconnus as(
+                                SELECT *
+                                 FROM public.blesses_inconnus_temp bi JOIN (SELECT s.*, m.date_match
+                                      FROM donnees_source.stat_nom s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
+                                      ON s.nom_simple=bi.nom_simple),
+                                blesses_inconnus_dernier_match AS (
+                                SELECT DISTINCT ON (id_joueur) id_joueur, "Injury", date_match, date_match+1 date_blessure
+                                 FROM tous_matchs_blesses_inconnus
+                                 ORDER BY id_joueur, date_match DESC),
+                                blesses_inconnus_insertion as(
+                                SELECT b.id_joueur,b.date_blessure,e.id_type_blessure
+                                 FROM blesses_inconnus_dernier_match b JOIN donnees_source.enum_type_blessure e ON b."Injury"=lower(e.nom_blessure_anglais))
+                                INSERT INTO donnees_source.blessure (id_joueur, date_blessure, id_type_blessure)
+                                 SELECT id_joueur, date_blessure, id_type_blessure FROM blesses_inconnus_insertion"""
+    sqlAlchemyConn.execute(rqtBlessesInconnusAInserer)
+    sqlAlchemyConn.execute("DROP TABLE IF EXISTS public.blesses_inconnus_temp")
+    
+def insererBlessesInconnusPasMatchBefore(dfInjuries,sqlAlchemyConn):
+    """
+    insrere dans la bdd les blesses non repertories dans les feuilles de matchs, 
+    et qui n'ont pas joue de matchs avant (i.e non reêrtorie dans table stats_joueurs)
+    in : 
+        sqlAlchemyConn : connexion sqlAlchemy à la base
+        dfInjuries : dataframe des blesses issu de la classe Blessures du module TelechargementDonnees
+    """
+    rqtBlesseEnCoursBdd="""SELECT b.id_blessure, j.nom, j.nom_simple
+                             FROM donnees_source.blessure b JOIN donnees_source.joueur j ON b.id_joueur=j.id_joueur
+                             WHERE date_guerison IS NULL and id_type_blessure!=99"""
+    blesseEnCoursBdd=pd.read_sql(rqtBlesseEnCoursBdd, sqlAlchemyConn)
+    joueurs=pd.read_sql('select nom_simple, id_joueur from donnees_source.joueur', sqlAlchemyConn)
+    dfInjuriesInconnu=dfInjuries.loc[~dfInjuries.nom_simple.isin(blesseEnCoursBdd.nom_simple.tolist())].merge(
+                        joueurs, on='nom_simple')
+    dfInjuriesInconnu['date_blessure']=dfInjuriesInconnu.Updated.apply(lambda x : pd.to_datetime(' '.join(x.split(', ')[1].split()
+                                                                                    [::-1]+[str(date.today().year),])))
+    dfInjuriesInconnu[['id_joueur','date_blessure','id_type_blessure']].to_sql('blessure', sqlAlchemyConn, 
+                                                                    schema='donnees_source', if_exists='append', index=False)
+    
 class JourneeBdd(JourneeSiteNba) : 
     """
     un objet permettant les échanges entre la base et une journee telechargee

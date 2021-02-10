@@ -16,6 +16,7 @@ import time, os, re
 import pandas as pd
 import numpy as np
 from collections import Counter
+import Connexion_Transfert as ct
 
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -69,8 +70,56 @@ class DriverFirefox(object):
     def __exit__(self,*args):
         self.driver.quit()   
         return False
+    
+class Blessures(object):
+    """
+    class permettant d'avoir acces aux joueurs blesses depuis le site de CBS
+    """   
+    
+    def __init__(self,siteCbs='https://www.cbssports.com/nba/injuries'):
+        """
+        attributs :
+            siteCbs : string : adresse du site reference
+        """
+        self.siteCbs=siteCbs
+        self.recupererTypeBlessure()
+        with DriverFirefox() as d:
+            self.driver=d.driver
+            self.dfInjuries=self.miseEnFormeBlessures(self.creerDfJoueursBlesses())
+            
+    def recupererTypeBlessure(self,bdd='basket'):
+        """
+        recuperer le type de blessure et le nom anglais depuis la Bdd
+        """
+        with ct.ConnexionBdd(bdd) as c : 
+            self.dftypeBlessure=pd.read_sql("""SELECT id_type_blessure, nom_blessure, LOWER(nom_blessure_anglais) "Injury"
+                                FROM donnees_source.enum_type_blessure""", c.sqlAlchemyConn)
+            
+    def creerDfJoueursBlesses(self):
+        """
+        recuperer la df de tous les joueurs blesses
+        """
+        self.driver.get(self.siteCbs)
+        time.sleep(5)
+        importPage=pd.read_html(self.driver.page_source)
+        dfsInjuries=pd.concat([importPage[i] for i in range(len(importPage))])
+        return dfsInjuries
+    
+    def miseEnFormeBlessures(self,dfsInjuries):
+        """
+        mettre en forme les donnees du site, en particulier la mise en forme du nom,
+        l'ajout de l'attribut nom_simple, le passage en minuscule des blessures et 
+        l'ajout de l'attribut id_type_blessure issu de la Bdd
+        """
+        dfsInjuries['Player']=dfsInjuries.Player.apply(lambda x : ' '.join(x.split()[-2:]) if Counter(x)[' ']<=4 
+                         and x.split()[-1].lower() not in ('jr.', 'sr.', 'ii','iii','iv','v')  
+                         else ' '.join(x.split()[-3:])).tolist()
+        dfsInjuries['nom_simple']=dfsInjuries.Player.apply(lambda x : simplifierNomJoueur(x))
+        dfsInjuries['Injury']=dfsInjuries.Injury.str.lower()
+        dfsInjuriesComplet=dfsInjuries.merge(self.dftypeBlessure, on='Injury')
+        return dfsInjuriesComplet
 
-class JourneeSiteNba(object):
+class JourneeSiteNba(Blessures):
     '''
     Resultats des matchs publies sur le site pour une date
     '''
@@ -86,6 +135,7 @@ class JourneeSiteNba(object):
             dicoJournee : dico avec en cle un integer  et en value un dico de 3 clé : match, stats_eO et stat_e1 qui contein les dfs de donnees
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
+        super().__init__()
         self.dateJournee=dateJournee
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         self.dossierExportCsv=dossierExportCsv
@@ -304,7 +354,8 @@ class JoueursSiteNba(object):
         """
         dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(listLinkJoueurs)], axis=0)
         return dfCaracJoueurs
-    
+ 
+
  
 class PasDeMatchError(Exception):  
     """
