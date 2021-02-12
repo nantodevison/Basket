@@ -249,8 +249,8 @@ class JourneeSiteNba(Blessures):
         #score ttfl
         dfStatEquipe.loc[~dfStatEquipe.dnp,'score_ttfl']=dfStatEquipe.loc[~dfStatEquipe.dnp].apply(lambda x : sum([x[c] for c in ('points', 'rebonds', 'passes_dec', 'steal','contres', 'tir_reussi',
                                     'trois_pt_r','lanc_frc_r')]) - (x['ball_perdu']+(x['tir_tentes']-x['tir_reussi'])+
-                                                                  (x['trois_pt_r']-x['trois_pt_t']) + 
-                                                                  (x['lanc_frc_r']-x['lanc_frc_t'])), axis=1)
+                                                                  (x['trois_pt_t']-x['trois_pt_r']) + 
+                                                                  (x['lanc_frc_t']-x['lanc_frc_r'])), axis=1)
         
     
     def creerDossierJournee(self):
