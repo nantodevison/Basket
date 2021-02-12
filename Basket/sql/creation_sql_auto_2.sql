@@ -36,7 +36,7 @@ CREATE TABLE donnees_source.joueur (
     date_entree_nba DATE,
     date_sortie_nba DATE,
     nom VARCHAR NOT NULL,
-	nom_simple VARCHAR NOT NULL,
+	nom_simple VARCHAR NOT NULL UNIQUE,
     taille NUMERIC(3,2),
     poids NUMERIC (4,1),
     id_position_terrain VARCHAR,
