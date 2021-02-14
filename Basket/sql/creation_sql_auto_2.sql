@@ -7,6 +7,7 @@
 CREATE SCHEMA donnees_source AUTHORIZATION postgres;
 
 DROP TABLE IF EXISTS donnees_source.equipe;
+DROP TABLE IF EXISTS donnees_source.stats_equipes;
 DROP TABLE IF EXISTS donnees_source.joueur;
 DROP TABLE IF EXISTS donnees_source.contrat;
 DROP TABLE IF EXISTS donnees_source.match;
@@ -28,6 +29,21 @@ CREATE TABLE donnees_source.equipe (
     conference VARCHAR(5) NOT NULL,
 	division VARCHAR NOT NULL ,
     PRIMARY KEY (id_equipe)
+);
+
+CREATE TABLE donnees_source.stats_equipes (
+	id_stats_equipes SERIAL NOT NULL,
+	id_match integer NOT NULL REFERENCES donnees_source.match (id_match) ON UPDATE CASCADE,
+    id_equipe VARCHAR(3) NOT NULL REFERENCES donnees_source.equipe (id_equipe) ON UPDATE CASCADE ,
+	pts_in_paint INTEGER ,
+	fastbreak_pts INTEGER,
+	biggest_lead INTEGER,
+    pts_banc INTEGER, 
+	tm_rebonds INTEGER,
+	ball_perdu INTEGER,
+	tm_ball_perdu INTEGER,
+	pt_subi_ctrattaq INTEGER,
+    PRIMARY KEY (id_stats_equipes)
 );
 
 CREATE TABLE donnees_source.joueur (

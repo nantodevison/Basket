@@ -109,7 +109,7 @@ class JourneeBdd(JourneeSiteNba) :
         self.id_type_match=id_type_match
         self.id_type_playoffs=id_type_playoffs
         self.dfMatchs,self.dfScoreMatch,self.dfNewContrat,self.dfContratJoueurChange=None,None, None, None
-        self.dfNouveauBlesse,self.dfJoueurRetourBlessure,self.dfStatsJoueurs=None, None, None
+        self.dfNouveauBlesse,self.dfJoueurRetourBlessure,self.dfStatsJoueurs,self.dfStatsEquipes=None, None, None, None
      
     def creerAttributsGlobaux(self):
         """
@@ -124,6 +124,7 @@ class JourneeBdd(JourneeSiteNba) :
         for k,v in self.dicoJournee.items() : 
             self.creerDfMatch(v['match'], k)
             self.creerDfScoreMatch(v['match'],k)
+            self.creerDfStatsEquipes(v['stats_equipes'],k)
             for e,s in enumerate((v['stats_e0'], v['stats_e1'])) : 
                 #synthese et epuration des donnees de joueurs
                 idEquipe=v['match'].loc[e].equipe
@@ -183,12 +184,27 @@ class JourneeBdd(JourneeSiteNba) :
     def creerDfMatch(self, dfMatch, id_match):
         """
         mettre en forme la df d'un match telechargee
+        in : 
+            dfMatch : df des equipes du match 
+            id_match : identiifant du match
         """
-        equipeExt=dfMatch.iloc[0].equipe
-        equipeDom=dfMatch.iloc[1].equipe
+        equipeExt=dfMatch.iloc[0].id_equipe
+        equipeDom=dfMatch.iloc[1].id_equipe
         self.dfMatchs=pd.concat([self.dfMatchs,pd.DataFrame({'id_match':id_match,'id_saison':[self.id_saison],
                         'date_match':[self.dateJournee],'equipe_domicile':[equipeDom],
                         'equipe_exterieure':[equipeExt],'id_type_match':[self.id_type_match]})])
+        
+    def creerDfStatsEquipes(self, dfStatsEquipes, id_match):
+        """
+        mettre en forme la df des stats générales par equipes 'points dans l apeinture, points du banc,
+        etc...
+        in : 
+            dfStatsEquipes :df ddes stats par equipes issue du dicoJournee
+            id_match : identifiant du match concernes
+        """
+        dfStatsEquipes['id_match']=id_match
+        self.dfStatsEquipes=pd.concat([self.dfStatsEquipes,dfStatsEquipes])
+        
     
     def creerDfScoreMatch(self,dfMatch,idMatchBdd) : 
         """
@@ -197,10 +213,9 @@ class JourneeBdd(JourneeSiteNba) :
             dfMatch :df du match issue du dicoJournee
             idMatchBdd : identifiant uniq du match dans la bdd, cf recupererIdMatch(
         """
-        dfScoreMatch=dfMatch.melt(id_vars=['equipe'], value_vars=[c for c in dfMatch.columns if c !='equipe'],
-                            var_name='id_periode', value_name='score_periode').sort_values('equipe')
+        dfScoreMatch=dfMatch.melt(id_vars=['id_equipe'], value_vars=[c for c in dfMatch.columns if c !='id_equipe'],
+                            var_name='id_periode', value_name='score_periode').sort_values('id_equipe')
         dfScoreMatch['id_match']=idMatchBdd
-        dfScoreMatch.rename(columns={'equipe':'id_equipe'}, inplace=True)
         self.dfScoreMatch=pd.concat([self.dfScoreMatch,dfScoreMatch])
         
     def clearJoueursInactifs(self,dfStatsJoueurs) : 
@@ -295,6 +310,7 @@ class JourneeBdd(JourneeSiteNba) :
             if 'match' in listExport or listExport=='all':
                 self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
                 self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                self.dfStatsEquipes.to_sql('stats_equipes',c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
             if 'contrat' in listExport or listExport=='all':
                 if isinstance(self.dfNewContrat, pd.DataFrame) and not self.dfNewContrat.empty :
                     self.dfNewContrat.to_sql('contrat',c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)

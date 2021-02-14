@@ -21,7 +21,9 @@ import Connexion_Transfert as ct
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
  'rebonds_o', 'rebonds_d', 'rebonds', 'passes_dec', 'steal','contres','ball_perdu', 'faute_p','points', 'plus_moins']
-nomsColonnesMatch=['equipe','q1','q2','q3','q4','final']
+nomsColonnesMatch=['id_equipe','q1','q2','q3','q4','final']
+nomsColonnesStatsEquipe=['id_equipe','pts_in_paint','fastbreak_pts','biggest_lead',
+                   'pts_banc','tm_rebonds','ball_perdu','tm_ball_perdu','pt_subi_ctrattaq']
 dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP","NWT","DND")
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
@@ -188,6 +190,10 @@ class JourneeSiteNba(Blessures):
             time.sleep(7)
             self.driver.implicitly_wait(20)
             dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
+            dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
+                                                      pd.read_html(self.driver.page_source)[1]],axis=1)
+            print(dicoJournee[e]['stats_equipes'])
+            break
         self.miseEnFormeDf(dicoJournee)
         return dicoJournee
     
@@ -199,13 +205,14 @@ class JourneeSiteNba(Blessures):
             dicoJournee : dico des matchs et stats non mis en forme
         """
         for i in range(len(dicoJournee)) :
-            self.colonnesMatch(dicoJournee[i]['match']) #modifier le noms de colonnes
+            self.colonnesMatch(dicoJournee[i]['match'],dicoJournee[i]['stats_equipes'] ) #modifier le noms de colonnes
             for e in ('stats_e0','stats_e1') : 
                 self.colonnesStats(dicoJournee[i][e])
                 #ajouter ttributs manqants et mettre en forme
                 self.ajoutAttributs(dicoJournee[i][e]) #ajouter les attributs supplementaires
     
-    def colonnesMatch(self,dfMatch,nomsColonnesMatch=nomsColonnesMatch):
+    def colonnesMatch(self,dfMatch,dfStatsEquipes,nomsColonnesMatch=nomsColonnesMatch,
+                      nomsColonnesStatsEquipe=nomsColonnesStatsEquipe):
         """
         modifier les noms de colonnees dans une df de match, gestion ds prolongations
         """
@@ -214,6 +221,7 @@ class JourneeSiteNba(Blessures):
             prolongation=[f'pr{i+1}' for i in range(nbColonnesMatch)]
             nomsColonnesMatch=nomsColonnesMatch[:-1]+prolongation+[nomsColonnesMatch[-1]]
         dfMatch.columns=nomsColonnesMatch
+        dfStatsEquipes.columns=nomsColonnesStatsEquipe
         
     def colonnesStats(self,dfStats):
         """
