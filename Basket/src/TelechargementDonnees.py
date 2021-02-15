@@ -192,8 +192,6 @@ class JourneeSiteNba(Blessures):
             dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
             dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
                                                       pd.read_html(self.driver.page_source)[1]],axis=1)
-            print(dicoJournee[e]['stats_equipes'])
-            break
         self.miseEnFormeDf(dicoJournee)
         return dicoJournee
     

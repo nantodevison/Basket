@@ -45,6 +45,7 @@ CREATE TABLE donnees_source.stats_equipes (
 	pt_subi_ctrattaq INTEGER,
     PRIMARY KEY (id_stats_equipes)
 );
+ALTER TABLE donnees_source.stats_equipes ADD CONSTRAINT stats_equipes_un UNIQUE (id_match,id_equipe);
 
 CREATE TABLE donnees_source.joueur (
     id_joueur SERIAL NOT NULL,

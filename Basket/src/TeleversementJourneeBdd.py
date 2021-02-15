@@ -127,7 +127,7 @@ class JourneeBdd(JourneeSiteNba) :
             self.creerDfStatsEquipes(v['stats_equipes'],k)
             for e,s in enumerate((v['stats_e0'], v['stats_e1'])) : 
                 #synthese et epuration des donnees de joueurs
-                idEquipe=v['match'].loc[e].equipe
+                idEquipe=v['match'].loc[e].id_equipe
                 dfJoueurActifBlesses=self.clearJoueursInactifs(s)
                 dfJoueursTot=self.creerDfJoueurFinale(dfJoueurActifBlesses,dfJoueursBdd)
                 #contrats
@@ -169,7 +169,7 @@ class JourneeBdd(JourneeSiteNba) :
         """
         Trouver les joueurs de la journee non presents dans la base de donnees
         """
-        dfJoueurJournee=pd.concat([v for c in self.dicoJournee.keys() for k,v in self.dicoJournee[c].items() if k[:6]!='match' ]).merge(dfJoueursBdd, on='nom_simple', how='left') 
+        dfJoueurJournee=pd.concat([v for c in self.dicoJournee.keys() for k,v in self.dicoJournee[c].items() if k in ('stats_e0', 'stats_e1') ]).merge(dfJoueursBdd, on='nom_simple', how='left') 
         self.dfJoueursInconnus=dfJoueurJournee.loc[dfJoueurJournee.id_joueur.isna()][['nom','nom_simple']]
     
     def ajoutJoueursInconnus(self):
@@ -308,8 +308,8 @@ class JourneeBdd(JourneeSiteNba) :
         dateVeille=(pd.to_datetime(self.dateJournee)-pd.Timedelta(1,'day')).strftime('%Y-%m-%d')
         with ct.ConnexionBdd(bdd) as c :
             if 'match' in listExport or listExport=='all':
-                self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
-                self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                #self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                #self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
                 self.dfStatsEquipes.to_sql('stats_equipes',c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
             if 'contrat' in listExport or listExport=='all':
                 if isinstance(self.dfNewContrat, pd.DataFrame) and not self.dfNewContrat.empty :
@@ -317,10 +317,16 @@ class JourneeBdd(JourneeSiteNba) :
                 if isinstance(self.dfContratJoueurChange, pd.DataFrame) and not self.dfContratJoueurChange.empty :
                     c.sqlAlchemyConn.execute(f"UPDATE donnees_source.contrat SET date_fin_contrat = '{dateVeille}' WHERE id_contrat=any(array{self.dfContratJoueurChange.id_contrat.tolist()})")
             if 'blesse' in listExport or listExport=='all':
+                #dans un premier temps on insere les blesses
                 if isinstance(self.dfNouveauBlesse, pd.DataFrame) and not self.dfNouveauBlesse.empty  :
                     self.dfNouveauBlesse.to_sql('blessure', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
                 if isinstance(self.dfJoueurRetourBlessure, pd.DataFrame) and not self.dfJoueurRetourBlessure.empty :
                     c.sqlAlchemyConn.execute(f"UPDATE donnees_source.blessure SET date_guerison = '{dateVeille}' WHERE id_joueur=any(array{self.dfJoueurRetourBlessure.id_joueur.tolist()}) AND date_guerison is null")
+                #puis on met a jour les type de blessures
+                if isinstance(self.dfInjuries, pd.DataFrame) and not self.dfInjuries.empty :
+                    miseAJourBlessesBdd(self.dfInjuries,c.sqlAlchemyConn)
+                    insererBlessesInconnusMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
+                    insererBlessesInconnusPasMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
             if 'stats' in listExport or listExport=='all':
                 self.dfStatsJoueurs.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
         
