@@ -332,11 +332,45 @@ SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
  FROM donnees_source.contrat
  ORDER BY id_joueur, date_debut_contrat desc
  
-/*==============================
- * VUES LES PLUS UTILES
- ===============================* 
- */
-CREATE OR REPLACE VIEW donnees_source.stat_nom AS 
- SELECT s.*, j.nom, j.nom_simple
-  FROM donnees_source.stats_joueur s JOIN donnees_source.joueur j ON j.id_joueur=s.id_joueur
+/*================================================
+ *VUE DE CALCUL DES OFFENSIVE ET DEFENSIVE RATINGS 
+ ==================================================*/
+  
+-- c'est un calcul par match, basé sur le nombre de possessions
+--cf https://www.basketball-reference.com/about/ratings.html
+
+--calcul du nombre de possession : 
+	-- d'abord les stats cumulees par equipes et par match
+CREATE OR REPLACE VIEW donnees_source.stats_joueurs_match AS 
+SELECT j.nom, d.id_match, c.id_equipe, d."minute", d.points, d.rebonds, d.passes_dec, d.steal, d.contres, d.tir_reussi, 
+d.tir_tentes, d.pct_tir, d.trois_pt_r, d.trois_pt_t, d.pct_3_pt, d.lanc_frc_r, d.lanc_frc_t, d.pct_lfrc, 
+d.rebonds_o, d.rebonds_d, d.ball_perdu, d.faute_p
+ FROM  (SELECT sj.id_joueur, sj.id_match, m.date_match, sj."minute", sj.points, sj.rebonds, sj.passes_dec, sj.steal, sj.contres, sj.tir_reussi, sj.tir_tentes, sj.pct_tir, sj.trois_pt_r, sj.trois_pt_t, sj.
+pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d, sj.ball_perdu, sj.faute_p
+	     FROM donnees_source.stats_joueur sj JOIN donnees_source."match" m ON sj.id_match=m.id_match) d 
+	     JOIN donnees_source.contrat c ON (c.id_joueur=d.id_joueur AND (
+										     d.date_match BETWEEN c.date_debut_contrat AND c.date_fin_contrat OR (
+										     d.date_match >= c.date_debut_contrat AND c.date_fin_contrat IS NULL) ))
+	     JOIN donnees_source.joueur j ON j.id_joueur = d.id_joueur
+
+	-- calcul des stats cumulees par equipe et par match
+CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_match AS 
+SELECT id_equipe, id_match, sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
+       sum(contres) contres, sum(tir_reussi) tir_reussi, sum(tir_tentes) tir_tentes,  avg(pct_tir) pct_tir, 
+       sum(trois_pt_r) trois_pt_r, sum(trois_pt_t) trois_pt_t,  avg(pct_3_pt) pct_3_pt, sum(lanc_frc_r) lanc_frc_r, 
+       sum(lanc_frc_t) lanc_frc_t,  avg(pct_lfrc) pct_lfrc, sum(rebonds_o) rebonds_o, sum(rebonds_d) rebonds_d, 
+       sum(ball_perdu) ball_perdu, sum(faute_p) faute_p
+  FROM donnees_source.stats_joueurs_match
+  GROUP BY id_match, id_equipe
+  
+	--calcul des possessions de l'equipe
+CREATE OR REPLACE VIEW donnees_source.nb_possessions AS 
+SELECT id_equipe, id_match, 0.96*(tir_tentes - rebonds_o + ball_perdu +(0.44*lanc_frc_t))
+ FROM donnees_source.stats_cumul_eqp_match
+
+	
+ 
+  
+  
+  
  
