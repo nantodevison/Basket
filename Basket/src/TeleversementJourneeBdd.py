@@ -308,8 +308,8 @@ class JourneeBdd(JourneeSiteNba) :
         dateVeille=(pd.to_datetime(self.dateJournee)-pd.Timedelta(1,'day')).strftime('%Y-%m-%d')
         with ct.ConnexionBdd(bdd) as c :
             if 'match' in listExport or listExport=='all':
-                #self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
-                #self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                self.dfMatchs.to_sql('match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+                self.dfScoreMatch.to_sql('score_match', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
                 self.dfStatsEquipes.to_sql('stats_equipes',c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
             if 'contrat' in listExport or listExport=='all':
                 if isinstance(self.dfNewContrat, pd.DataFrame) and not self.dfNewContrat.empty :
