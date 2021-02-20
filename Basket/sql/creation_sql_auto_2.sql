@@ -357,7 +357,7 @@ pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d,
 	     
 	-- calcul des stats cumulees par equipe et par match
 CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_match AS 
-SELECT id_equipe, id_match, sum("minute"), sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
+SELECT id_equipe, id_match, sum("minute") minutes, sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
        sum(contres) contres, sum(tir_reussi) tir_reussi, sum(tir_tentes) tir_tentes,  avg(pct_tir) pct_tir, 
        sum(trois_pt_r) trois_pt_r, sum(trois_pt_t) trois_pt_t,  avg(pct_3_pt) pct_3_pt, sum(lanc_frc_r) lanc_frc_r, 
        sum(lanc_frc_t) lanc_frc_t,  avg(pct_lfrc) pct_lfrc, sum(rebonds_o) rebonds_o, sum(rebonds_d) rebonds_d, 
@@ -371,18 +371,28 @@ SELECT id_match, count(id_match)
   GROUP BY id_match
   HAVING count(id_match) != 2
 
-	--calcul des possessions de l'equipe
-CREATE OR REPLACE VIEW donnees_source.team_ratings_match AS 
-
-SELECT id_equipe, id_match, points,
- donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t) possessions, 
- CASE WHEN row_number() OVER w = 1 THEN lead(points) OVER w / donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)
-      ELSE lag(points) OVER w / donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)
-      END team_def_rating, 
-points/donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)*100 team_off_rating
- FROM donnees_source.stats_cumul_eqp_match
+	--calcul des stats avancees par match
+CREATE OR REPLACE VIEW donnees_source.stats_avancee_match AS 
+WITH 
+nb_poss AS (
+SELECT id_equipe, id_match, points, minutes,
+ donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t) possessions
+ FROM donnees_source.stats_cumul_eqp_match)
+SELECT *,
+       CASE WHEN row_number() OVER w = 1 THEN lead(points) OVER w / possessions*100
+       ELSE lag(points) OVER w / possessions*100
+       END team_def_rating, 
+       points/possessions*100 team_off_rating,
+       CASE WHEN row_number() OVER w = 1 THEN donnees_source.func_pace(LEAD(possessions) OVER w,possessions,
+       round(EXTRACT(EPOCH FROM minutes)/60)::integer)
+           ELSE donnees_source.func_pace(LAG(possessions) OVER w,possessions,
+       round(EXTRACT(EPOCH FROM minutes)/60)::integer) 
+           END pace
+ FROM nb_poss
  WINDOW w AS (PARTITION BY id_match)
  ORDER BY id_match
+ 
+ 	--calcul des stats avance par saison
 
  
 /* ========================
@@ -401,6 +411,20 @@ END
 $$ ;
 COMMENT ON FUNCTION donnees_source.func_nb_possessions(bigint,bigint,bigint,bigint) IS 'calcul du nombre de possesions
 par equipe et par match' ;
+
+
+-- fonction de calcul de la pace
+CREATE OR REPLACE FUNCTION donnees_source.func_pace (IN team_poss numeric, opp_poss numeric, team_minutes integer,
+                        OUT pace numeric)
+LANGUAGE plpgsql
+AS
+$$
+BEGIN 
+	pace=48*((team_poss+opp_poss)/(2*(team_minutes/5))) ;
+END 
+$$ ;
+COMMENT ON FUNCTION donnees_source.func_pace(numeric,numeric,integer) IS 'calcul du nombre de possesions
+moyen (peu importe le temps de match) par equipe et par match' ;
 
 -- supression à partir d'une date
 CREATE OR REPLACE FUNCTION donnees_source.supprimer_par_date(dateMin date)
