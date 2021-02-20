@@ -17,6 +17,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import Connexion_Transfert as ct
+from pickle import TRUE, FALSE
 
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -236,8 +237,41 @@ class JourneeSiteNba(Blessures):
         in : 
            dfStatEquipe : df de stats des equipes issues du dico des matchs et stats mis en forme issu sde miseEnFormeDf()
         """
-        dfStatEquipe['dnp']=dfStatEquipe.minute.apply(lambda x : any([e in x for e in dnpTupleTexte])  or x=='00:00')
-        dfStatEquipe['blesse']=dfStatEquipe.minute.apply(lambda x : "Injury/Illness" in x)
+        def trouverDnp(minute):
+            """
+            trouver les dnp, en fonction du nombre de minute ou des annotations
+            """
+            if isinstance(minute, float) or isinstance(minute, int) : 
+                if minute==0 : 
+                    return True 
+                else : 
+                    return False 
+            elif isinstance(minute, str) : 
+                if any([e in minute for e in dnpTupleTexte])  or float(minute.replace(':','.'))==0 :
+                    return True 
+                else : 
+                    return False 
+            else : 
+                raise TypeError('donnees minutes non traitees dans recherche dnp')
+                
+        def convertirMinute(minute):
+            """
+            convertir les minutes en timedelta
+            """
+            if pd.isnull(minute) : 
+                return pd.to_timedelta(minute,unit='S')
+            elif isinstance(minute, str) : 
+                return pd.to_timedelta('00:'+':'.join([a.zfill(2) for a in str(minute).split('.')]))
+            elif isinstance(minute, float) : 
+                return pd.to_timedelta('00:'+':'.join([a.zfill(2) for a in str(minute).split('.')]))
+            elif isinstance(minute, int) :
+                return f'{str(minute).zfill(2)}:00'
+            else :
+                raise TypeError('type de donnees minutes non gere')
+            
+            
+        dfStatEquipe['dnp']=dfStatEquipe.minute.apply(lambda x : trouverDnp(x))
+        dfStatEquipe['blesse']=dfStatEquipe.minute.apply(lambda x : "Injury/Illness" in x if isinstance(x, str) else False)
         #passer les valeurs des joueurs n'ayant pas joues a NaN
         dfStatEquipe.loc[dfStatEquipe.dnp,
             [c for c in dfStatEquipe.columns if c not in ('nom','dnp','blesse')]]=np.NaN
@@ -245,8 +279,7 @@ class JourneeSiteNba(Blessures):
         for c in [e for e in dfStatEquipe.columns if e not in ('nom', 'position', 'minute', 'dnp', 'blesse')] :
                 dfStatEquipe[c]=dfStatEquipe[c].astype(float)
         #convertir le temps joue en format date
-        dfStatEquipe['minute']=dfStatEquipe.minute.apply(lambda x : 
-                    pd.to_timedelta('00:'+x) if not pd.isnull(x) else pd.to_timedelta(x,unit='S'))
+        dfStatEquipe['minute']=dfStatEquipe.minute.apply(lambda x : convertirMinute(x))
         #simplifier les noms car il le lit 2 fois (je crois que c'est du au differents liens de la page)
         dfStatEquipe['nom']=dfStatEquipe.nom.apply(lambda x : x.split()[0]+' '+x.split()[1][:-2] if Counter(x)[' ']<=2 and x.split()[-1].lower() not in ('jr.', 'sr.', 'ii','iii','iv','v')  
                                              else ' '.join(x.split()[:2]+[x.split()[2][:-2],]))

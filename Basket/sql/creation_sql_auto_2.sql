@@ -355,11 +355,9 @@ pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d,
 										     d.date_match >= c.date_debut_contrat AND c.date_fin_contrat IS NULL) ))
 	     JOIN donnees_source.joueur j ON j.id_joueur = d.id_joueur
 	     
-	--on verifie 
-
 	-- calcul des stats cumulees par equipe et par match
 CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_match AS 
-SELECT id_equipe, id_match, sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
+SELECT id_equipe, id_match, sum("minute"), sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
        sum(contres) contres, sum(tir_reussi) tir_reussi, sum(tir_tentes) tir_tentes,  avg(pct_tir) pct_tir, 
        sum(trois_pt_r) trois_pt_r, sum(trois_pt_t) trois_pt_t,  avg(pct_3_pt) pct_3_pt, sum(lanc_frc_r) lanc_frc_r, 
        sum(lanc_frc_t) lanc_frc_t,  avg(pct_lfrc) pct_lfrc, sum(rebonds_o) rebonds_o, sum(rebonds_d) rebonds_d, 
@@ -367,15 +365,42 @@ SELECT id_equipe, id_match, sum(points) points, sum(rebonds) rebonds, sum(passes
   FROM donnees_source.stats_joueurs_match
   GROUP BY id_match, id_equipe
   
+  	--on verifie que l'on a bien que 2 equipes par id_match dans la vue des stats cumulee
+SELECT id_match, count(id_match)
+  FROM donnees_source.stats_cumul_eqp_match
+  GROUP BY id_match
+  HAVING count(id_match) != 2
+
 	--calcul des possessions de l'equipe
-CREATE OR REPLACE VIEW donnees_source.nb_possessions AS 
-SELECT id_equipe, id_match, 0.96*(tir_tentes - rebonds_o + ball_perdu +(0.44*lanc_frc_t))
+CREATE OR REPLACE VIEW donnees_source.team_ratings_match AS 
+
+SELECT id_equipe, id_match, points,
+ donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t) possessions, 
+ CASE WHEN row_number() OVER w = 1 THEN lead(points) OVER w / donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)
+      ELSE lag(points) OVER w / donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)
+      END team_def_rating, 
+points/donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t)*100 team_off_rating
  FROM donnees_source.stats_cumul_eqp_match
+ WINDOW w AS (PARTITION BY id_match)
+ ORDER BY id_match
 
  
-/*========================
+/* ========================
  * FONCTIONS
- ======================*/
+ ====================== */
+ 
+--calcul du nombre de possessions
+CREATE OR REPLACE FUNCTION donnees_source.func_nb_possessions (IN tir_tentes bigint, rebonds_o bigint, ball_perdu bigint, lanc_frc_t bigint,
+                        OUT possessions numeric)
+LANGUAGE plpgsql
+AS
+$$
+BEGIN 
+	possessions=0.96*(tir_tentes - rebonds_o + ball_perdu +(0.44*lanc_frc_t)) ;
+END 
+$$ ;
+COMMENT ON FUNCTION donnees_source.func_nb_possessions(bigint,bigint,bigint,bigint) IS 'calcul du nombre de possesions
+par equipe et par match' ;
 
 -- supression à partir d'une date
 CREATE OR REPLACE FUNCTION donnees_source.supprimer_par_date(dateMin date)
@@ -385,37 +410,30 @@ AS
 $$
 
 BEGIN 
-	
 DELETE FROM donnees_source.score_match
 WHERE id_match IN (
 SELECT id_match 
  FROM donnees_source."match"
  WHERE date_match >= dateMin) ;
- 
 DELETE FROM donnees_source.stats_equipes
 WHERE id_match IN (
 SELECT id_match 
  FROM donnees_source."match"
  WHERE date_match >= dateMin) ;
- 
 DELETE FROM donnees_source.stats_joueur
 WHERE id_match IN (
 SELECT id_match 
  FROM donnees_source."match"
  WHERE date_match >= dateMin) ;
-
 DELETE FROM donnees_source."match"
 WHERE id_match IN (
 SELECT id_match 
  FROM donnees_source."match"
  WHERE date_match >= dateMin) ;
- 
 DELETE FROM donnees_source.blessure
 WHERE date_blessure >= dateMin;
-
 DELETE FROM donnees_source.contrat
 WHERE date_debut_contrat >= dateMin;
-
 END
 $$ ;
 COMMENT ON FUNCTION donnees_source.supprimer_par_date(date) IS 'supprmier des tables match, blessures, contrat, stats_joueur, stat_equipe, score match les
