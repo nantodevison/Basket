@@ -325,8 +325,8 @@ class JourneeBdd(JourneeSiteNba) :
                 #puis on met a jour les type de blessures
                 if isinstance(self.dfInjuries, pd.DataFrame) and not self.dfInjuries.empty :
                     miseAJourBlessesBdd(self.dfInjuries,c.sqlAlchemyConn)
-                    #insererBlessesInconnusMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
-                    #insererBlessesInconnusPasMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
+                    insererBlessesInconnusMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
+                    insererBlessesInconnusPasMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
             if 'stats' in listExport or listExport=='all':
                 self.dfStatsJoueurs.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
         
