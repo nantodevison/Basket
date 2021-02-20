@@ -330,7 +330,9 @@ select b.*,j.nom from donnees_source.joueur j JOIN donnees_source.blessure b ON 
 
 SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
  FROM donnees_source.contrat
- ORDER BY id_joueur, date_debut_contrat desc
+ ORDER BY id_joueur, date_debut_contrat DESC
+ 
+
  
 /*================================================
  *VUE DE CALCUL DES OFFENSIVE ET DEFENSIVE RATINGS 
@@ -342,7 +344,7 @@ SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
 --calcul du nombre de possession : 
 	-- d'abord les stats cumulees par equipes et par match
 CREATE OR REPLACE VIEW donnees_source.stats_joueurs_match AS 
-SELECT j.nom, d.id_match, c.id_equipe, d."minute", d.points, d.rebonds, d.passes_dec, d.steal, d.contres, d.tir_reussi, 
+SELECT j.id_joueur, j.nom, j.nom_simple, d.id_match, c.id_equipe, d."minute", d.points, d.rebonds, d.passes_dec, d.steal, d.contres, d.tir_reussi, 
 d.tir_tentes, d.pct_tir, d.trois_pt_r, d.trois_pt_t, d.pct_3_pt, d.lanc_frc_r, d.lanc_frc_t, d.pct_lfrc, 
 d.rebonds_o, d.rebonds_d, d.ball_perdu, d.faute_p
  FROM  (SELECT sj.id_joueur, sj.id_match, m.date_match, sj."minute", sj.points, sj.rebonds, sj.passes_dec, sj.steal, sj.contres, sj.tir_reussi, sj.tir_tentes, sj.pct_tir, sj.trois_pt_r, sj.trois_pt_t, sj.
@@ -352,6 +354,8 @@ pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d,
 										     d.date_match BETWEEN c.date_debut_contrat AND c.date_fin_contrat OR (
 										     d.date_match >= c.date_debut_contrat AND c.date_fin_contrat IS NULL) ))
 	     JOIN donnees_source.joueur j ON j.id_joueur = d.id_joueur
+	     
+	--on verifie 
 
 	-- calcul des stats cumulees par equipe et par match
 CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_match AS 
@@ -367,6 +371,55 @@ SELECT id_equipe, id_match, sum(points) points, sum(rebonds) rebonds, sum(passes
 CREATE OR REPLACE VIEW donnees_source.nb_possessions AS 
 SELECT id_equipe, id_match, 0.96*(tir_tentes - rebonds_o + ball_perdu +(0.44*lanc_frc_t))
  FROM donnees_source.stats_cumul_eqp_match
+
+ 
+/*========================
+ * FONCTIONS
+ ======================*/
+
+-- supression à partir d'une date
+CREATE OR REPLACE FUNCTION donnees_source.supprimer_par_date(dateMin date)
+RETURNS VOID
+LANGUAGE plpgsql
+AS
+$$
+
+BEGIN 
+	
+DELETE FROM donnees_source.score_match
+WHERE id_match IN (
+SELECT id_match 
+ FROM donnees_source."match"
+ WHERE date_match >= dateMin) ;
+ 
+DELETE FROM donnees_source.stats_equipes
+WHERE id_match IN (
+SELECT id_match 
+ FROM donnees_source."match"
+ WHERE date_match >= dateMin) ;
+ 
+DELETE FROM donnees_source.stats_joueur
+WHERE id_match IN (
+SELECT id_match 
+ FROM donnees_source."match"
+ WHERE date_match >= dateMin) ;
+
+DELETE FROM donnees_source."match"
+WHERE id_match IN (
+SELECT id_match 
+ FROM donnees_source."match"
+ WHERE date_match >= dateMin) ;
+ 
+DELETE FROM donnees_source.blessure
+WHERE date_blessure >= dateMin;
+
+DELETE FROM donnees_source.contrat
+WHERE date_debut_contrat >= dateMin;
+
+END
+$$ ;
+COMMENT ON FUNCTION donnees_source.supprimer_par_date(date) IS 'supprmier des tables match, blessures, contrat, stats_joueur, stat_equipe, score match les
+données de date supéreiure ou égale à la date en entrée' ;
 
 	
  

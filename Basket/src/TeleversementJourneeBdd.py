@@ -55,7 +55,7 @@ def insererBlessesInconnusMatchBefore(dfInjuries,sqlAlchemyConn):
                                 tous_matchs_blesses_inconnus as(
                                 SELECT *
                                  FROM public.blesses_inconnus_temp bi JOIN (SELECT s.*, m.date_match
-                                      FROM donnees_source.stat_nom s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
+                                      FROM donnees_source.stats_joueurs_match s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
                                       ON s.nom_simple=bi.nom_simple),
                                 blesses_inconnus_dernier_match AS (
                                 SELECT DISTINCT ON (id_joueur) id_joueur, "Injury", date_match, date_match+1 date_blessure
@@ -132,7 +132,7 @@ class JourneeBdd(JourneeSiteNba) :
                 dfJoueursTot=self.creerDfJoueurFinale(dfJoueurActifBlesses,dfJoueursBdd)
                 #contrats
                 self.contratJoueursinconnus(dfJoueursTot,dfContratBdd,idEquipe)
-                self.modifContrats
+                self.modifContrats(dfJoueursTot,dfContratBdd,idEquipe)
                 #blessures
                 self.blessures(dfJoueursTot,dfJoueursBlessesBdd)
                 self.retourBlessures(dfJoueursTot,dfJoueursBlessesBdd)
@@ -325,8 +325,8 @@ class JourneeBdd(JourneeSiteNba) :
                 #puis on met a jour les type de blessures
                 if isinstance(self.dfInjuries, pd.DataFrame) and not self.dfInjuries.empty :
                     miseAJourBlessesBdd(self.dfInjuries,c.sqlAlchemyConn)
-                    insererBlessesInconnusMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
-                    insererBlessesInconnusPasMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
+                    #insererBlessesInconnusMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
+                    #insererBlessesInconnusPasMatchBefore(self.dfInjuries,c.sqlAlchemyConn)
             if 'stats' in listExport or listExport=='all':
                 self.dfStatsJoueurs.to_sql('stats_joueur', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
         
