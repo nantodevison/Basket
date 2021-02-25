@@ -52,18 +52,22 @@ def insererBlessesInconnusMatchBefore(dfInjuries,sqlAlchemyConn):
     dfInjuriesInconnu=dfInjuries.loc[~dfInjuries.nom_simple.isin(blesseEnCoursBdd.nom_simple.tolist())]
     dfInjuriesInconnu.to_sql('blesses_inconnus_temp', sqlAlchemyConn, schema='public', if_exists='replace', index=False)
     rqtBlessesInconnusAInserer="""WITH 
-                                tous_matchs_blesses_inconnus as(
-                                SELECT *
-                                 FROM public.blesses_inconnus_temp bi JOIN (SELECT s.*, m.date_match
-                                      FROM donnees_source.stats_joueurs_match s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
-                                      ON s.nom_simple=bi.nom_simple),
-                                blesses_inconnus_dernier_match AS (
-                                SELECT DISTINCT ON (id_joueur) id_joueur, "Injury", date_match, date_match+1 date_blessure
-                                 FROM tous_matchs_blesses_inconnus
-                                 ORDER BY id_joueur, date_match DESC),
-                                blesses_inconnus_insertion as(
-                                SELECT b.id_joueur,b.date_blessure,e.id_type_blessure
-                                 FROM blesses_inconnus_dernier_match b JOIN donnees_source.enum_type_blessure e ON b."Injury"=lower(e.nom_blessure_anglais))
+                                    tous_matchs_blesses_inconnus as(
+                                    SELECT *
+                                     FROM public.blesses_inconnus_temp bi JOIN (SELECT s.*, m.date_match
+                                          FROM donnees_source.stats_joueurs_match s JOIN donnees_source."match" m ON s.id_match=m.id_match) s 
+                                          ON s.nom_simple=bi.nom_simple),
+                                    blesses_inconnus_dernier_match AS (
+                                    SELECT DISTINCT ON (id_joueur) id_joueur, "Injury", date_match, date_match+1 date_blessure
+                                     FROM tous_matchs_blesses_inconnus
+                                     ORDER BY id_joueur, date_match DESC),
+                                    blesses_inconnus_tot as(
+                                    SELECT b.id_joueur,b.date_blessure,e.id_type_blessure
+                                     FROM blesses_inconnus_dernier_match b JOIN donnees_source.enum_type_blessure e ON b."Injury"=lower(e.nom_blessure_anglais)),
+                                    blesses_inconnus_insertion as(
+                                    SELECT b.* 
+                                     FROM blesses_inconnus_tot b LEFT JOIN donnees_source.blessure b2 ON (b.id_joueur, b.date_blessure)=(b2.id_joueur, b2.date_blessure)
+                                     WHERE b2.id_joueur IS NULL)
                                 INSERT INTO donnees_source.blessure (id_joueur, date_blessure, id_type_blessure)
                                  SELECT id_joueur, date_blessure, id_type_blessure FROM blesses_inconnus_insertion"""
     sqlAlchemyConn.execute(rqtBlessesInconnusAInserer)
@@ -84,8 +88,6 @@ def insererBlessesInconnusPasMatchBefore(dfInjuries,sqlAlchemyConn):
     joueurs=pd.read_sql('select nom_simple, id_joueur from donnees_source.joueur', sqlAlchemyConn)
     dfInjuriesInconnu=dfInjuries.loc[~dfInjuries.nom_simple.isin(blesseEnCoursBdd.nom_simple.tolist())].merge(
                         joueurs, on='nom_simple')
-    dfInjuriesInconnu['date_blessure']=dfInjuriesInconnu.Updated.apply(lambda x : pd.to_datetime(' '.join(x.split(', ')[1].split()
-                                                                                    [::-1]+[str(date.today().year),])))
     dfInjuriesInconnu[['id_joueur','date_blessure','id_type_blessure']].to_sql('blessure', sqlAlchemyConn, 
                                                                     schema='donnees_source', if_exists='append', index=False)
     

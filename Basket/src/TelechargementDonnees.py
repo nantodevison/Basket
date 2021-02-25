@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException
 from selenium.webdriver.support.ui import Select
 import time, os, re
+from datetime import datetime
 import pandas as pd
 import numpy as np
 from collections import Counter
@@ -79,11 +80,13 @@ class Blessures(object):
     class permettant d'avoir acces aux joueurs blesses depuis le site de CBS
     """   
     
-    def __init__(self,siteCbs='https://www.cbssports.com/nba/injuries'):
+    def __init__(self,dateMaxi, siteCbs='https://www.cbssports.com/nba/injuries'):
         """
         attributs :
             siteCbs : string : adresse du site reference
+            dateMaxi : string format YYYY-MM-DD date maximale de recherche des blessures : au dela on ne cherche pas
         """
+        self.dateMaxi=dateMaxi
         self.siteCbs=siteCbs
         self.recupererTypeBlessure()
         with DriverFirefox() as d:
@@ -120,6 +123,10 @@ class Blessures(object):
         dfsInjuries['nom_simple']=dfsInjuries.Player.apply(lambda x : simplifierNomJoueur(x))
         dfsInjuries['Injury']=dfsInjuries.Injury.str.lower()
         dfsInjuriesComplet=dfsInjuries.merge(self.dftypeBlessure, on='Injury')
+        dfsInjuriesComplet['date_blessure']=dfsInjuriesComplet.Updated.apply(lambda x : pd.to_datetime(x.split(', ')[1]+' '+str(datetime.now().year)) if 
+                                                                       pd.to_datetime(x.split(', ')[1]+' '+str(datetime.now().year))<datetime.now() else
+                                                                       pd.to_datetime(x.split(', ')[1]+' '+str(datetime.now().year-1))  )
+        dfsInjuriesComplet=dfsInjuriesComplet.loc[dfsInjuriesComplet.date_blessure<=self.dateMaxi].copy()
         return dfsInjuriesComplet
 
 class JourneeSiteNba(Blessures):
@@ -138,8 +145,8 @@ class JourneeSiteNba(Blessures):
             dicoJournee : dico avec en cle un integer  et en value un dico de 3 clé : match, stats_eO et stat_e1 qui contein les dfs de donnees
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
-        super().__init__()
         self.dateJournee=dateJournee
+        super().__init__(self.dateJournee)
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         self.dossierExportCsv=dossierExportCsv
         with DriverFirefox() as d : 

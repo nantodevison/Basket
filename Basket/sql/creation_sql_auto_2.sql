@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS donnees_source.equipe;
 DROP TABLE IF EXISTS donnees_source.stats_equipes;
 DROP TABLE IF EXISTS donnees_source.joueur;
 DROP TABLE IF EXISTS donnees_source.contrat;
-DROP TABLE IF EXISTS donnees_source.match;
+DROP TABLE IF EXISTS donnees_source."match";
 DROP TABLE IF EXISTS donnees_source.stats_joueur;
 DROP TABLE IF EXISTS donnees_source.score_match;
 DROP TABLE IF EXISTS donnees_source.enum_periode_match;
@@ -358,9 +358,9 @@ pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d,
 	-- calcul des stats cumulees par equipe et par match
 CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_match AS 
 SELECT id_equipe, id_match, sum("minute") minutes, sum(points) points, sum(rebonds) rebonds, sum(passes_dec) passes_dec, sum(steal) steal, 
-       sum(contres) contres, sum(tir_reussi) tir_reussi, sum(tir_tentes) tir_tentes,  avg(pct_tir) pct_tir, 
-       sum(trois_pt_r) trois_pt_r, sum(trois_pt_t) trois_pt_t,  avg(pct_3_pt) pct_3_pt, sum(lanc_frc_r) lanc_frc_r, 
-       sum(lanc_frc_t) lanc_frc_t,  avg(pct_lfrc) pct_lfrc, sum(rebonds_o) rebonds_o, sum(rebonds_d) rebonds_d, 
+       sum(contres) contres, sum(tir_reussi) tir_reussi, sum(tir_tentes) tir_tentes,  (sum(tir_reussi)::NUMERIC/sum(tir_tentes)*100)::NUMERIC(5,2) pct_tir, 
+       sum(trois_pt_r) trois_pt_r, sum(trois_pt_t) trois_pt_t,  (sum(trois_pt_r)::NUMERIC/sum(trois_pt_t)*100)::numeric(5,2) pct_3_pt, sum(lanc_frc_r) lanc_frc_r, 
+       sum(lanc_frc_t) lanc_frc_t,  (sum(lanc_frc_r)::numeric/sum(lanc_frc_t)*100)::numeric(5,2) pct_lfrc, sum(rebonds_o) rebonds_o, sum(rebonds_d) rebonds_d, 
        sum(ball_perdu) ball_perdu, sum(faute_p) faute_p
   FROM donnees_source.stats_joueurs_match
   GROUP BY id_match, id_equipe
@@ -379,21 +379,54 @@ SELECT id_equipe, id_match, points, minutes,
  donnees_source.func_nb_possessions(tir_tentes,rebonds_o,ball_perdu,lanc_frc_t) possessions
  FROM donnees_source.stats_cumul_eqp_match)
 SELECT *,
-       CASE WHEN row_number() OVER w = 1 THEN lead(points) OVER w / possessions*100
-       ELSE lag(points) OVER w / possessions*100
+       CASE WHEN row_number() OVER w = 1 THEN (lead(points) OVER w / possessions*100)::NUMERIC(5,2)
+       ELSE (lag(points) OVER w / LAG(possessions) OVER w*100)::NUMERIC(5,2)
        END team_def_rating, 
-       points/possessions*100 team_off_rating,
-       CASE WHEN row_number() OVER w = 1 THEN donnees_source.func_pace(LEAD(possessions) OVER w,possessions,
-       round(EXTRACT(EPOCH FROM minutes)/60)::integer)
-           ELSE donnees_source.func_pace(LAG(possessions) OVER w,possessions,
-       round(EXTRACT(EPOCH FROM minutes)/60)::integer) 
-           END pace
+       (points/possessions*100)::NUMERIC(5,2) team_off_rating,
+       CASE WHEN row_number() OVER w = 1 THEN donnees_source.func_pace(LEAD(possessions) OVER w,possessions,round(EXTRACT(EPOCH FROM minutes)/60)::integer)
+           ELSE donnees_source.func_pace(LAG(possessions) OVER w,possessions,round(EXTRACT(EPOCH FROM minutes)/60)::integer) 
+           END pace,
+       CASE WHEN row_number() OVER w = 1 THEN lead(points) OVER w 
+               ELSE lag(points) OVER w
+               END points_encaisse       
  FROM nb_poss
  WINDOW w AS (PARTITION BY id_match)
  ORDER BY id_match
  
  	--calcul des stats avance par saison
+CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_saison AS 
+SELECT id_equipe, sum("minutes") minutes, avg(points)::numeric(5,2) points, avg(rebonds)::numeric(3,1) rebonds, avg(passes_dec)::numeric(3,1) passes_dec, avg(steal)::numeric(2,1) steal, 
+       avg(contres)::numeric(3,1) contres, avg(tir_reussi)::numeric(5,2) tir_reussi, avg(tir_tentes)::numeric(5,2) tir_tentes,  (sum(tir_reussi)::NUMERIC/sum(tir_tentes)*100)::NUMERIC(5,2) pct_tir, 
+       avg(trois_pt_r)::numeric(5,2) trois_pt_r, avg(trois_pt_t)::numeric(5,2) trois_pt_t,   (sum(trois_pt_r)::NUMERIC/sum(trois_pt_t)*100)::numeric(5,2) pct_3_pt, avg(lanc_frc_r)::numeric(5,2) lanc_frc_r, 
+       avg(lanc_frc_t)::numeric(5,2) lanc_frc_t,   (sum(lanc_frc_r)::numeric/sum(lanc_frc_t)*100)::numeric(5,2) pct_lfrc, avg(rebonds_o)::numeric(3,1) rebonds_o, avg(rebonds_d)::numeric(3,1) rebonds_d, 
+       avg(ball_perdu)::numeric(3,1) ball_perdu, avg(faute_p)::numeric(3,1) faute_p
+  FROM donnees_source.stats_cumul_eqp_match 
+  GROUP BY id_equipe
+  
+CREATE OR REPLACE VIEW donnees_source.stats_avancee_saison AS 
+WITH
+stats_match AS (
+SELECT * ,
+          CASE WHEN row_number() OVER w = 1 THEN lead(possessions) OVER w 
+               ELSE lag(possessions) OVER w
+               END possessions_opp
+ FROM donnees_source.stats_avancee_match
+ WINDOW w AS (PARTITION BY id_match))
+SELECT id_equipe, (sum(points)/sum(possessions)*100)::numeric(5,2) team_off_rating, 
+       avg(points)::numeric(5,2) points_moy,
+       (sum(points_encaisse)/sum(possessions_opp)*100)::numeric(5,2) team_def_rating, 
+       avg(points_encaisse)::numeric(5,2) points_encaisse_moy,
+       avg(pace)::numeric(5,2) pace
+ FROM stats_match
+ GROUP BY id_equipe
 
+ 
+--classements
+SELECT *, ROW_NUMBER() OVER (ORDER BY team_off_rating DESC) off_rtg_rank,
+          ROW_NUMBER() OVER (ORDER BY points_moy DESC) points_marq_rank,
+          ROW_NUMBER() OVER (ORDER BY team_def_rating) def_rtg_rank,
+          ROW_NUMBER() OVER (ORDER BY points_encaisse_moy) points_encaisse_rank
+ FROM donnees_source.stats_avancee_saison
  
 /* ========================
  * FONCTIONS
@@ -415,7 +448,7 @@ par equipe et par match' ;
 
 -- fonction de calcul de la pace
 CREATE OR REPLACE FUNCTION donnees_source.func_pace (IN team_poss numeric, opp_poss numeric, team_minutes integer,
-                        OUT pace numeric)
+                        OUT pace NUMERIC)
 LANGUAGE plpgsql
 AS
 $$
@@ -463,8 +496,12 @@ $$ ;
 COMMENT ON FUNCTION donnees_source.supprimer_par_date(date) IS 'supprmier des tables match, blessures, contrat, stats_joueur, stat_equipe, score match les
 données de date supéreiure ou égale à la date en entrée' ;
 
-	
- 
+/* ======================================================================
+ * exemple de suppression de l''intégralité des données postérieure à une date
+ ======================================================================= */
+SELECT donnees_source.supprimer_par_date('2021-02-24')
+
+
   
   
   
