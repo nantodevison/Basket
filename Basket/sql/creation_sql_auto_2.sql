@@ -5,6 +5,7 @@
 -- DROP SCHEMA donnees_source;
 
 CREATE SCHEMA donnees_source AUTHORIZATION postgres;
+CREATE SCHEMA ttfl AUTHORIZATION postgres;
 
 DROP TABLE IF EXISTS donnees_source.equipe;
 DROP TABLE IF EXISTS donnees_source.stats_equipes;
@@ -194,6 +195,15 @@ ALTER TABLE donnees_source.score_match ADD FOREIGN KEY (id_equipe) REFERENCES do
 ALTER TABLE donnees_source.score_match ADD FOREIGN KEY (id_periode) REFERENCES donnees_source.enum_periode_match(id_periode) ON UPDATE CASCADE;
 ALTER TABLE donnees_source.blessure ADD FOREIGN KEY (id_joueur) REFERENCES donnees_source.joueur(id_joueur) ON UPDATE CASCADE;
 ALTER TABLE donnees_source.blessure ADD FOREIGN KEY (id_type_blessure) REFERENCES donnees_source.enum_type_blessure(id_type_blessure) ON UPDATE CASCADE;
+
+--TTFL
+CREATE TABLE ttfl.joueurs_choisis (
+ id_joueur_choisis SERIAL PRIMARY KEY,
+ id_joueur integer REFERENCES donnees_source.joueur (id_joueur) ON UPDATE CASCADE,
+ date_choix date,
+ id_saison REFERENCES donnees_source.saison (id_saison) ON UPDATE CASCADE) ;
+ALTER TABLE ttfl.joueurs_choisis ADD CONSTRAINT ttfl_joueurs_choisi_unique UNIQUE (id_joueur, date_choix);
+ 
 
 /* ==================================
  * REMPLIR LES TABLES D'ENUMERATIONS
@@ -513,10 +523,10 @@ BEGIN
      WHERE numero_match<=5 ;
 END
 $$ ;
-COMMENT ON FUNCTION donnees_sources.x_dernier_match(integer) IS 'renvoyer une table pareille à celle de donnees_source.stats_joueurs_match avec seulement les x dernier matchs de chaque joueur'
+COMMENT ON FUNCTION donnees_source.x_dernier_match(integer) IS 'renvoyer une table pareille à celle de donnees_source.stats_joueurs_match avec seulement les x dernier matchs de chaque joueur'
 
 --selection des x meileurs joueurs sur les y dernier matchs
-CREATE OR REPLACE FUNCTION donnees_source.x_meilleurs_ttfl_x_match(nb_match integer, nb_joueurs integer)
+CREATE OR REPLACE FUNCTION ttfl.x_meilleurs_ttfl_x_match(nb_match integer, nb_joueurs integer)
 RETURNS TABLE (id_joueur integer, score_ttfl_moy numeric(4,1) )
 LANGUAGE plpgsql
 AS 
@@ -530,23 +540,83 @@ BEGIN
         LIMIT nb_joueurs ;
 END 
 $$ ; 
+COMMENT ON FUNCTION ttfl.x_meilleurs_ttfl_x_match(integer, integer) IS 'renvoyer la liste des x joueurs avec la meilleure moyenne ttfl sur les y dernier matchs de chaque joueur'
+
+--selection des x meileurs joueurs sur les y dernier matchs avec prise en compte disponibilite blessure et ttfl
+CREATE OR REPLACE FUNCTION ttfl.x_meilleurs_ttfl_x_match_dispo(nb_match integer, nb_joueurs integer, date_ref date)
+RETURNS TABLE (id_joueur integer, nom CHARACTER VARYING , nom_simple CHARACTER VARYING, id_match int8, id_equipe CHARACTER VARYING (3), "minute" interval, points integer, 
+                rebonds integer, passes_dec integer, steal integer, contres integer, tir_reussi integer, tir_tentes integer, pct_tir numeric(5,2), trois_pt_r integer, trois_pt_t integer, 
+                pct_3_pt numeric(5,2), lanc_frc_r integer, lanc_frc_t integer, pct_lfrc numeric(5,2), rebonds_o integer, rebonds_d integer, ball_perdu integer, faute_p integer,
+                plus_moins NUMERIC(3), score_ttfl integer, num_match int8, date_match date, score_ttfl_moy NUMERIC(4,1), type_indispo CHARACTER VARYING)
+LANGUAGE plpgsql
+AS 
+$$ 
+BEGIN 
+     RETURN QUERY
+     WITH 
+        ttfl_choix_recent_joueur AS (
+        SELECT DISTINCT ON (id_joueur) *
+         FROM ttfl.joueurs_choisis
+         ORDER BY id_joueur, date_choix DESC),
+        ttfl_joueur_dispo AS (
+         SELECT *
+          FROM ttfl_choix_recent_joueur
+          WHERE date_choix > (date_ref - 30)),
+        joueurs_a_filtrer AS (
+        SELECT t.id_joueur,'choix_ttfl'::CHARACTER VARYING type_indisponibilite FROM ttfl_joueur_dispo t 
+         UNION 
+        SELECT b.id_joueur, 'blesse'::CHARACTER VARYING type_indisponibilite FROM donnees_source.blessure b WHERE date_guerison IS NULL),
+        suppr_doublon_blessure_choix_ttfl AS (
+        SELECT DISTINCT ON (d.id_joueur, d.date_match) d.*, l.score_ttfl_moy, f.type_indisponibilite
+         FROM donnees_source.x_dernier_match(nb_match:=5) d JOIN 
+              (SELECT * FROM ttfl.x_meilleurs_ttfl_x_match(nb_match:=nb_match, nb_joueurs:=nb_joueurs)) l ON d.id_joueur=l.id_joueur
+              LEFT JOIN joueurs_a_filtrer f  ON d.id_joueur=f.id_joueur
+         ORDER BY d.id_joueur, d.date_match, f.type_indisponibilite) 
+        SELECT s.*
+         FROM suppr_doublon_blessure_choix_ttfl s
+         ORDER BY s.score_ttfl_moy DESC,s.id_joueur, s.type_indisponibilite ;    
 END
-COMMENT ON FUNCTION donnees_sources.x_dernier_match(integer, integer) IS 'renvoyer la liste des x joueurs avec la meilleure moyenne ttfl sur les y dernier matchs de chaque joueur'
+$$ ;
+COMMENT ON function ttfl.x_meilleurs_ttfl_x_match_dispo(integer, integer, date) IS 'renvoyer la liste des x joueurs avec la meilleure moyenne ttfl sur les y dernier matchs de chaque joueur, avec la dispo 
+selon les blessure et les choi ttfl'
+
 
 /* ======================================================================
  * exemple de suppression de l''intégralité des données postérieure à une date
  ======================================================================= */
 SELECT donnees_source.supprimer_par_date('2021-02-24')
 
-/* ===================================================================
- * Vue des 20 meilleusr joueurs ttfl sur les 5 derniers matchs 
+/*===================================================================
+ * Vue des 30 meilleusr joueurs ttfl sur les 5 derniers matchs, avec dispo selon blessure et ttfl
  ====================================================================*/
 
-CREATE OR REPLACE VIEW donnees_source.ttfl_best20_from_5last_matchs AS 
-SELECT d.*, l.score_ttfl_moy
+-- vue de base, sans prise en compte des données de joueurs deja pris ou blesses
+CREATE OR REPLACE VIEW ttfl.bestjoueurs_matchrecents AS 
+select * FROM ttfl.x_meilleurs_ttfl_x_match_dispo(5,30,(SELECT CURRENT_DATE))
+ 
+--en prenant en compte les joueurs pris ou blesses
+WITH 
+ttfl_choix_recent_joueur AS (
+SELECT DISTINCT ON (id_joueur) *
+ FROM ttfl.joueurs_choisis
+ ORDER BY id_joueur, date_choix DESC),
+ttfl_joueur_dispo AS (
+ SELECT *
+  FROM ttfl_choix_recent_joueur
+  WHERE date_choix > (SELECT CURRENT_DATE - 30)),
+joueurs_a_filtrer AS (
+SELECT id_joueur,'choix_ttfl' type_indispo FROM ttfl_joueur_dispo 
+ UNION 
+SELECT id_joueur, 'blesse' type_indispo FROM donnees_source.blessure WHERE date_guerison IS NULL)
+SELECT d.*, l.score_ttfl_moy, f.type_indispo
  FROM donnees_source.x_dernier_match(nb_match:=5) d JOIN 
       (SELECT * FROM donnees_source.x_meilleurs_ttfl_x_match(nb_match:=5, nb_joueurs:=20)) l ON d.id_joueur=l.id_joueur
- ORDER BY score_ttfl_moy desc
+      LEFT JOIN joueurs_a_filtrer f  ON d.id_joueur=f.id_joueur
+ ORDER BY score_ttfl_moy DESC
+
+
+
+
 
 
 
