@@ -538,7 +538,7 @@ COMMENT ON FUNCTION donnees_sources.x_dernier_match(integer, integer) IS 'renvoy
  ======================================================================= */
 SELECT donnees_source.supprimer_par_date('2021-02-24')
 
-/* ===================================================================
+/*===================================================================
  * Vue des 20 meilleusr joueurs ttfl sur les 5 derniers matchs 
  ====================================================================*/
 
