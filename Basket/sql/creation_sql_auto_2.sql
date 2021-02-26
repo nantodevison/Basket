@@ -346,9 +346,9 @@ SELECT DISTINCT ON (id_joueur) id_equipe, id_joueur, date_debut_contrat
 CREATE OR REPLACE VIEW donnees_source.stats_joueurs_match AS 
 SELECT j.id_joueur, j.nom, j.nom_simple, d.id_match, c.id_equipe, d."minute", d.points, d.rebonds, d.passes_dec, d.steal, d.contres, d.tir_reussi, 
 d.tir_tentes, d.pct_tir, d.trois_pt_r, d.trois_pt_t, d.pct_3_pt, d.lanc_frc_r, d.lanc_frc_t, d.pct_lfrc, 
-d.rebonds_o, d.rebonds_d, d.ball_perdu, d.faute_p
+d.rebonds_o, d.rebonds_d, d.ball_perdu, d.faute_p, d.plus_moins, d.score_ttfl
  FROM  (SELECT sj.id_joueur, sj.id_match, m.date_match, sj."minute", sj.points, sj.rebonds, sj.passes_dec, sj.steal, sj.contres, sj.tir_reussi, sj.tir_tentes, sj.pct_tir, sj.trois_pt_r, sj.trois_pt_t, sj.
-pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d, sj.ball_perdu, sj.faute_p
+pct_3_pt, sj.lanc_frc_r, sj.lanc_frc_t, sj.pct_lfrc, sj.rebonds_o, sj.rebonds_d, sj.ball_perdu, sj.faute_p, sj.plus_moins, sj.score_ttfl
 	     FROM donnees_source.stats_joueur sj JOIN donnees_source."match" m ON sj.id_match=m.id_match) d 
 	     JOIN donnees_source.contrat c ON (c.id_joueur=d.id_joueur AND (
 										     d.date_match BETWEEN c.date_debut_contrat AND c.date_fin_contrat OR (
@@ -496,10 +496,61 @@ $$ ;
 COMMENT ON FUNCTION donnees_source.supprimer_par_date(date) IS 'supprmier des tables match, blessures, contrat, stats_joueur, stat_equipe, score match les
 données de date supéreiure ou égale à la date en entrée' ;
 
+--selection des x derniers match des joueurs
+CREATE OR REPLACE FUNCTION donnees_source.x_dernier_match(nb_match integer)
+RETURNS TABLE (id_joueur integer, nom CHARACTER VARYING , nom_simple CHARACTER VARYING, id_match int8, id_equipe CHARACTER VARYING (3), "minute" interval, points integer, 
+                rebonds integer, passes_dec integer, steal integer, contres integer, tir_reussi integer, tir_tentes integer, pct_tir numeric(5,2), trois_pt_r integer, trois_pt_t integer, 
+                pct_3_pt numeric(5,2), lanc_frc_r integer, lanc_frc_t integer, pct_lfrc numeric(5,2), rebonds_o integer, rebonds_d integer, ball_perdu integer, faute_p integer,
+                plus_moins NUMERIC(3), score_ttfl integer, num_match int8, date_match date )
+LANGUAGE plpgsql
+AS 
+$$
+BEGIN
+    RETURN QUERY 
+    SELECT * 
+     FROM (SELECT sj.*, ROW_NUMBER() OVER (PARTITION BY sj.id_joueur ORDER BY m.date_match desc) numero_match, m.date_match
+            FROM donnees_source.stats_joueurs_match sj JOIN donnees_source."match" m ON m.id_match=sj.id_match) t
+     WHERE numero_match<=5 ;
+END
+$$ ;
+COMMENT ON FUNCTION donnees_sources.x_dernier_match(integer) IS 'renvoyer une table pareille à celle de donnees_source.stats_joueurs_match avec seulement les x dernier matchs de chaque joueur'
+
+--selection des x meileurs joueurs sur les y dernier matchs
+CREATE OR REPLACE FUNCTION donnees_source.x_meilleurs_ttfl_x_match(nb_match integer, nb_joueurs integer)
+RETURNS TABLE (id_joueur integer, score_ttfl_moy numeric(4,1) )
+LANGUAGE plpgsql
+AS 
+$$ 
+BEGIN 
+    RETURN QUERY
+    SELECT t.id_joueur, avg(t.score_ttfl) score_ttfl_moy
+        FROM (SELECT * FROM donnees_source.x_dernier_match(nb_match:=nb_match)) t
+        GROUP BY t.id_joueur
+        ORDER BY score_ttfl_moy DESC
+        LIMIT nb_joueurs ;
+END 
+$$ ; 
+END
+COMMENT ON FUNCTION donnees_sources.x_dernier_match(integer, integer) IS 'renvoyer la liste des x joueurs avec la meilleure moyenne ttfl sur les y dernier matchs de chaque joueur'
+
 /* ======================================================================
  * exemple de suppression de l''intégralité des données postérieure à une date
  ======================================================================= */
 SELECT donnees_source.supprimer_par_date('2021-02-24')
+
+/* ===================================================================
+ * Vue des 20 meilleusr joueurs ttfl sur les 5 derniers matchs 
+ ====================================================================*/
+
+CREATE OR REPLACE VIEW donnees_source.ttfl_best20_from_5last_matchs AS 
+SELECT d.*, l.score_ttfl_moy
+ FROM donnees_source.x_dernier_match(nb_match:=5) d JOIN 
+      (SELECT * FROM donnees_source.x_meilleurs_ttfl_x_match(nb_match:=5, nb_joueurs:=20)) l ON d.id_joueur=l.id_joueur
+ ORDER BY score_ttfl_moy desc
+
+
+
+
 
 
   
