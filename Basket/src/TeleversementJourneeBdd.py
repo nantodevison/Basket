@@ -8,7 +8,7 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 
 import pandas as pd
 from datetime import date
-from TelechargementDonnees import JourneeSiteNba, Blessures
+from TelechargementDonnees import JourneeSiteNba, Blessures, telechargerCalendrier
 import Connexion_Transfert as ct
 
 def miseAJourBlessesBdd(dfInjuries,sqlAlchemyConn):
@@ -90,6 +90,19 @@ def insererBlessesInconnusPasMatchBefore(dfInjuries,sqlAlchemyConn):
                         joueurs, on='nom_simple')
     dfInjuriesInconnu[['id_joueur','date_blessure','id_type_blessure']].to_sql('blessure', sqlAlchemyConn, 
                                                                     schema='donnees_source', if_exists='append', index=False)
+    
+def transfertCalendrier(id_saison, date_depart, duree, bdd='basket'):
+    """
+    transferer le calendrier telecharge grace a la fonction TelechargementDonnees.telechargerCalendrier() dans la bdd
+    in :
+        id_saison : integer, identiiant saioson
+        date_depart : string format YYYY-MM-DD
+        duree : integer :nb de jours apres date de depart
+        bdd : id de connxion a la bdd
+    """
+    dfMatchs=telechargerCalendrier(id_saison, date_depart, duree)
+    with ct.ConnexionBdd(bdd) as c :
+        dfMatchs.to_sql('calendrier', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
     
 class JourneeBdd(JourneeSiteNba) : 
     """
