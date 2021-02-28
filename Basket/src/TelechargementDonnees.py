@@ -18,7 +18,6 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import Connexion_Transfert as ct
-from pickle import TRUE, FALSE
 
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -47,6 +46,35 @@ def simplifierNomJoueur(nom):
     simplifier un nom (prenom+nom) de joueur pour n'avoir aucun espace aucun caracteres special, tout lie
     """
     return re.sub(' |-|\.|\'','',nom).lower()
+
+def telechargerCalendrier(id_saison, date_depart, duree):
+    """
+    telecharger les donnees des matchs futurs, avec identifiant de saison, selon une date de depart et une duree
+    in :
+        id_saison : integer, identiiant saioson
+        date_depart : string format YYYY-MM-DD
+        duree : integer :nb de jours apres date de depart
+    out :
+        dfMatchs : la df des matchs avec equipe dom, equipe_est, date_match et id_saison
+    """
+    listDfMatchs=[]
+    with DriverFirefox() as d :
+        driver=d.driver
+        for dateString in [d.strftime('%Y-%m-%d') for d in pd.date_range(start=date_depart,periods=duree)] :
+            urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
+            driver.get(urlDateJournee)
+            time.sleep(3)
+            gererCookie(driver)
+            try :
+                elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, 
+                                                                                                   "//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']")))
+            except TimeoutException as e :
+                print(e)
+                raise PasDeMatchError(d)
+            listMatch=[p.get_attribute("href") for p in elementsMatch]
+            listDfMatchs.append(pd.DataFrame.from_records([(m.split('-vs-')[0][-3:].upper(), m.split('-vs-')[1][:3].upper(), dateString, id_saison  ) for m in listMatch], 
+                              columns=['equipe_exterieure', 'equipe_domicile', 'date_match', 'id_saison']))
+    return pd.concat(listDfMatchs)
 
 class DriverFirefox(object):
     """

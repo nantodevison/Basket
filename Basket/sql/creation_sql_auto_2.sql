@@ -203,6 +203,15 @@ CREATE TABLE ttfl.joueurs_choisis (
  date_choix date,
  id_saison REFERENCES donnees_source.saison (id_saison) ON UPDATE CASCADE) ;
 ALTER TABLE ttfl.joueurs_choisis ADD CONSTRAINT ttfl_joueurs_choisi_unique UNIQUE (id_joueur, date_choix);
+
+--calendrier
+CREATE TABLE donnees_source.calendrier (
+    id_calendrier SERIAL PRIMARY KEY,
+    id_saison INTEGER NOT NULL REFERENCES donnees_source.saison(id_saison) ON UPDATE CASCADE,
+    date_match DATE NOT NULL,
+    equipe_domicile VARCHAR(3) NOT NULL REFERENCES donnees_source.equipe(id_equipe) ON UPDATE CASCADE,
+    equipe_exterieure VARCHAR(3) NOT NULL REFERENCES donnees_source.equipe(id_equipe) ON UPDATE CASCADE);
+ALTER TABLE donnees_source.calendrier ADD CONSTRAINT match_unique_calendrier UNIQUE (date_match, equipe_domicile, equipe_exterieure);
  
 
 /* ==================================
@@ -593,26 +602,7 @@ SELECT donnees_source.supprimer_par_date('2021-02-24')
 -- vue de base, sans prise en compte des données de joueurs deja pris ou blesses
 CREATE OR REPLACE VIEW ttfl.bestjoueurs_matchrecents AS 
 select * FROM ttfl.x_meilleurs_ttfl_x_match_dispo(5,30,(SELECT CURRENT_DATE))
- 
---en prenant en compte les joueurs pris ou blesses
-WITH 
-ttfl_choix_recent_joueur AS (
-SELECT DISTINCT ON (id_joueur) *
- FROM ttfl.joueurs_choisis
- ORDER BY id_joueur, date_choix DESC),
-ttfl_joueur_dispo AS (
- SELECT *
-  FROM ttfl_choix_recent_joueur
-  WHERE date_choix > (SELECT CURRENT_DATE - 30)),
-joueurs_a_filtrer AS (
-SELECT id_joueur,'choix_ttfl' type_indispo FROM ttfl_joueur_dispo 
- UNION 
-SELECT id_joueur, 'blesse' type_indispo FROM donnees_source.blessure WHERE date_guerison IS NULL)
-SELECT d.*, l.score_ttfl_moy, f.type_indispo
- FROM donnees_source.x_dernier_match(nb_match:=5) d JOIN 
-      (SELECT * FROM donnees_source.x_meilleurs_ttfl_x_match(nb_match:=5, nb_joueurs:=20)) l ON d.id_joueur=l.id_joueur
-      LEFT JOIN joueurs_a_filtrer f  ON d.id_joueur=f.id_joueur
- ORDER BY score_ttfl_moy DESC
+
 
 
 
