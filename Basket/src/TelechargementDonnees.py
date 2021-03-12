@@ -429,8 +429,64 @@ class JoueursSiteNba(object):
         dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(listLinkJoueurs)], axis=0)
         return dfCaracJoueurs
  
-
+class JoueursChoisisTtfl(object):
+    """
+    class des joueurs choisis en ttfl par le passé
+    pour le moment il y a 2 sources de données : 
+    - l'enregistrement de pages html depuis le site de trashtalk, 
+    - les données stockées en base
+    """
+    def __init__(self, listFichiersHtml, saison):
+        """
+        attributs : 
+        fichiersHtml : tuple ou list des fichiers html telecharges au prealable depuis l'historique de trashtalk https://fantasy.trashtalk.co/?tpl=historique
+        dfJoueursChoisisBdd :df des joueurs deja choisi stockes dans la bdd
+        """
+        self.listFichiersHtml=listFichiersHtml
+        self.saison=saison
+        self.dfJoueurAInserer=self.filtrerJoueurDejaBdd()
+        self.transfertBdd()
+    
+    def creerDfJoueursChoisisTrashtalk(self) :
+        """
+        creer la df des joueurs stockes dans les fhciers utml issus de trashtalk
+        in : 
+            listFichiersHtml : list des fihciers html à perndre en compte
+        out : 
+            dfJoueurChoisis  : df issus des fichiers html, avec Date, Joueur, nom_simple, id_joueur
+        """
+        dfJoueurChoisis=pd.concat([pd.read_html(e)[0] for e in self.listFichiersHtml])
+        dfJoueurChoisis['nom_simple']=dfJoueurChoisis.Joueur.apply(lambda x :  simplifierNomJoueur(x))
+        with ct.ConnexionBdd('basket','maison') as c : 
+            dfJoueur=pd.read_sql("select id_joueur, nom_simple from donnees_source.joueur", c.sqlAlchemyConn)
+            dfJoueurChoisiId=dfJoueurChoisis.merge(dfJoueur, on='nom_simple')
+            dfJoueurChoisiId['Date']=pd.to_datetime(dfJoueurChoisiId.Date)
+        return dfJoueurChoisiId.iloc[:-1]
+    
+    def recupJoueurChoisiBdd(self):
+        """
+        recuperer les joueurs deja dans la base comme ayant été choisi
+        """
+        with ct.ConnexionBdd('basket','maison') as c : 
+            dfJoueurChoisisBdd=pd.read_sql("SELECT * FROM ttfl.joueurs_choisis;", c.sqlAlchemyConn)
+            dfJoueurChoisisBdd['date_choix']=pd.to_datetime(dfJoueurChoisisBdd.date_choix)
+        return dfJoueurChoisisBdd
+    
+    def filtrerJoueurDejaBdd(self):
+        """
+        filtrer les joueurs issus des fichiers html deja dans la bdd
+        """
+        dfJoueurChoisiId=self.creerDfJoueursChoisisTrashtalk()
+        dfJoueurChoisisBdd=self.recupJoueurChoisiBdd()
+        return dfJoueurChoisiId.loc[~(dfJoueurChoisiId.Date.isin(dfJoueurChoisisBdd.date_choix) & dfJoueurChoisiId.id_joueur.isin(dfJoueurChoisisBdd.id_joueur))]
  
+    def transfertBdd(self):
+        """
+        transferer les joueurs choisis  non presents dans la bdd
+        """
+        with ct.ConnexionBdd('basket','maison') as c :
+            self.dfJoueurAInserer[['Date','id_joueur']].rename(columns={'Date':'date_choix'}).assign(saison=self.saison).to_sql('joueurs_choisis', c.sqlAlchemyConn, 'ttfl', if_exists='append', index=False)
+        
 class PasDeMatchError(Exception):  
     """
     erreur levee si pas de match à une date donnee
