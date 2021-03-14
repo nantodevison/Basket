@@ -4,8 +4,9 @@
 
 -- DROP SCHEMA donnees_source;
 
-CREATE SCHEMA donnees_source AUTHORIZATION postgres;
-CREATE SCHEMA ttfl AUTHORIZATION postgres;
+CREATE SCHEMA donnees_source AUTHORIZATION postgres; --stocke les données sources et les vue de calcul des stats 
+CREATE SCHEMA ttfl AUTHORIZATION postgres; --tout ce quia trait a la ttfl
+CREATE SCHEMA classements AUTHORIZATION postgres; -- stocke les classemnts equipe et indiv (quasi que des vues)
 
 DROP TABLE IF EXISTS donnees_source.equipe;
 DROP TABLE IF EXISTS donnees_source.stats_equipes;
@@ -84,6 +85,7 @@ CREATE TABLE donnees_source.match (
     PRIMARY KEY (id_match)
 );
 ALTER TABLE donnees_source."match" ADD CONSTRAINT match_unique UNIQUE (date_match, equipe_domicile, equipe_exterieure);
+CREATE INDEX match_id_type_match_idx ON donnees_source."match" (id_type_match);
 
 CREATE TABLE donnees_source.stats_joueur (
     id_stats_joueurs SERIAL NOT NULL,
@@ -438,14 +440,60 @@ SELECT id_equipe, (sum(points)/sum(possessions)*100)::numeric(5,2) team_off_rati
        avg(pace)::numeric(5,2) pace
  FROM stats_match
  GROUP BY id_equipe
-
  
---classements
+ /*======================================
+  * Vue du nb de victoire ou defaites
+  ========================================= */
+ 
+CREATE OR REPLACE VIEW donnees_source.victoire_defaite_sr AS
+WITH 
+trouver_gagnant AS (
+ SELECT sm.*, CASE WHEN sm.score_periode=max(sm.score_periode) OVER (PARTITION BY sm.id_match) THEN 'W'
+              ELSE 'L'
+              END::varchar(1) gagnant
+  FROM donnees_source.score_match sm JOIN donnees_source."match" m ON sm.id_match=m.id_match
+  WHERE sm.id_periode='final' AND m.id_type_match=0),
+nb_win_loose AS (
+SELECT id_equipe, count(gagnant) FILTER (WHERE gagnant='W') victoire, count(gagnant) FILTER (WHERE gagnant='L') defaite
+ FROM trouver_gagnant
+ GROUP BY id_equipe)
+SELECT *, (victoire / (victoire+defaite)::numeric)::numeric(6,3) pct_win
+ FROM nb_win_loose
+ 
+/*====================
+ * VUES DES CLASSEMENTS
+ ===================== */
+--classements des equipes sur les stats avancees
+CREATE OR REPLACE VIEW classements.classement_stats_avancees_equipe AS 
 SELECT *, ROW_NUMBER() OVER (ORDER BY team_off_rating DESC) off_rtg_rank,
           ROW_NUMBER() OVER (ORDER BY points_moy DESC) points_marq_rank,
           ROW_NUMBER() OVER (ORDER BY team_def_rating) def_rtg_rank,
-          ROW_NUMBER() OVER (ORDER BY points_encaisse_moy) points_encaisse_rank
+          ROW_NUMBER() OVER (ORDER BY points_encaisse_moy) points_encaisse_rank,
+          ROW_NUMBER() OVER (ORDER BY pace) pace_rank_asc
  FROM donnees_source.stats_avancee_saison
+ 
+--classement des equipes total
+CREATE OR REPLACE VIEW classements.classement_equipes_complet AS
+SELECT vd.*, e.conference, e.division, 
+       ROW_NUMBER() OVER (ORDER BY vd.pct_win DESC) total_rank,
+       ROW_NUMBER() OVER (partition BY e.conference ORDER BY vd.pct_win DESC) conference_rank,
+       ROW_NUMBER() OVER (partition BY e.division ORDER BY vd.pct_win DESC) division_rank
+ FROM donnees_source.victoire_defaite_sr vd JOIN donnees_source.equipe e ON vd.id_equipe=e.id_equipe
+ 
+--classement des equipes conference Ouest
+CREATE OR REPLACE VIEW classements.classement_equipes_conf_ouest AS
+SELECT id_equipe, victoire, defaite, pct_win, conference_rank
+ FROM classements.classement_equipes_complet
+ WHERE conference='Ouest'
+ ORDER BY conference_rank ASC
+ 
+--classement des equipes conference Est
+CREATE OR REPLACE VIEW classements.classement_equipes_conf_est AS
+SELECT id_equipe, victoire, defaite, pct_win, conference_rank
+ FROM classements.classement_equipes_complet
+ WHERE conference='Est'
+ ORDER BY conference_rank asc
+ 
  
 /* ========================
  * FONCTIONS
@@ -602,6 +650,11 @@ SELECT donnees_source.supprimer_par_date('2021-02-24')
 -- vue de base, sans prise en compte des données de joueurs deja pris ou blesses
 CREATE OR REPLACE VIEW ttfl.bestjoueurs_matchrecents AS 
 select * FROM ttfl.x_meilleurs_ttfl_x_match_dispo(5,30,(SELECT CURRENT_DATE))
+
+/*====================================
+ * Vue de classement des equipes (total)
+ ====================================== */
+ 
 
 
 
