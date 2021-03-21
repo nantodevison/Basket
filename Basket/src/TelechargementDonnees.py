@@ -28,7 +28,7 @@ nomsColonnesStatsEquipe=['id_equipe','pts_in_paint','fastbreak_pts','biggest_lea
 dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP","NWT","DND")
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
 
-def gererCookie(driver):
+def gererCookieNba(driver):
     """
     si sur la page joueur un cookie apparait je veux pouvoir le clicker
     """
@@ -40,6 +40,19 @@ def gererCookie(driver):
         time.sleep(3)
     except TimeoutException : 
         pass
+
+def gererCookieTtfl(driver):
+    """
+    si sur la page ttfl un cookie apparait je veux pouvoir le clicker (i.e accepter)
+    """
+    time.sleep(5)
+    try : 
+        boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                By.XPATH, f"//button[@class='sd-cmp-1rLJX']/span[@class='sd-cmp-3zOvK sd-cmp-3xV-4 sd-cmp-3t33g']")))
+        boutonCookie.click()
+        time.sleep(3)
+    except TimeoutException : 
+        pass 
 
 def simplifierNomJoueur(nom):
     """
@@ -64,7 +77,7 @@ def telechargerCalendrier(id_saison, date_depart, duree):
             urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
             driver.get(urlDateJournee)
             time.sleep(3)
-            gererCookie(driver)
+            gererCookieNba(driver)
             try :
                 elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.XPATH, 
                                                                                                    "//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']")))
@@ -195,12 +208,11 @@ class JourneeSiteNba(Blessures):
         """
         self.driver.get(self.urlDateJournee)
         time.sleep(3)
-        gererCookie(self.driver)
+        gererCookieNba(self.driver)
         #recuperer la liste des hyperliens qui ont le mot "feuille" dedans
         try :
             elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.LINK_TEXT, 'BOX SCORE')))
-        except TimeoutException as e :
-            print(e)
+        except TimeoutException :
             raise PasDeMatchError(self.dateJournee)
         return [p.get_attribute("href") for p in elementsScore]
     
@@ -371,7 +383,7 @@ class JoueursSiteNba(object):
             self.urlPageJoueurs=urlPageJoueurs
             self.refWebElement=refWebElement
             self.driver.get(self.urlPageJoueurs)
-            gererCookie(self.driver)
+            gererCookieNba(self.driver)
             if typeExport=='All' : 
                 self.dfJoueurs=self.miseEnForme(self.obtenirlistLinkJoueurs())
             else : 
@@ -428,7 +440,7 @@ class JoueursSiteNba(object):
         """
         dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(listLinkJoueurs)], axis=0)
         return dfCaracJoueurs
- 
+
 class JoueursChoisisTtfl(object):
     """
     class des joueurs choisis en ttfl par le passé
@@ -436,32 +448,122 @@ class JoueursChoisisTtfl(object):
     - l'enregistrement de pages html depuis le site de trashtalk, 
     - les données stockées en base
     """
-    def __init__(self, listFichiersHtml, saison):
+    def __init__(self, saison, htmlTtfl='https://fantasy.trashtalk.co/?tpl=historique'):
         """
         attributs : 
+        htmlTtfl : strinf url de la TTFL
         fichiersHtml : tuple ou list des fichiers html telecharges au prealable depuis l'historique de trashtalk https://fantasy.trashtalk.co/?tpl=historique
         dfJoueursChoisisBdd :df des joueurs deja choisi stockes dans la bdd
         """
-        self.listFichiersHtml=listFichiersHtml
+        self.htmlTtfl=htmlTtfl
         self.saison=saison
-        self.dfJoueurAInserer=self.filtrerJoueurDejaBdd()
-        self.transfertBdd()
-    
-    def creerDfJoueursChoisisTrashtalk(self) :
+        with DriverFirefox() as d :
+            self.driver=d.driver
+            self.driver.get(self.htmlTtfl)
+            time.sleep(3)
+            self.recupSiteTrashtalk()
+            time.sleep(3)
+            self.dfJoueurAInserer=self.filtrerJoueurDejaBdd()
+        
+    def recupSiteTrashtalk(self, titrePageConnexion='#TTFL - Saison 6', titrePageTTFl='Dashboard | TRASHTALK FANTASY'):    
         """
-        creer la df des joueurs stockes dans les fhciers utml issus de trashtalk
+        vérifier si la connexion de __init__ nous dirige directement sur la page TTFL ou sur la page d'accueil
         in : 
-            listFichiersHtml : list des fihciers html à perndre en compte
-        out : 
-            dfJoueurChoisis  : df issus des fichiers html, avec Date, Joueur, nom_simple, id_joueur
+           titrePageConnexion : string : titre de la page de connexion (i.e entrer login et mdp)
+           titrePageTTFl :  string : titre de la page d'accueil de TTFL (i.e deja connecte)
         """
-        dfJoueurChoisis=pd.concat([pd.read_html(e)[0] for e in self.listFichiersHtml])
+        if self.driver.title==titrePageConnexion :
+            print('connexion a etablir') 
+            gererCookieTtfl(self.driver)
+            self.ouvrirPageConnexion()
+            self.connexion()
+            dfJoueursChoisisBase=self.agregationJoueursChoisis(self.accesHistorique())
+            self.formeDfJoueursChoisisTrashtalk(dfJoueursChoisisBase)
+            #return 'pageConnexion'
+        elif self.driver.title==titrePageTTFl : 
+            print('connexion deja etablie')
+            dfJoueursChoisisBase=self.agregationJoueursChoisis(self.accesHistorique())
+        else : 
+            raise NameError('le titre de la page ne correspond pas aux titres connus')
+        
+    def ouvrirPageConnexion(self):
+        """
+        depuis la page d'accueil TTFL non connecte, ouvrir la page de connexion
+        """
+        time.sleep(3)
+        boutonConnexion=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                By.XPATH, f"//li/a[@href='#login']")))
+        boutonConnexion.click()
+    
+    def recupLoginMdp(self, cheminFichier=r'C:\Users\martin.schoreisz\git\Basket\Basket\src\ConnexionId'):
+        """
+        récupérer les login et mdp depuis le fichier de stockage (en .gitignore)
+        in : 
+            cheminFichier : path du fichier de stockage
+        """
+        with open(cheminFichier,'r') as f_id :
+            for texte in f_id :
+                login, mdp=texte.strip().split(' ')[0],texte.strip().split(' ')[1]
+        return login, mdp
+    
+    def connexion(self):
+        """
+        se connecter a mon compte de TTFL
+        """
+        time.sleep(3)
+        textLogin=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+                By.XPATH, f"//input[@name='email']")))
+        textMdp=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+                        By.XPATH, f"//input[@name='password']")))
+        boutonLogin=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                        By.XPATH, f"//button[@class='btn btn-primary font-montserrat all-caps fs-12 pull-right xs-pull-left']")))
+        login, mdp=self.recupLoginMdp()
+        textLogin.send_keys(login)
+        textMdp.send_keys(mdp)
+        time.sleep(3)
+        boutonLogin.click()
+        time.sleep(2)
+        
+    def accesHistorique(self):
+        """
+        acceder à la page de l'historique et recuperer le nb de page
+        """
+        boutonHistorique=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+                By.XPATH, f"//li/a[@href='/?tpl=historique']")))
+        boutonHistorique.click()
+        time.sleep(2)
+        pagination=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
+                By.XPATH, f"//ul[@class='pagination']//a")))
+        longueurPagination=len(pagination)-2
+        return longueurPagination
+    
+    def agregationJoueursChoisis(self,longueurPagination) : 
+        """
+        parcourir les pages et recuperer les joueurs deja joues
+        """
+        listDfJoueursChoisis=[]
+        for i in range(longueurPagination) : 
+            time.sleep(2)
+            pagination=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
+                        By.XPATH, f"//ul[@class='pagination']//a")))
+            pagination[i+1].click()
+            time.sleep(2)
+            listDfJoueursChoisis.append(pd.read_html(self.driver.page_source)[0])  
+        return pd.concat(listDfJoueursChoisis).iloc[:-1]
+    
+    def formeDfJoueursChoisisTrashtalk(self,dfJoueurChoisis) :
+        """
+        mettre en forme la df des joueurs issus de trashtalk
+        in : 
+            dfJoueurChoisis : df des joueurs telles que importee du site
+        out : 
+            dfJoueurChoisiId  : df des joueurs telles que importee du site, avec Date, Joueur, nom_simple, id_joueur
+        """
         dfJoueurChoisis['nom_simple']=dfJoueurChoisis.Joueur.apply(lambda x :  simplifierNomJoueur(x))
         with ct.ConnexionBdd('basket','maison') as c : 
             dfJoueur=pd.read_sql("select id_joueur, nom_simple from donnees_source.joueur", c.sqlAlchemyConn)
-            dfJoueurChoisiId=dfJoueurChoisis.merge(dfJoueur, on='nom_simple')
-            dfJoueurChoisiId['Date']=pd.to_datetime(dfJoueurChoisiId.Date)
-        return dfJoueurChoisiId.iloc[:-1]
+            self.dfJoueurChoisiId=dfJoueurChoisis.merge(dfJoueur, on='nom_simple')
+            self.dfJoueurChoisiId['Date']=pd.to_datetime(self.dfJoueurChoisiId.Date)
     
     def recupJoueurChoisiBdd(self):
         """
@@ -476,9 +578,8 @@ class JoueursChoisisTtfl(object):
         """
         filtrer les joueurs issus des fichiers html deja dans la bdd
         """
-        dfJoueurChoisiId=self.creerDfJoueursChoisisTrashtalk()
         dfJoueurChoisisBdd=self.recupJoueurChoisiBdd()
-        return dfJoueurChoisiId.loc[~(dfJoueurChoisiId.Date.isin(dfJoueurChoisisBdd.date_choix) & dfJoueurChoisiId.id_joueur.isin(dfJoueurChoisisBdd.id_joueur))]
+        return self.dfJoueurChoisiId.loc[~(self.dfJoueurChoisiId.Date.isin(dfJoueurChoisisBdd.date_choix) & self.dfJoueurChoisiId.id_joueur.isin(dfJoueurChoisisBdd.id_joueur))]
  
     def transfertBdd(self):
         """
