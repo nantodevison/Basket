@@ -91,6 +91,19 @@ def insererBlessesInconnusPasMatchBefore(dfInjuries,sqlAlchemyConn):
     dfInjuriesInconnu[['id_joueur','date_blessure','id_type_blessure']].to_sql('blessure', sqlAlchemyConn, 
                                                                     schema='donnees_source', if_exists='append', index=False)
     
+def televerserJourneeSiteNba(date, duree):
+    """
+    telecharger une ou plusieurs journee du site Nba.com (USA) et les basculer dans la bdd
+    in :
+        date : string : date de depart de telechargement (YYYY-MM-DD)
+        duree : integer : nb de jours a telecharegre a partir de la date de depart
+    """
+    for j in [d.strftime('%Y-%m-%d') for d in pd.date_range(start=date,periods=duree)] : 
+        print(j)
+        journee=JourneeBdd(j)
+        journee.creerAttributsGlobaux()
+        journee.exporterVersBdd()
+
 def transfertCalendrier(id_saison, date_depart, duree, bdd='basket'):
     """
     transferer le calendrier telecharge grace a la fonction TelechargementDonnees.telechargerCalendrier() dans la bdd
