@@ -7,8 +7,7 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 '''
 
 import pandas as pd
-from datetime import date
-from TelechargementDonnees import JourneeSiteNba, Blessures, telechargerCalendrier
+from TelechargementDonnees import JourneeSiteNba, telechargerCalendrier
 import Connexion_Transfert as ct
 
 def miseAJourBlessesBdd(dfInjuries,sqlAlchemyConn):
