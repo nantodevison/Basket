@@ -492,7 +492,15 @@ CREATE OR REPLACE VIEW classements.classement_equipes_conf_est AS
 SELECT id_equipe, victoire, defaite, pct_win, conference_rank
  FROM classements.classement_equipes_complet
  WHERE conference='Est'
- ORDER BY conference_rank asc
+ ORDER BY conference_rank ASC
+ 
+/*==================================
+ * VUE GENERAL DES JOUEURS
+ ====================================*/
+CREATE OR REPLACE VIEW donnees_source.desciption_joueur AS 
+ SELECT j.nom, j.id_position_terrain, j.poids, j.taille, c.id_equipe, c.date_debut_contrat
+ FROM donnees_source.joueur j JOIN donnees_source.contrat c ON j.id_joueur=c.id_joueur
+ AND c.date_fin_contrat IS null
  
  
 /* ========================

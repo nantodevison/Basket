@@ -9,6 +9,7 @@ module de conversion des fichiers .ui en .py
 from PyQt5 import QtWidgets, uic
 from Ihm.Initialiser_donnees_IHM import lastDates, nbJourneeImportDefaut
 from TeleversementJourneeBdd import televerserJourneeSiteNba
+from datetime import date
 
 
 class WindowPrincipale(QtWidgets.QMainWindow):
@@ -21,7 +22,7 @@ class WindowPrincipale(QtWidgets.QMainWindow):
         Constructor
         '''
         super(WindowPrincipale, self).__init__()
-        uic.loadUi('FenetreBaseStat-TTFL.ui', self)
+        uic.loadUi(r'C:\Users\martin.schoreisz\git\Basket\Basket\src\Ihm\FenetreBaseStat-TTFL.ui', self)
         
         #inititialisation des données de date
         dateMatchAImporter, dateCalendrierAImporter=lastDates()[2:]
@@ -31,7 +32,7 @@ class WindowPrincipale(QtWidgets.QMainWindow):
         self.spinBox_NbjourImport.setValue(nbJoursMatchs)
         
         #signaux slots pour télécharger les données
-        self.pushButton_importJournee.clicked.connect(televerserJourneeSiteNba(self.dateEdit_ImportJournee.date, self.spinBox_NbjourImport.value))
+        self.pushButton_importJournee.clicked.connect(televerserJourneeSiteNba(self.dateEdit_ImportJournee.date().toString('yyyy-MM-dd'), self.spinBox_NbjourImport.value()))
         
 if __name__=="__main__" : 
     import sys 
