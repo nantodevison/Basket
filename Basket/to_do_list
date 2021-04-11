@@ -1,8 +1,11 @@
-TO_DO
-
+TO_DO :
 - une gestion d'erreur simplifiee avec une boite de dialog qui indique : 
 	- dans quelle cadre à eu lieu l'erreur
 	- le nom de l'erreur
 	- quelques détails
+- basculer le telechargement des donnees dans un Qthread pour ne pas bloquer l'interface
+- ajouter une barre de progression au temechargement des donnees
 	
+
+DONE :
 - la définition d'une date d'import et nombre de journée minimum en fonction de la dernière journée connue

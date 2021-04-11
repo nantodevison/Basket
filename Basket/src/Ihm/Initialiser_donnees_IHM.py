@@ -21,7 +21,7 @@ def lastDates(bdd='basket'):
         dateMatchAImporter : date : date du 1er jour a importer pour completer la base des matchs
         dateCalendrierAImporter : date : date du 1er jour a importer pour completer la base du calendrier
     """
-    with ct.ConnexionBdd(bdd, 'maison') as c:
+    with ct.ConnexionBdd(bdd, 'boulot') as c:
         resultDateMatchRecent=c.sqlAlchemyConn.execute('SELECT max(date_match) FROM donnees_source.match')
         resultDateCalendrierRecent=c.sqlAlchemyConn.execute('SELECT max(date_match) FROM donnees_source.calendrier')
         dateMatchRecentBdd=resultDateMatchRecent.fetchone()[0]
