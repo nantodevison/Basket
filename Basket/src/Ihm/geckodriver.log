@@ -167,3 +167,140 @@ console.error: BookmarksPolicies.jsm:
 
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
+1618162654562	geckodriver	INFO	Listening on 127.0.0.1:58991
+1618162657584	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\MARTIN~1.SCH\\AppData\\Local\\Temp\\rust_mozprofileob7yad"
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-Racine-1.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-Racine-1-igca.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-2.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-3.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-igca-2.1-20110708.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-Gestion_carte.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-1.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - serveur-1E-2018.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - serveur-1e-2017.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - acr-ministere-interieur-2018.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-racine-ministere-Interieur-2017.cer
+console.error: Policies.jsm: 
+  Unable to add security device ANTS-IAS_64
+console.error: Policies.jsm: 
+  Unable to add security device ANTS-IAS_32
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+1618162660909	Marionette	INFO	Listening on port 59002
+1618162660921	Marionette	WARN	TLS certificate errors will be ignored for this session
+1618162671371	Marionette	INFO	Stopped listening on port 59002
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1618162672800	geckodriver	INFO	Listening on 127.0.0.1:59088
+1618162675821	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\MARTIN~1.SCH\\AppData\\Local\\Temp\\rust_mozprofileWJLNti"
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-Racine-1.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-Racine-1-igca.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-2.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-3.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-igca-2.1-20110708.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-Gestion_carte.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-ANTSv3-AAE-1.cer
+console.error: Policies.jsm: 
+  Unable to find certificate - serveur-1E-2018.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - serveur-1e-2017.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - acr-ministere-interieur-2018.crt
+console.error: Policies.jsm: 
+  Unable to find certificate - AC-racine-ministere-Interieur-2017.cer
+console.error: Policies.jsm: 
+  Unable to add security device ANTS-IAS_64
+console.error: Policies.jsm: 
+  Unable to add security device ANTS-IAS_32
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+console.error: BookmarksPolicies.jsm: 
+  Message: Error: parentGuid must be valid
+  Stack:
+    insert/<@resource://gre/modules/Bookmarks.jsm:298:15
+
+1618162680657	Marionette	INFO	Listening on port 59096
+1618162680768	Marionette	WARN	TLS certificate errors will be ignored for this session
+1618162692822	Marionette	ERROR	[36] No reply from Marionette:Register
+1618162819690	Marionette	INFO	Stopped listening on port 59096
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+

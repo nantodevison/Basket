@@ -18,6 +18,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import Connexion_Transfert as ct
+from PyQt5.QtCore import QObject, pyqtSignal
 
 urlSiteNbaScore='https://www.nba.com/games'
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -170,11 +171,11 @@ class Blessures(object):
         dfsInjuriesComplet=dfsInjuriesComplet.loc[dfsInjuriesComplet.date_blessure<=self.dateMaxi].copy()
         return dfsInjuriesComplet
 
-class JourneeSiteNba(Blessures):
+class JourneeSiteNba(Blessures, QObject):
     '''
     Resultats des matchs publies sur le site pour une date
     '''
-
+    signalAvancement=pyqtSignal(int)
     def __init__(self, dateJournee, dossierExportCsv=r'C:\Users\martin.schoreisz\git\Basket\Basket\data'):
         '''
         Attributes
@@ -187,7 +188,8 @@ class JourneeSiteNba(Blessures):
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
         self.dateJournee=dateJournee
-        super().__init__(self.dateJournee)
+        Blessures.__init__(self, self.dateJournee)
+        QObject.__init__(self)
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         self.dossierExportCsv=dossierExportCsv
         with DriverFirefox() as d : 
@@ -223,6 +225,7 @@ class JourneeSiteNba(Blessures):
         dicoJournee={}
         for e,p in enumerate(self.getListFeuilleDeMatch()) : 
             print(e,p)
+            self.signalAvancement.emit(e+1)
             self.driver.get(p)
             time.sleep(7)
             self.driver.implicitly_wait(20)
