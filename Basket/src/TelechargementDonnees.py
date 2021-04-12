@@ -176,7 +176,7 @@ class JourneeSiteNba(Blessures, QObject):
     Resultats des matchs publies sur le site pour une date
     '''
     signalAvancement=pyqtSignal(int)
-    def __init__(self, dateJournee, dossierExportCsv=r'C:\Users\martin.schoreisz\git\Basket\Basket\data'):
+    def __init__(self, dateJournee):
         '''
         Attributes
             dateJournee : string au format YYYY-MM-DD
@@ -191,10 +191,8 @@ class JourneeSiteNba(Blessures, QObject):
         Blessures.__init__(self, self.dateJournee)
         QObject.__init__(self)
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
-        self.dossierExportCsv=dossierExportCsv
         with DriverFirefox() as d : 
             self.driver=d.driver
-            self.dossierDate=os.path.join(self.dossierExportCsv,self.dateJournee)
             self.dicoJournee=self.dicoMatchs()
         
     def __str__(self):
@@ -216,33 +214,35 @@ class JourneeSiteNba(Blessures, QObject):
             elementsScore=WebDriverWait(self.driver, 20).until(EC.presence_of_all_elements_located((By.LINK_TEXT, 'BOX SCORE')))
         except TimeoutException :
             raise PasDeMatchError(self.dateJournee)
-        return [p.get_attribute("href") for p in elementsScore]
+        return [p.get_attribute("href") for p in elementsScore], len(elementsScore)
     
     def dicoMatchs(self):
         """
         en fonction de la source, creer les dfs des matchs et stats, dans un dico
         """
         dicoJournee={}
-        for e,p in enumerate(self.getListFeuilleDeMatch()) : 
-            print(e,p)
-            self.signalAvancement.emit(e+1)
-            self.driver.get(p)
-            time.sleep(7)
-            self.driver.implicitly_wait(20)
-            #sur l'onglet box-score on recupere les stats des equipes
-            dfsEquipes=pd.read_html(self.driver.page_source)
-            dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
-            dicoJournee[e]['stats_e1']=dfsEquipes[1]
-            time.sleep(7)
-            self.driver.implicitly_wait(20)
-            #bascule sur l'onglet summary er recuperer les stats de matchs: 
-            elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
-            self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
-            time.sleep(7)
-            self.driver.implicitly_wait(20)
-            dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
-            dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
-                                                      pd.read_html(self.driver.page_source)[1]],axis=1)
+        with DriverFirefox() as d : 
+            self.driver=d.driver
+            for e,p in enumerate(self.getListFeuilleDeMatch()) : 
+                print(e,p)
+                self.signalAvancement.emit(e+1)
+                self.driver.get(p)
+                time.sleep(7)
+                self.driver.implicitly_wait(20)
+                #sur l'onglet box-score on recupere les stats des equipes
+                dfsEquipes=pd.read_html(self.driver.page_source)
+                dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
+                dicoJournee[e]['stats_e1']=dfsEquipes[1]
+                time.sleep(7)
+                self.driver.implicitly_wait(20)
+                #bascule sur l'onglet summary er recuperer les stats de matchs: 
+                elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
+                self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
+                time.sleep(7)
+                self.driver.implicitly_wait(20)
+                dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
+                dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
+                                                          pd.read_html(self.driver.page_source)[1]],axis=1)
         self.miseEnFormeDf(dicoJournee)
         return dicoJournee
     
@@ -340,27 +340,6 @@ class JourneeSiteNba(Blessures, QObject):
                                     'trois_pt_r','lanc_frc_r')]) - (x['ball_perdu']+(x['tir_tentes']-x['tir_reussi'])+
                                                                   (x['trois_pt_t']-x['trois_pt_r']) + 
                                                                   (x['lanc_frc_t']-x['lanc_frc_r'])), axis=1)
-        
-    
-    def creerDossierJournee(self):
-        """
-        creer un dossier pour y stocker les fichiers csv d'une journee telechargee
-        """
-        if not os.path.exists(self.dossierDate):
-            os.makedirs(self.dossierDate)
-        return
-    
-    def saveCsv(self):
-        """
-        sauvegarder les df du dico Journee en csv
-        """    
-        self.creerDossierJournee()
-        for k,v in self.dicoJournee.items() : 
-            for i,j in v.items():
-                if i=='match' : 
-                    j.to_csv(os.path.join(self.dossierDate,f'm{k}_{self.dateJournee}.csv'), index=False)
-                else : 
-                    j.to_csv(os.path.join(self.dossierDate,f'm{k}_equipe{i[-1]}_{self.dateJournee}.csv'),index=False)
   
 class JoueursSiteNba(object):  
     """
