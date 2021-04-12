@@ -175,7 +175,7 @@ class JourneeSiteNba(Blessures, QObject):
     '''
     Resultats des matchs publies sur le site pour une date
     '''
-    signalAvancement=pyqtSignal(int)
+    signalAvancement=pyqtSignal(int, str)
     def __init__(self, dateJournee):
         '''
         Attributes
@@ -225,7 +225,7 @@ class JourneeSiteNba(Blessures, QObject):
             self.driver=d.driver
             for e,p in enumerate(self.listFeuilleDeMatch) : 
                 print(e,p)
-                self.signalAvancement.emit(e+1)
+                self.signalAvancement.emit(e+1, p[25:35])
                 self.driver.get(p)
                 time.sleep(7)
                 self.driver.implicitly_wait(20)
