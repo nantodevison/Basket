@@ -53,8 +53,9 @@ class WindowPrincipale(QtWidgets.QMainWindow):
                                                                 periods=self.spinBox_NbjourImport.value())] : 
             print(j)
             journee=JourneeBdd(j)
+            #TODO :envoyer le nombre de matchs vers la barre de progression
             journee.creerAttributsGlobaux()
-            journee.exporterVersBdd()
+            #journee.exporterVersBdd()
         
 if __name__=="__main__" : 
     import sys 

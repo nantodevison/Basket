@@ -142,6 +142,9 @@ class JourneeBdd(JourneeSiteNba) :
         """
         faire appel aux fonctions en dessous pour obtenir les attributs descriptifs de la journee
         """ 
+        #commencer par creer le dico des matchs
+        self.dicoMatchs()
+        #puis traiter les données
         dfJoueursBdd, dfContratBdd, dfJoueursBlessesBdd=self.telechargerDonnees()
         self.verifJoueursInconnu(dfJoueursBdd)
         if not self.dfJoueursInconnus.empty : 

@@ -193,7 +193,7 @@ class JourneeSiteNba(Blessures, QObject):
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         with DriverFirefox() as d : 
             self.driver=d.driver
-            self.dicoJournee=self.dicoMatchs()
+            self.listFeuilleDeMatch, self.nbMatchs=self.getListFeuilleDeMatch()
         
     def __str__(self):
         return '\n'.join([f'match {i} \n'+ v['match'].to_string(columns=['equipe', 'final'], index=False,
@@ -223,7 +223,7 @@ class JourneeSiteNba(Blessures, QObject):
         dicoJournee={}
         with DriverFirefox() as d : 
             self.driver=d.driver
-            for e,p in enumerate(self.getListFeuilleDeMatch()) : 
+            for e,p in enumerate(self.listFeuilleDeMatch) : 
                 print(e,p)
                 self.signalAvancement.emit(e+1)
                 self.driver.get(p)
@@ -243,8 +243,7 @@ class JourneeSiteNba(Blessures, QObject):
                 dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
                 dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
                                                           pd.read_html(self.driver.page_source)[1]],axis=1)
-        self.miseEnFormeDf(dicoJournee)
-        return dicoJournee
+        self.dicoJournee=self.miseEnFormeDf(dicoJournee)
     
     def miseEnFormeDf(self, dicoJournee):
         """
