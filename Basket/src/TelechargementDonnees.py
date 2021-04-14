@@ -243,7 +243,8 @@ class JourneeSiteNba(Blessures, QObject):
                 dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
                 dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
                                                           pd.read_html(self.driver.page_source)[1]],axis=1)
-        self.dicoJournee=self.miseEnFormeDf(dicoJournee)
+        self.miseEnFormeDf(dicoJournee)
+        self.dicoJournee=dicoJournee
     
     def miseEnFormeDf(self, dicoJournee):
         """

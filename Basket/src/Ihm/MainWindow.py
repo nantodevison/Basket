@@ -52,26 +52,42 @@ class WindowPrincipale(QtWidgets.QMainWindow):
             duree : integer : nb de jours a telecharegre a partir de la date de depart
         """
         print('avant ouverture Tread')
+        #ouvrir le thread
         self.thread = QThread()
+        #creer le worker
         print('avant creation worker')
         self.workerTelechargement=WorkerTelechargement(self.dateEdit_ImportJournee.date().toString('yyyy-MM-dd'),
                                              self.spinBox_NbjourImport.value())
-        #self.workerTelechargement=WorkerTelechargement()
+        #envoyer le worker dans le thread
         print('avant move to')
         self.workerTelechargement.moveToThread(self.thread)
+        #signaux/slots
         print('avant signaux/slots')
         self.thread.started.connect(self.workerTelechargement.run)
         self.workerTelechargement.finished.connect(self.thread.quit)
         self.workerTelechargement.finished.connect(self.workerTelechargement.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
-        #self.workerTelechargement.progress.connect(self.reportProgress)
-        # Step 6: Start the thread
+        self.barresProgress=BarreProgression()
+        self.workerTelechargement.signalNbMatch.connect(self.setPgBarNbMatchs)
+        self.workerTelechargement.signalAvancement.connect(self.setPgBarMatchEnCour)
+        
+        # Start the thread
         self.thread.start()
     """ 
     @pyqtSlot(int)   
     def reportProgress(self, cnt):
         print(cnt)
     """
+    
+    @pyqtSlot(int)
+    def setPgBarNbMatchs(self,nbMatchs):
+        self.barresProgress.progressBar_etape.setMaximum(nbMatchs)
+    
+    @pyqtSlot(int, str)
+    def setPgBarMatchEnCour(self,numMatch, nomMatch):
+        self.barresProgress.progressBar_etape.setValue(numMatch)
+        self.barresProgress.label_etape.setText(nomMatch)
+        
 
 
 class BarreProgression(QtWidgets.QDialog):
@@ -82,6 +98,10 @@ class BarreProgression(QtWidgets.QDialog):
     def __init__(self):
         super(BarreProgression, self).__init__()
         uic.loadUi(r'C:\Users\martin.schoreisz\git\Basket\Basket\src\Ihm\ProgressBar.ui', self)
+        self.progressBar_etape.setMinimum(0)
+        self.progressBar_etape.setValue(0)
+        self.show()
+        
             
 class WorkerTelechargement(QObject):
     """
@@ -91,6 +111,7 @@ class WorkerTelechargement(QObject):
     signalNbMatch=pyqtSignal(int)#envoyer le nb total de la journee en cours
     signalNbJournee=pyqtSignal(int)#envoyer le nb total de journee
     signalNouvelleJournee=pyqtSignal(int)#pour envoyer le numero de la journee telechragee
+    signalAvancement=pyqtSignal(int, str)#pour trabsmettre le signal issu de l'objet journee
     
     def __init__(self, date_debut, duree):
         super(WorkerTelechargement,self).__init__()
@@ -111,8 +132,10 @@ class WorkerTelechargement(QObject):
                 self.signalNouvelleJournee.emit(e+1)
                 print(j)
                 journee=JourneeBdd(j)
+                journee.signalAvancement.connect(self.transmissionDonneesjournee)
+                print(f'journee cree, nb matchs : {journee.nbMatchs}')
                 self.signalNbMatch.emit(journee.nbMatchs)
-                journee.creerAttributsGlobaux()
+                journee.creerAttributsGlobaux()                
                 #journee.exporterVersBdd()
         except Exception as e : 
             print(e)
@@ -128,6 +151,10 @@ class WorkerTelechargement(QObject):
             self.progress.emit(i + 1)
         self.finished.emit()
     """
+    
+    @pyqtSlot(int, str)
+    def transmissionDonneesjournee(self, numMatch, nomMatch):
+        self.signalAvancement.emit(numMatch, nomMatch)
         
 if __name__=="__main__" : 
     import sys 
