@@ -16,6 +16,12 @@
     <height>200</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>300</height>
+   </size>
+  </property>
   <property name="baseSize">
    <size>
     <width>500</width>
@@ -52,7 +58,7 @@
    <item>
     <widget class="QLabel" name="label_etape">
      <property name="text">
-      <string>TextLabel</string>
+      <string>Initialisation...</string>
      </property>
     </widget>
    </item>

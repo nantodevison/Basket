@@ -175,7 +175,8 @@ class JourneeSiteNba(Blessures, QObject):
     '''
     Resultats des matchs publies sur le site pour une date
     '''
-    signalAvancement=pyqtSignal(int, str)
+    signalAvancement=pyqtSignal(str)
+    signalMatchFait=pyqtSignal(int)
     def __init__(self, dateJournee):
         '''
         Attributes
@@ -187,9 +188,9 @@ class JourneeSiteNba(Blessures, QObject):
             dicoJournee : dico avec en cle un integer  et en value un dico de 3 clé : match, stats_eO et stat_e1 qui contein les dfs de donnees
             dossierExportCsv : dossier pour export de la journee telechargee
         '''
+        QObject.__init__(self)
         self.dateJournee=dateJournee
         Blessures.__init__(self, self.dateJournee)
-        QObject.__init__(self)
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         with DriverFirefox() as d : 
             self.driver=d.driver
@@ -225,7 +226,7 @@ class JourneeSiteNba(Blessures, QObject):
             self.driver=d.driver
             for e,p in enumerate(self.listFeuilleDeMatch) : 
                 print(e,p)
-                self.signalAvancement.emit(e+1, p[25:35])
+                self.signalAvancement.emit(f'{p[25:35]}...')
                 self.driver.get(p)
                 time.sleep(7)
                 self.driver.implicitly_wait(20)
@@ -243,6 +244,7 @@ class JourneeSiteNba(Blessures, QObject):
                 dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
                 dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
                                                           pd.read_html(self.driver.page_source)[1]],axis=1)
+                self.signalMatchFait.emit(e+2)
         self.miseEnFormeDf(dicoJournee)
         self.dicoJournee=dicoJournee
     
