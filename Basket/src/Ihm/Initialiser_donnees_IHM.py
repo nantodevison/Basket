@@ -12,7 +12,7 @@ from datetime import timedelta, date
 
 def lastDates(bdd='basket'):
     """
-    recuperer dans la bdd la derniere date de match et la date la plus avancee de calendrier
+    recuperer dans la bdd la derniere date de match et la date la plus avancee de calendrier et l'identifiant de saison
     in : 
         bdd : string de connexion a la base
     out :
@@ -23,12 +23,13 @@ def lastDates(bdd='basket'):
     """
     with ct.ConnexionBdd(bdd, 'boulot') as c:
         resultDateMatchRecent=c.sqlAlchemyConn.execute('SELECT max(date_match) FROM donnees_source.match')
-        resultDateCalendrierRecent=c.sqlAlchemyConn.execute('SELECT max(date_match) FROM donnees_source.calendrier')
+        resultDateCalendrierRecent=c.sqlAlchemyConn.execute('SELECT max(date_match), max(id_saison) FROM donnees_source.calendrier')
         dateMatchRecentBdd=resultDateMatchRecent.fetchone()[0]
-        dateCalendrierRecent=resultDateCalendrierRecent.fetchone()[0]
+        resultatsInter=resultDateCalendrierRecent.fetchall()[0]
+        dateCalendrierRecent, idSaisonRecent=resultatsInter[0],resultatsInter[1]
     dateMatchAImporter=dateMatchRecentBdd + timedelta(days=1)
     dateCalendrierAImporter=dateCalendrierRecent + timedelta(days=1)
-    return dateMatchRecentBdd, dateCalendrierRecent, dateMatchAImporter, dateCalendrierAImporter
+    return dateMatchRecentBdd, dateCalendrierRecent, dateMatchAImporter, dateCalendrierAImporter, idSaisonRecent
 
 def nbJourneeImportDefaut(dateCalendrierAImporter):
     """

@@ -3,9 +3,13 @@ TO_DO :
 	- dans quelle cadre à eu lieu l'erreur
 	- le nom de l'erreur
 	- quelques détails
-- basculer le telechargement des donnees dans un Qthread pour ne pas bloquer l'interface
-- ajouter une barre de progression au temechargement des donnees
+-import calendrier : creer une classe calendrier qui reprend la foction de telechargement
+-import joueurs deja choisi
+-creation de graphs
+- reflexions sur les blessures : comment faire mieux ? sources de donnees, traitements?
 	
 
 DONE :
 - la définition d'une date d'import et nombre de journée minimum en fonction de la dernière journée connue
+- basculer le telechargement des donnees dans un Qthread pour ne pas bloquer l'interface
+- ajouter une barre de progression au temechargement des donnees

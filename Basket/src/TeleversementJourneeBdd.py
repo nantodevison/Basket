@@ -7,7 +7,7 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 '''
 
 import pandas as pd
-from TelechargementDonnees import JourneeSiteNba, telechargerCalendrier
+from TelechargementDonnees import JourneeSiteNba, Calendrier
 import Connexion_Transfert as ct
 
 def miseAJourBlessesBdd(dfInjuries,sqlAlchemyConn):
@@ -112,9 +112,9 @@ def transfertCalendrier(id_saison, date_depart, duree, bdd='basket'):
         duree : integer :nb de jours apres date de depart
         bdd : id de connxion a la bdd
     """
-    dfMatchs=telechargerCalendrier(id_saison, date_depart, duree)
-    with ct.ConnexionBdd(bdd) as c :
-        dfMatchs.to_sql('calendrier', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+    cal=Calendrier(id_saison, date_depart, duree)
+    cal.telechargerCalendrier()
+    cal.exporteVersBdd()
     
 class JourneeBdd(JourneeSiteNba) : 
     """
