@@ -61,55 +61,7 @@ def simplifierNomJoueur(nom):
     """
     return re.sub(' |-|\.|\'','',nom).lower()
 
-class Calendrier(QObject):
-    """
-    récuperer le calendrier depuis le site NBA
-    """
-    signalJourneeFaite=pyqtSignal(int)
-    def __init__(self,id_saison, date_depart, duree):
-        """
-        attributs : 
-            id_saison : integer, identiiant saioson
-            date_depart : string format YYYY-MM-DD
-            duree : integer :nb de jours apres date de depart
-        """
-        QObject.__init__(self)
-        self.id_saison=id_saison
-        self.date_depart=date_depart
-        self.duree=duree
 
-    def telechargerCalendrier(self):
-        """
-        telecharger les donnees des matchs futurs, avec identifiant de saison, selon une date de depart et une duree
-        in :
-            
-        out :
-            dfMatchs : la df des matchs avec equipe dom, equipe_est, date_match et id_saison
-        """
-        listDfMatchs=[]
-        with DriverFirefox() as d :
-            driver=d.driver
-            for i,dateString in enumerate([d.strftime('%Y-%m-%d') 
-                        for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
-                urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
-                driver.get(urlDateJournee)
-                time.sleep(3)
-                gererCookieNba(driver)
-                try :
-                    elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located(
-                        (By.XPATH,"//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']")))
-                except TimeoutException as e :
-                    print(e)
-                    raise PasDeMatchError(d)
-                listMatch=[p.get_attribute("href") for p in elementsMatch]
-                listDfMatchs.append(pd.DataFrame.from_records([(m.split('-vs-')[0][-3:].upper(), m.split('-vs-')[1][:3].upper(), dateString, self.id_saison) for m in listMatch], 
-                                  columns=['equipe_exterieure', 'equipe_domicile', 'date_match', 'id_saison']))
-                self.signalJourneeFaite.emit(i+1)
-        self.calendrier=pd.concat(listDfMatchs)
-    
-    def exporterVersBdd(self,bdd='basket'):    
-        with ct.ConnexionBdd(bdd) as c :
-            self.calendrier.to_sql('calendrier', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
 
 class DriverFirefox(object):
     """
@@ -137,7 +89,63 @@ class DriverFirefox(object):
     def __exit__(self,*args):
         self.driver.quit()   
         return False
+
+class Calendrier(QObject):
+    """
+    récuperer le calendrier depuis le site NBA
+    """
+    signalJourneeFaite=pyqtSignal(int)
+    def __init__(self,id_saison, date_depart, duree):
+        """
+        attributs : 
+            id_saison : integer, identiiant saioson
+            date_depart : string format YYYY-MM-DD
+            duree : integer :nb de jours apres date de depart
+        """
+        QObject.__init__(self)
+        self.id_saison=id_saison
+        self.date_depart=date_depart
+        self.duree=duree
+
+    def telechargerCalendrier(self):
+        """
+        telecharger les donnees des matchs futurs, avec identifiant de saison, selon une date de depart et une duree
+        in :
+            
+        out :
+            dfMatchs : la df des matchs avec equipe dom, equipe_est, date_match et id_saison
+        """
+        listDfMatchs=[]
+        try :
+            print('debut')
+            with DriverFirefox() as d :
+                print('avant driver')
+                driver=d.driver
+                print('apres driver')
+                for i,dateString in enumerate([d.strftime('%Y-%m-%d') 
+                            for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
+                    urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
+                    driver.get(urlDateJournee)
+                    time.sleep(3)
+                    gererCookieNba(driver)
+                    try :
+                        elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located(
+                            (By.XPATH,"//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']")))
+                    except TimeoutException as e :
+                        print(e)
+                        raise PasDeMatchError(d)
+                    listMatch=[p.get_attribute("href") for p in elementsMatch]
+                    listDfMatchs.append(pd.DataFrame.from_records([(m.split('-vs-')[0][-3:].upper(), m.split('-vs-')[1][:3].upper(), dateString, self.id_saison) for m in listMatch], 
+                                      columns=['equipe_exterieure', 'equipe_domicile', 'date_match', 'id_saison']))
+                    self.signalJourneeFaite.emit(i+1)
+            self.calendrier=pd.concat(listDfMatchs)
+        except Exception as e : 
+            print(e)
     
+    def exporterVersBdd(self,bdd='basket'):    
+        with ct.ConnexionBdd(bdd) as c :
+            self.calendrier.to_sql('calendrier', c.sqlAlchemyConn, schema='donnees_source', if_exists='append', index=False)
+   
 class Blessures(object):
     """
     class permettant d'avoir acces aux joueurs blesses depuis le site de CBS

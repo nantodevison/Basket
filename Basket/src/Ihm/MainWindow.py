@@ -45,32 +45,36 @@ class WindowPrincipale(QtWidgets.QMainWindow):
     @pyqtSlot()    
     def transfertCalendrier(self):
         """
-        transferer le calendrier telecharge grace a la fonction TelechargementDonnees.telechargerCalendrier() dans la bdd
+        transferer le calendrier telecharge grace a la classe calendrier() dans la bdd
         in :
             id_saison : integer, identiiant saioson
             date_depart : string format YYYY-MM-DD
             duree : integer :nb de jours apres date de depart
             bdd : id de connxion a la bdd
         """
-        self.threadCalendrier = QThread()
-        print('avant creation worker')
-        self.workerCalendrier=WorkerCalendrier(self.spinBox_idSaisonCalendrier.value(), 
-                                               self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'), 
-                                               self.spinBox_calendrierNbJourImport.value())
-        print('avant move to')
-        self.workerCalendrier.moveToThread(self.threadCalendrier)
-        print('avant signaux/slots')
-        self.threadCalendrier.started.connect(self.workerCalendrier.run)
-        self.workerCalendrier.finished.connect(self.threadCalendrier.quit)
-        self.workerCalendrier.finished.connect(self.workerCalendrier.deleteLater)
-        self.workerCalendrier.finished.connect(self.fermerPgBar)
-        self.threadCalendrier.finished.connect(self.threadCalendrier.deleteLater)
-        self.barresProgressCalendrier=BarreProgression(barreEtape=False)
-        print('postbar')
-        self.workerCalendrier.signalJourneeFaite.connect(self.setJourneeDone)
-        self.workerCalendrier.signalNbJournee.connect(self.initPgBarNouvelleJournee)
-        print('avant start')
-        self.threadCalendrier.start()
+        try : 
+            self.threadCalendrier = QThread()
+            print('avant creation worker')
+            print(self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'))
+            self.workerCalendrier=WorkerCalendrier(self.spinBox_idSaisonCalendrier.value(), 
+                                                   self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'), 
+                                                   self.spinBox_calendrierNbJourImport.value())
+            print('avant move to')
+            self.workerCalendrier.moveToThread(self.threadCalendrier)
+            print('avant signaux/slots')
+            self.threadCalendrier.started.connect(self.workerCalendrier.run)
+            self.workerCalendrier.finished.connect(self.threadCalendrier.quit)
+            self.workerCalendrier.finished.connect(self.workerCalendrier.deleteLater)
+            self.workerCalendrier.finished.connect(self.fermerPgBar)
+            self.threadCalendrier.finished.connect(self.threadCalendrier.deleteLater)
+            self.barresProgressCalendrier=BarreProgression(barreEtape=False)
+            print('postbar')
+            self.workerCalendrier.signalJourneeFaite.connect(self.setJourneeDone)
+            self.workerCalendrier.signalNbJournee.connect(self.initPgBarNouvelleJournee)
+            print('avant start')
+            self.threadCalendrier.start()
+        except Exception as e : 
+            print(e)
 
     @pyqtSlot()
     def televerserJourneeSiteNba(self):
@@ -136,6 +140,7 @@ class WindowPrincipale(QtWidgets.QMainWindow):
             
     @pyqtSlot(int)    
     def setJourneeDone(self, numJournee):
+        print()
         if self.sender()==self.workerTelechargement :
             self.barresProgressTelechargement.progressBar_nbJournee.setValue(numJournee)
         elif self.sender()==self.workerCalendrier :
@@ -236,12 +241,18 @@ class WorkerCalendrier(QObject):
         self.duree=duree
             
     def run(self):
-        self.signalNbJournee.emit(self.duree)
-        cal=Calendrier(self.idSaison,self.dateDepart,self.duree)
-        cal.signalJourneeFaite.connect(self.transmissionjourneeFaite)
-        cal.telechargerCalendrier()
-        cal.exporterVersBdd()
-        self.finished.emit()
+        print('debut run')
+        try : 
+            self.signalNbJournee.emit(self.duree)
+            cal=Calendrier(self.idSaison,self.dateDepart,self.duree)
+            print('avant tranbsmission')
+            #cal.signalJourneeFaite.connect(self.transmissionjourneeFaite)
+            print('avant calendrier')
+            cal.telechargerCalendrier()
+            cal.exporterVersBdd()
+            #self.finished.emit()
+        except Exception as e : 
+            print(e)
         
     @pyqtSlot(int)
     def transmissionjourneeFaite(self, numjournee):
