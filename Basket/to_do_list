@@ -3,10 +3,10 @@ TO_DO :
 	- dans quelle cadre à eu lieu l'erreur
 	- le nom de l'erreur
 	- quelques détails
--import calendrier : creer une classe calendrier qui reprend la foction de telechargement
+-import calendrier : creer une classe calendrier qui reprend la foction de telechargement (en cours)
 -import joueurs deja choisi
 -creation de graphs
-- reflexions sur les blessures : comment faire mieux ? sources de donnees, traitements?
+- reflexions sur les blessures : comment faire mieux ? sources de donnees (cf les donnees de 'inactive dans les book du summary), traitements?
 	
 
 DONE :

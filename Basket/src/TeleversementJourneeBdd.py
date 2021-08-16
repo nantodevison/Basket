@@ -7,7 +7,7 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 '''
 
 import pandas as pd
-from TelechargementDonnees import JourneeSiteNba, Calendrier
+from TelechargementDonnees import JourneeSiteNba, Calendrier, PasDeMatchError
 import Connexion_Transfert as ct
 
 def miseAJourBlessesBdd(dfInjuries,sqlAlchemyConn):
@@ -99,7 +99,10 @@ def televerserJourneeSiteNba(date, duree):
     """
     for j in [d.strftime('%Y-%m-%d') for d in pd.date_range(start=date,periods=duree)] : 
         print(j)
-        journee=JourneeBdd(j)
+        try :
+            journee=JourneeBdd(j)
+        except PasDeMatchError : 
+            continue
         journee.creerAttributsGlobaux()
         journee.exporterVersBdd()
 

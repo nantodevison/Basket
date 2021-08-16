@@ -11,7 +11,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot
 import pandas as pd
 from Ihm.Initialiser_donnees_IHM import lastDates, nbJourneeImportDefaut
 from TeleversementJourneeBdd import JourneeBdd
-from TelechargementDonnees import Calendrier
+from TelechargementDonnees import Calendrier, PasDeMatchError
 from datetime import date
 from PyQt5.QtCore import QObject
 from time import sleep
@@ -196,25 +196,24 @@ class WorkerTelechargement(QObject):
     
     def run(self):
         print('thread run')
-        try :
-            self.signalNbJournee.emit(self.duree)
-            print('avant boucle')
-            for e,j in  enumerate([d.strftime('%Y-%m-%d') for d in pd.date_range(start=self.date_debut,
-                                                                    periods=self.duree)]): 
-                self.signalNouvelleJournee.emit(e+1)
-                print(j)
+        self.signalNbJournee.emit(self.duree)
+        print('avant boucle')
+        for e,j in  enumerate([d.strftime('%Y-%m-%d') for d in pd.date_range(start=self.date_debut,
+                                                                periods=self.duree)]): 
+            self.signalNouvelleJournee.emit(e+1)
+            print(j)
+            try : 
                 journee=JourneeBdd(j)
-                self.signalNbMatch.emit(journee.nbMatchs+1)
-                journee.signalAvancement.connect(self.transmissionDonneesJournee)
-                journee.signalMatchFait.connect(self.transmissionMatchFait) 
-                print(f'journee cree, nb matchs : {journee.nbMatchs}')
-                journee.creerAttributsGlobaux()  
-                self.signalJourneeDone.emit(e+1)
-                print('fait')     
-                journee.exporterVersBdd()
-                
-        except Exception as e : 
-            print(e)
+            except PasDeMatchError : 
+                continue
+            self.signalNbMatch.emit(journee.nbMatchs+1)
+            journee.signalAvancement.connect(self.transmissionDonneesJournee)
+            journee.signalMatchFait.connect(self.transmissionMatchFait) 
+            print(f'journee cree, nb matchs : {journee.nbMatchs}')
+            journee.creerAttributsGlobaux()  
+            self.signalJourneeDone.emit(e+1)
+            print('fait')     
+            journee.exporterVersBdd()
         print('avant finished')
         self.finished.emit()
     
