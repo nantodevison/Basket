@@ -117,7 +117,7 @@ def transfertCalendrier(id_saison, date_depart, duree, bdd='basket'):
     """
     cal=Calendrier(id_saison, date_depart, duree)
     cal.telechargerCalendrier()
-    cal.exporteVersBdd()
+    cal.exporterVersBdd()
     
 class JourneeBdd(JourneeSiteNba) : 
     """
