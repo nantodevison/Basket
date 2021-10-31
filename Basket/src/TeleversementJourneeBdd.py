@@ -123,7 +123,7 @@ class JourneeBdd(JourneeSiteNba) :
     """
     un objet permettant les échanges entre la base et une journee telechargee
     """
-    def __init__(self, dateJournee, bdd='basket', id_saison=1, id_type_match=0, id_type_playoffs=None) : 
+    def __init__(self, dateJournee, bdd='basket', id_saison=2, id_type_match=0, id_type_playoffs=None) : 
         """
         attributes :
             dateJournee : string de date au format YYYY-mm-dd; attribut classe mere

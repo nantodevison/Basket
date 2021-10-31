@@ -2,6 +2,14 @@
  * CREER LA STRUCTURE DE BASE
  ====================================*/
 
+/*
+ * list de sprincipaux champs :
+   minutes INTERVAL, points integer, rebonds integer, passes_dec integer, steal integer, contres integer, tir_reussi integer, tir_tentes integer,)
+   pct_tir numeric(5,2), trois_pt_r integer, trois_pt_t integer, pct_3_pt numeric(5,2), lanc_frc_r integer, lanc_frc_t integer, pct_lfrc numeric(5,2),
+   rebonds_o integer, rebonds_d integer, ball_perdu integer, faute_p integer, plus_moins integer, score_ttfl integer
+ * 
+ */
+
 -- DROP SCHEMA donnees_source;
 
 CREATE SCHEMA donnees_source AUTHORIZATION postgres; --stocke les données sources et les vue de calcul des stats 
@@ -414,51 +422,29 @@ SELECT *,
  WINDOW w AS (PARTITION BY id_match)
  ORDER BY id_match
  
- 	--calcul des stats avance par saison
-CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_saison AS 
-SELECT id_equipe, sum("minutes") minutes, avg(points)::numeric(5,2) points, avg(rebonds)::numeric(3,1) rebonds, avg(passes_dec)::numeric(3,1) passes_dec, avg(steal)::numeric(2,1) steal, 
-       avg(contres)::numeric(3,1) contres, avg(tir_reussi)::numeric(5,2) tir_reussi, avg(tir_tentes)::numeric(5,2) tir_tentes,  (sum(tir_reussi)::NUMERIC/sum(tir_tentes)*100)::NUMERIC(5,2) pct_tir, 
-       avg(trois_pt_r)::numeric(5,2) trois_pt_r, avg(trois_pt_t)::numeric(5,2) trois_pt_t,   (sum(trois_pt_r)::NUMERIC/sum(trois_pt_t)*100)::numeric(5,2) pct_3_pt, avg(lanc_frc_r)::numeric(5,2) lanc_frc_r, 
-       avg(lanc_frc_t)::numeric(5,2) lanc_frc_t,   (sum(lanc_frc_r)::numeric/sum(lanc_frc_t)*100)::numeric(5,2) pct_lfrc, avg(rebonds_o)::numeric(3,1) rebonds_o, avg(rebonds_d)::numeric(3,1) rebonds_d, 
-       avg(ball_perdu)::numeric(3,1) ball_perdu, avg(faute_p)::numeric(3,1) faute_p
-  FROM donnees_source.stats_cumul_eqp_match 
-  GROUP BY id_equipe
-  
+
+ --calcul des stats cumule par equipe pour la saison la plus recente
+ CREATE OR REPLACE VIEW donnees_source.stats_cumul_eqp_saison AS 
+ SELECT id_equipe::varchar(3), minutes::interval, points::numeric(5,2), rebonds::numeric(3,1), passes_dec::numeric(3,1), steal::numeric(3,1), contres::numeric(3,1), tir_reussi::numeric(5,2), tir_tentes::numeric(5,2), pct_tir::numeric(5,2), 
+        trois_pt_r::numeric(5,2), trois_pt_t::numeric(5,2), pct_3_pt::numeric(5,2), lanc_frc_r::numeric(5,2), 
+        lanc_frc_t::numeric(5,2), pct_lfrc::numeric(5,2), rebonds_o::numeric(3,1), rebonds_d::numeric(3,1), ball_perdu::numeric(3,1), faute_p::numeric(3,1)
+   FROM donnees_source.func_stats_cumul_eqp_saison((SELECT max(s.id_saison) FROM donnees_source.saison s)) ;
+
+--calcul des stats avance pour la saison la plus recente
 CREATE OR REPLACE VIEW donnees_source.stats_avancee_saison AS 
-WITH
-stats_match AS (
-SELECT * ,
-          CASE WHEN row_number() OVER w = 1 THEN lead(possessions) OVER w 
-               ELSE lag(possessions) OVER w
-               END possessions_opp
- FROM donnees_source.stats_avancee_match
- WINDOW w AS (PARTITION BY id_match))
-SELECT id_equipe, (sum(points)/sum(possessions)*100)::numeric(5,2) team_off_rating, 
-       avg(points)::numeric(5,2) points_moy,
-       (sum(points_encaisse)/sum(possessions_opp)*100)::numeric(5,2) team_def_rating, 
-       avg(points_encaisse)::numeric(5,2) points_encaisse_moy,
-       avg(pace)::numeric(5,2) pace
- FROM stats_match
- GROUP BY id_equipe
+select id_equipe::varchar(3), team_off_rating::numeric(5,2), points_moy::numeric(5,2), team_def_rating::numeric(5,2), points_encaisse_moy::numeric(5,2), pace::numeric(5,2) 
+FROM donnees_source.func_stats_avancee_saison((SELECT max(s.id_saison) FROM donnees_source.saison s)) ;
  
+
+ 
+ SELECT * FROM donnees_source.func_stats_cumul_eqp_saison(2) ;
  /*======================================
   * Vue du nb de victoire ou defaites
   ========================================= */
  
 CREATE OR REPLACE VIEW donnees_source.victoire_defaite_sr AS
-WITH 
-trouver_gagnant AS (
- SELECT sm.*, CASE WHEN sm.score_periode=max(sm.score_periode) OVER (PARTITION BY sm.id_match) THEN 'W'
-              ELSE 'L'
-              END::varchar(1) gagnant
-  FROM donnees_source.score_match sm JOIN donnees_source."match" m ON sm.id_match=m.id_match
-  WHERE sm.id_periode='final' AND m.id_type_match=0),
-nb_win_loose AS (
-SELECT id_equipe, count(gagnant) FILTER (WHERE gagnant='W') victoire, count(gagnant) FILTER (WHERE gagnant='L') defaite
- FROM trouver_gagnant
- GROUP BY id_equipe)
-SELECT *, (victoire / (victoire+defaite)::numeric)::numeric(6,3) pct_win
- FROM nb_win_loose
+SELECT id_equipe::CHARACTER VARYING (3), victoire::bigint, defaite::bigint, pct_win::numeric(6,3)
+ FROM donnees_source.func_victoire_defaite_sr_saison((SELECT max(s.id_saison) FROM donnees_source.saison s)) ;
  
 /*====================
  * VUES DES CLASSEMENTS
@@ -474,11 +460,8 @@ SELECT *, ROW_NUMBER() OVER (ORDER BY team_off_rating DESC) off_rtg_rank,
  
 --classement des equipes total
 CREATE OR REPLACE VIEW classements.classement_equipes_complet AS
-SELECT vd.*, e.conference, e.division, 
-       ROW_NUMBER() OVER (ORDER BY vd.pct_win DESC) total_rank,
-       ROW_NUMBER() OVER (partition BY e.conference ORDER BY vd.pct_win DESC) conference_rank,
-       ROW_NUMBER() OVER (partition BY e.division ORDER BY vd.pct_win DESC) division_rank
- FROM donnees_source.victoire_defaite_sr vd JOIN donnees_source.equipe e ON vd.id_equipe=e.id_equipe
+SELECT id_equipe::CHARACTER VARYING (3), victoire::int8, defaite::int8, pct_win::numeric(6,3), 
+       conference::varchar(5), division::varchar, total_rank::int8, conference_rank::int8, division_rank::int8 FROM classements.func_classement_equipes_complet_saison(2) ;
  
 --classement des equipes conference Ouest
 CREATE OR REPLACE VIEW classements.classement_equipes_conf_ouest AS
@@ -644,6 +627,42 @@ END
 $$ ;
 COMMENT ON function ttfl.x_meilleurs_ttfl_x_match_dispo(integer, integer, date) IS 'renvoyer la liste des x joueurs avec la meilleure moyenne ttfl sur les y dernier matchs de chaque joueur, avec la dispo 
 selon les blessure et les choi ttfl'
+
+--fonction de calcul des stats par equipe sur une saison donnee
+CREATE OR REPLACE FUNCTION  donnees_source.func_stats_cumul_eqp_saison (IN saison integer)
+RETURNS TABLE (id_equipe CHARACTER VARYING (3), minutes INTERVAL, points numeric(5,2), rebonds numeric(3,1), passes_dec numeric(3,1), steal numeric(3,1), contres numeric(3,1), 
+               tir_reussi numeric(5,2), tir_tentes numeric(5,2),pct_tir numeric(5,2), trois_pt_r numeric(5,2), trois_pt_t numeric(5,2), pct_3_pt numeric(5,2), 
+               lanc_frc_r numeric(5,2), lanc_frc_t numeric(5,2), pct_lfrc numeric(5,2),rebonds_o numeric(3,1), rebonds_d numeric(3,1), ball_perdu numeric(3,1), faute_p numeric(3,1))
+AS $function$
+BEGIN 
+RETURN query 
+SELECT s.id_equipe,
+    sum(s.minutes) AS minutes,
+    avg(s.points)::numeric(5,2) AS points,
+    avg(s.rebonds)::numeric(3,1) AS rebonds,
+    avg(s.passes_dec)::numeric(3,1) AS passes_dec,
+    avg(s.steal)::numeric(3,1) AS steal,
+    avg(s.contres)::numeric(3,1) AS contres,
+    avg(s.tir_reussi)::numeric(5,2) AS tir_reussi,
+    avg(s.tir_tentes)::numeric(5,2) AS tir_tentes,
+    (sum(s.tir_reussi) / sum(s.tir_tentes) * 100::numeric)::numeric(5,2) AS pct_tir,
+    avg(s.trois_pt_r)::numeric(5,2) AS trois_pt_r,
+    avg(s.trois_pt_t)::numeric(5,2) AS trois_pt_t,
+    (sum(s.trois_pt_r) / sum(s.trois_pt_t) * 100::numeric)::numeric(5,2) AS pct_3_pt,
+    avg(s.lanc_frc_r)::numeric(5,2) AS lanc_frc_r,
+    avg(s.lanc_frc_t)::numeric(5,2) AS lanc_frc_t,
+    (sum(s.lanc_frc_r) / sum(s.lanc_frc_t) * 100::numeric)::numeric(5,2) AS pct_lfrc,
+    avg(s.rebonds_o)::numeric(3,1) AS rebonds_o,
+    avg(s.rebonds_d)::numeric(3,1) AS rebonds_d,
+    avg(s.ball_perdu)::numeric(3,1) AS ball_perdu,
+    avg(s.faute_p)::numeric(3,1) AS faute_p
+   FROM donnees_source.stats_cumul_eqp_match s JOIN donnees_source."match" m ON m.id_match=s.id_match
+   WHERE m.id_saison=saison
+  GROUP BY s.id_equipe ;
+END;
+$function$
+LANGUAGE plpgsql ;
+COMMENT ON FUNCTION donnees_source.func_stats_cumul_eqp_saison (integer) IS 'calcul des stats cumule des equipes pour 1 saison donnees' ;
 
 
 /* ======================================================================

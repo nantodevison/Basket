@@ -49,7 +49,7 @@ def gererCookieTtfl(driver):
     time.sleep(5)
     try : 
         boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                By.XPATH, f"//button[@class='sd-cmp-1rLJX']/span[@class='sd-cmp-3zOvK sd-cmp-3xV-4 sd-cmp-3t33g']")))
+                By.XPATH, f"//button[@class='sd-cmp-JnaLO']/span[@class='sd-cmp-16t61 sd-cmp-2JYyd sd-cmp-3cRQ2']")))
         boutonCookie.click()
         time.sleep(3)
     except TimeoutException : 
@@ -437,7 +437,7 @@ class JoueursSiteNba(object):
             listeCaracNomPosition=[e.text for e in nomPosition.find_elements_by_xpath(".//*")]
             dicoCaracJoueur['taille']=[float(re.sub('(\(|\)|m)','',re.search('(\([1-2]\.[0-9]{2}m\))',e.text).group(1))) for i,e in enumerate(elements) if i==0][0]
             dicoCaracJoueur['poids']=[float(re.sub('(\(|\)|kg)','',re.search('(\([0-9]{1,3}kg\))',e.text).group(1))) for i,e in enumerate(elements) if i==1][0]
-            dicoCaracJoueur['date_entree_nba']=pd.to_datetime(f"{[2020-int(e.text.split()[0]) if e.text != 'Rookie' else 2020 for i,e in enumerate(elements) if i==7][0]  }-10-01")
+            dicoCaracJoueur['date_entree_nba']=pd.to_datetime(f"{[2021-int(e.text.split()[0]) if e.text != 'Rookie' else 2021 for i,e in enumerate(elements) if i==7][0]  }-10-01")
             dicoCaracJoueur['date_naissance']=pd.to_datetime([e.text for e in elements if re.match('[a-z]{0,12} [0-9]{1,2}, [0-9]{4}',e.text.lower())][0])
             dicoCaracJoueur['nom']=' '.join(listeCaracNomPosition[-2:])
             dicoCaracJoueur['nom_simple']=simplifierNomJoueur(' '.join(listeCaracNomPosition[-2:]))
@@ -478,7 +478,7 @@ class JoueursChoisisTtfl(object):
             time.sleep(3)
             self.dfJoueurAInserer=self.filtrerJoueurDejaBdd()
         
-    def recupSiteTrashtalk(self, titrePageConnexion='#TTFL - Saison 6', titrePageTTFl='Dashboard | TRASHTALK FANTASY'):    
+    def recupSiteTrashtalk(self, titrePageConnexion='#TTFL - Saison 7', titrePageTTFl='Dashboard | TRASHTALK FANTASY'):    
         """
         vérifier si la connexion de __init__ nous dirige directement sur la page TTFL ou sur la page d'accueil
         in : 
