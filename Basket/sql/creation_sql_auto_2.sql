@@ -666,7 +666,30 @@ COMMENT ON FUNCTION donnees_source.func_stats_cumul_eqp_saison (integer) IS 'cal
 
 ---------Fonction de visu des points ttfl de joueurs d'une equipe
 CREATE OR REPLACE FUNCTION ttfl.func_points_ttfl_joueur_equipe (IN equipe char (3))
- RETURNS TABLE (id_joueur, nom, id_equipe, ttfl_moy_tot, ttfl_median_tot_nb_match, ttfl_min_tot, ttfl_max_tot)
+ RETURNS TABLE (id_joueur int4, nom varchar, id_equipe varchar(3), ttfl_moy_tot numeric, ttfl_median_tot float8, nb_match int8, ttfl_min_tot int4, ttfl_max_tot int4, last_5_matchs integer[]) 
+ LANGUAGE plpgsql
+  AS
+ $function$
+  DECLARE 
+    nom_equipe_up char(3) := (SELECT upper(equipe)) ;
+  BEGIN 
+      IF NOT (SELECT EXISTS (SELECT 1 FROM donnees_source.equipe e WHERE e.id_equipe=nom_equipe_up)) THEN 
+        RAISE EXCEPTION 'le nom d''equipe n''est pas dans la table donnees_source.equipe' ;
+      END IF ;
+      
+      RETURN query 
+      SELECT * 
+       FROM ttfl.ttfl_par_equipe t
+       WHERE t.id_equipe=nom_equipe_up ;
+  END ;
+  $function$ ;
+  
+COMMENT ON FUNCTION  ttfl.func_points_ttfl_joueur_equipe(char(3)) IS 'vue de syntheses des stats ttfl des joueurs d''une equipe' ;
+--exemple d'appel
+SELECT * FROM ttfl.func_points_ttfl_joueur_equipe('hou') ;
+ 
+ 
+
 
 
 /* ======================================================================
@@ -685,7 +708,7 @@ select * FROM ttfl.x_meilleurs_ttfl_x_match_dispo(5,30,(SELECT CURRENT_DATE))
 /*====================================
  * Vue de classement par points ttfl et par equipes (total)
  ====================================== */
-CREATE OR REPLACE VIEW ttfl_par_equipe AS 
+CREATE OR REPLACE view ttfl.ttfl_par_equipe AS 
 WITH 
 joueur_equipe_recente AS (
  SELECT DISTINCT ON (id_joueur) sj.*, m.date_match 
@@ -695,11 +718,13 @@ joueur_equipe_recente AS (
 SELECT st.id_joueur,st.nom, st.id_equipe,  
         round(avg(st.score_ttfl)) ttfl_moy_tot, PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY st.score_ttfl) ttfl_median_tot,
         count(*) nb_match, 
-        min(st.score_ttfl) min_ttfl_tot, max(st.score_ttfl) max_ttfl_tot
+        min(st.score_ttfl) min_ttfl_tot, max(st.score_ttfl) max_ttfl_tot, 
+        (array_agg(st.score_ttfl ORDER BY m.date_match desc))[:5] last_5_matchs
  FROM donnees_source.stats_joueurs_match st JOIN joueur_equipe_recente sj ON (st.id_joueur, st.id_equipe)=(sj.id_joueur, sj.id_equipe)
+                                            JOIN donnees_source.MATCH m ON st.id_match=m.id_match
   WHERE st.id_saison=2
-  GROUP by st.id_joueur,st.nom, st.id_equipe
-  ORDER BY id_equipe, ttfl_moy_tot DESC ;
+  GROUP by st.id_joueur,st.nom, st.id_equipe, st.id_saison
+  ORDER BY id_equipe, ttfl_median_tot DESC ;
  
 
 

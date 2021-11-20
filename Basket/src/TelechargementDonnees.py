@@ -130,7 +130,7 @@ class Calendrier(QObject):
                     gererCookieNba(driver)
                     try :
                         elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located(
-                            (By.XPATH,"//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']")))
+                            (By.XPATH,"//a[@class='shadow-block bg-white flex md:rounded text-sm relative mb-4']")))
                     except TimeoutException as e :
                         print(e)
                         raise PasDeMatchError(d)
@@ -381,43 +381,48 @@ class JoueursSiteNba(object):
     3. concatener (France) puis mettre en forme un df
     """
     
-    def __init__(self, urlPageJoueurs='https://www.nba.com/players',refWebElement='Page Number Selection Drown Down List',
-                 typeExport='All'):
+    def __init__(self, urlPageJoueurs='https://www.nba.com/players',listeDeroulanteNbPage='Page Number Selection Drown Down List',
+                 typeExport='All', classeTableauColonne1='primary text RosterRow_primaryCol__19xPQ', classeLienNom='flex items-center t6 Anchor_complexLink__2NtkO'):
         """
         Attributes : 
             driver : driver Selenium pour firefox. cf CreationDriverFirefox()
             urlPageJoueurs : url de la page des joueurs
-            refWebElement : nom de l'element qui permet d'afficher tous les joueurs
+            listeDeroulanteNbPage : classe de l'element qui permet d'afficher tous les joueurs
             dfJoueurs : dataframe descriptives des joueurs (nom, equipe, taille, poids, position, experience, pays, date_entree_nba
-            typeExport = string : pour pouvoir utiliser la classe pour balayer tous les joueurs à la suite ou un seul
+            typeExport = string : pour pouvoir utiliser la classe pour balayer tous les joueurs à la suite, seulement ceux inconnus en bdd ou un seul
+            classeTableauColonne1 : string : nom de la classe de l'objet contenant le nom des joueurs en colonne 1
+            classeLienNom : string : nom de classe de l'objet contenant le lien vers la fiche du joueur
+            
         """
         with DriverFirefox() as d :
             self.driver=d.driver
             self.urlPageJoueurs=urlPageJoueurs
-            self.refWebElement=refWebElement
+            self.listeDeroulanteNbPage=listeDeroulanteNbPage
+            self.classeTableauColonne1=classeTableauColonne1
+            self.classeLienNom=classeLienNom
+            self.typeExport=typeExport
             self.driver.get(self.urlPageJoueurs)
             gererCookieNba(self.driver)
-            if typeExport=='All' : 
-                self.dfJoueurs=self.miseEnForme(self.obtenirlistLinkJoueurs())
-            else : 
-                self.dfJoueurs=pd.DataFrame(self.attributJoueur(self.urlPageJoueurs), index=[0])
+            if self.typeExport=='All' :
+                self.listLinkJoueurs=self.obtenirlistLinkJoueurs()     
+            self.creerDfJoueur()
 
     def obtenirlistLinkJoueurs(self):
         """
         obetnir le container 
         """
         select = Select(WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
-                    By.XPATH, f"//select[@title='{self.refWebElement}']"))))
+                    By.XPATH, f"//select[@title='{self.listeDeroulanteNbPage}']"))))
         time.sleep(3)
         select.select_by_value('-1')
         time.sleep(3)
         #recupérer la liste des liens vers les pages des joueurs
-        listLinkGeneral=self.driver.find_element_by_xpath("//td[@class='primary text PlayerList_primaryCol__1tWZA']")
-        listLinkJoueurs=[a.get_attribute("href") for a in listLinkGeneral.find_elements_by_xpath("//a[@class='flex items-center t6']")]
+        listLinkGeneral=self.driver.find_element_by_xpath(f"//td[@class='{self.classeTableauColonne1}']")
+        listLinkJoueurs=[a.get_attribute("href") for a in listLinkGeneral.find_elements_by_xpath(f"//a[@class='{self.classeLienNom}']")]
         return listLinkJoueurs
     
     def attributJoueur(self,linkJoueur, refDivCarac='PlayerSummary_playerInfo__1L8sx',
-                       refParagrapheCarac='PlayerSummary_playerInfoValue__mSfou', refElementNom='flex flex-col mb-2 text-white'):
+                       refParagrapheCarac='PlayerSummary_playerInfoValue__mSfou', refElementNom='flex flex-col text-white'):
         """
         à partir d'un lien qui pointe vers une page liee à un joueur, retourner un dico des caracteristique
         in : 
@@ -447,12 +452,21 @@ class JoueursSiteNba(object):
         
         return dicoCaracJoueur
 
-    def miseEnForme(self,listLinkJoueurs):
+    def miseEnForme(self):
         """
         parcourir la liste des liens vers les joueurs, appeker la fonction de recup des infos et concatener
         """
-        dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(listLinkJoueurs)], axis=0)
+        dfCaracJoueurs= pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(self.listLinkJoueurs)], axis=0)
         return dfCaracJoueurs
+    
+    def creerDfJoueur(self):
+        """
+        creer la df des joueurs selon le type d'export souhaite
+        """
+        if self.typeExport=='All' : 
+                self.dfJoueurs=self.miseEnForme()
+        else : 
+            self.dfJoueurs=pd.DataFrame(self.attributJoueur(self.urlPageJoueurs), index=[0])
 
 class JoueursChoisisTtfl(object):
     """

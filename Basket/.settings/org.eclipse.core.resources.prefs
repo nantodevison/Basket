@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/Ihm/Initialiser_donnees_IHM.py=utf-8
 encoding//src/Ihm/MainWindow.py=utf-8
+encoding//src/ParamsWeb.py=utf-8
 encoding//src/TelechargementDonnees.py=utf-8
 encoding//src/TeleversementJourneeBdd.py=utf-8
