@@ -19,8 +19,9 @@ import numpy as np
 from collections import Counter
 import Connexion_Transfert as ct
 from PyQt5.QtCore import QObject, pyqtSignal
+from ParamsWeb import idBoutonGererCookieNba, classLienMatch_calendrier, boutonGererCookieTtfl, urlSiteNbaScore
 
-urlSiteNbaScore='https://www.nba.com/games'
+
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
  'rebonds_o', 'rebonds_d', 'rebonds', 'passes_dec', 'steal','contres','ball_perdu', 'faute_p','points', 'plus_moins']
 nomsColonnesMatch=['id_equipe','q1','q2','q3','q4','final']
@@ -36,7 +37,7 @@ def gererCookieNba(driver):
     time.sleep(5)
     try : 
         boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                By.XPATH, f"//button[@id='onetrust-accept-btn-handler']")))
+                By.XPATH, idBoutonGererCookieNba)))
         boutonCookie.click()
         time.sleep(3)
     except TimeoutException : 
@@ -49,7 +50,7 @@ def gererCookieTtfl(driver):
     time.sleep(5)
     try : 
         boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
-                By.XPATH, f"//button[@class='sd-cmp-JnaLO']/span[@class='sd-cmp-16t61 sd-cmp-2JYyd sd-cmp-3cRQ2']")))
+                By.XPATH, boutonGererCookieTtfl)))
         boutonCookie.click()
         time.sleep(3)
     except TimeoutException : 
@@ -106,6 +107,24 @@ class Calendrier(QObject):
         self.id_saison=id_saison
         self.date_depart=date_depart
         self.duree=duree
+        
+    def telechargerUneJournee(self, dateMatch, driver):
+        """
+        pour une date donnees, telecharger les matchs de cette date ou lever une erreur si pas de match
+        in : 
+            dateMatch : string : date au format '%Y-%m-%d'
+            driver : dirver firfox de selenium
+        out : 
+            listMatch : liste de strin composant les lihes internet des pages de match
+        """
+        try :
+            elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located(
+                (By.XPATH,classLienMatch_calendrier)))
+        except TimeoutException as e :
+            print(e)
+            raise PasDeMatchError(dateMatch)
+        listMatch=[p.get_attribute("href") for p in elementsMatch]
+        return listMatch
 
     def telechargerCalendrier(self):
         """
@@ -116,31 +135,26 @@ class Calendrier(QObject):
             dfMatchs : la df des matchs avec equipe dom, equipe_est, date_match et id_saison
         """
         listDfMatchs=[]
-        try :
-            print('debut')
-            with DriverFirefox() as d :
-                print('avant driver')
-                driver=d.driver
-                print('apres driver')
-                for i,dateString in enumerate([d.strftime('%Y-%m-%d') 
-                            for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
-                    urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
-                    driver.get(urlDateJournee)
-                    time.sleep(3)
-                    gererCookieNba(driver)
-                    try :
-                        elementsMatch=WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located(
-                            (By.XPATH,"//a[@class='shadow-block bg-white flex md:rounded text-sm relative mb-4']")))
-                    except TimeoutException as e :
-                        print(e)
-                        raise PasDeMatchError(d)
-                    listMatch=[p.get_attribute("href") for p in elementsMatch]
-                    listDfMatchs.append(pd.DataFrame.from_records([(m.split('-vs-')[0][-3:].upper(), m.split('-vs-')[1][:3].upper(), dateString, self.id_saison) for m in listMatch], 
-                                      columns=['equipe_exterieure', 'equipe_domicile', 'date_match', 'id_saison']))
-                    self.signalJourneeFaite.emit(i+1)
-            self.calendrier=pd.concat(listDfMatchs)
-        except Exception as e : 
-            print(e)
+        print('debut')
+        with DriverFirefox() as d :
+            print('avant driver')
+            driver=d.driver
+            print('apres driver')
+            for i,dateString in enumerate([d.strftime('%Y-%m-%d') 
+                        for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
+                urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
+                driver.get(urlDateJournee)
+                time.sleep(3)
+                gererCookieNba(driver)
+                try :
+                    listMatch=self.telechargerUneJournee(dateString, driver)
+                except PasDeMatchError as e : 
+                    print(e)
+                    continue
+                listDfMatchs.append(pd.DataFrame.from_records([(m.split('-vs-')[0][-3:].upper(), m.split('-vs-')[1][:3].upper(), dateString, self.id_saison) for m in listMatch if '-vs-' in m], 
+                      columns=['equipe_exterieure', 'equipe_domicile', 'date_match', 'id_saison']).drop_duplicates())
+                self.signalJourneeFaite.emit(i+1)
+        self.calendrier=pd.concat(listDfMatchs)
     
     def exporterVersBdd(self,bdd='basket'):    
         with ct.ConnexionBdd(bdd) as c :
