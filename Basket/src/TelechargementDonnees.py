@@ -12,14 +12,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException,TimeoutException
 from selenium.webdriver.support.ui import Select
-import time, os, re
+import time, re
 from datetime import datetime
 import pandas as pd
 import numpy as np
 from collections import Counter
 import Connexion_Transfert as ct
 from PyQt5.QtCore import QObject, pyqtSignal
-from ParamsWeb import idBoutonGererCookieNba, classLienMatch_calendrier, boutonGererCookieTtfl, urlSiteNbaScore
+from ParamsWeb import (idBoutonGererCookieNba, classLienMatch_calendrier, boutonGererCookieTtfl, urlSiteNbaScore,
+                       divDrapeauIncrustation, boutonCloseIncrustation, boutonCloseConnexionNba, divTestCalendrier)
 
 
 nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -54,7 +55,42 @@ def gererCookieTtfl(driver):
         boutonCookie.click()
         time.sleep(3)
     except TimeoutException : 
+        return 
+
+def fermerIncrustationNba(driver):
+    """
+    si la page des matchs s'ouvre avec un incrustation devant (pour les dates des matchs a venir par exemple), on la ferme
+    """
+    time.sleep(5)
+    try : 
+        boutonFermerIncrustation = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, boutonCloseIncrustation)))
+        boutonFermerIncrustation.click()
+    except TimeoutException : 
         pass 
+    
+def fermerFenetreConnexion(driver):
+    """
+    si une fenetre de connexion s'ouvre, la fermer 
+    """
+    time.sleep(5)
+    try :
+        boutonFermetureFenetreConnexion = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,boutonCloseConnexionNba)))
+        boutonFermetureFenetreConnexion.click()
+    except TimeoutException : 
+        pass 
+    
+def fermerFenetreFaçade(driver, elementTest):
+    """
+    fermer n'impore quelle fenetre qui se place devant
+    """
+    try:
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, elementTest)))
+    except TimeoutException:
+        if WebDriverWait(driver, 10).until(EC.presence_of_element_located((divDrapeauIncrustation))):
+            fermerIncrustationNba(driver)
+        else:
+            fermerFenetreConnexion
+    return
 
 def simplifierNomJoueur(nom):
     """
@@ -140,12 +176,13 @@ class Calendrier(QObject):
             print('avant driver')
             driver=d.driver
             print('apres driver')
-            for i,dateString in enumerate([d.strftime('%Y-%m-%d') 
-                        for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
+            for i,dateString in enumerate([d.strftime('%Y-%m-%d') for d in pd.date_range(start=self.date_depart,periods=self.duree)]) :
+                print(dateString)
                 urlDateJournee=fr'{urlSiteNbaScore}?date={dateString}'
                 driver.get(urlDateJournee)
                 time.sleep(3)
                 gererCookieNba(driver)
+                fermerFenetreFaçade(driver, divTestCalendrier)
                 try :
                     listMatch=self.telechargerUneJournee(dateString, driver)
                 except PasDeMatchError as e : 
