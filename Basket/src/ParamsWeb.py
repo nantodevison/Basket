@@ -7,6 +7,9 @@ Created on 20 nov. 2021
 Module contenant les parametres d'identifiaction des objets Web
 '''
 
+#################################################
+################### SITE NBA ####################
+#################################################
 urlSiteNbaScore = 'https://www.nba.com/games'
 classLienMatch_calendrier = "//a[@class='flex-1 px-2 pt-5 h-full block hover:no-underline relative text-sm pt-5 pb-4 mb-1 px-2']"
 idBoutonGererCookieNba = "//button[@id='onetrust-accept-btn-handler']"
@@ -16,4 +19,16 @@ boutonCloseIncrustation = "//button[@class='ab-close-button']"
 boutonCloseConnexionNba = "//div[@class='mvpd-modal-close-button']"
 divTestCalendrier = "//div[@class='shadow-block bg-white flex md:rounded text-sm relative mb-4']"
 testTextPasDeMatch = "// *[contains(text(),\'No scheduled games')]"
+
+#################################################
+################### JOUEURS #####################
+#################################################
+urlPageJoueurs = 'https://www.nba.com/players'
+listeDeroulanteNbPage = 'Page Number Selection Drown Down List'
+classeTableauColonne1 = 'primary text RosterRow_primaryCol__19xPQ'
+classeLienNom = 'flex items-center t6 Anchor_complexLink__2NtkO'
+refDivCarac = 'PlayerSummary_playerInfo__1L8sx'
+refParagrapheCarac = 'PlayerSummary_playerInfoValue__mSfou'
+refElementNom = 'flex flex-col text-white'
+sliderHistorique = 'Toggle_slider__hCMQQ'
 
