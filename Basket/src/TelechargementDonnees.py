@@ -471,6 +471,7 @@ class JoueursSiteNba(object):
             dfJoueurs : dataframe descriptives des joueurs (nom, equipe, taille, poids, position, experience, pays, date_entree_nba
             typeExport = string : pour pouvoir utiliser la classe pour balayer tous les joueurs à la suite, seulement ceux inconnus en bdd ou une liste fournie.
                                   valeur possible : 'All', 'Mano'
+            liensMano : string : adresse internetde la page du joueur a recuperer
         """
         checkParamValues(typeExport, ['All', 'Mano'])
         with DriverFirefox() as d:
@@ -564,26 +565,19 @@ class JoueursSiteNba(object):
         dicoCaracJoueur['nom'] = ' '.join(listeCaracNomPosition[1:3])
         dicoCaracJoueur['nom_simple'] = simplifierNomJoueur(' '.join(listeCaracNomPosition[1:3]))
         dicoCaracJoueur['id_position_terrain'] = '-'.join([e[0] if e in ('Center','Guard', 'Forward') else 'NC' for e in 
-                                                           listeCaracNomPosition[0].split(' | ')[-1].split('-')])    
+                                                           listeCaracNomPosition[0].split(' | ')[-1].split('-')])   
+        dicoCaracJoueur['page_web'] =  linkJoueur
         #except Exception as x :
             #print (x, linkJoueur)
         return dicoCaracJoueur
 
-
-    def miseEnForme(self):
-        """
-        parcourir la liste des liens vers les joueurs, appeker la fonction de recup des infos et concatener
-        """
-        dfCaracJoueurs = pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(self.listLinkJoueurs)], axis=0)
-        return dfCaracJoueurs
-    
     
     def creerDfJoueur(self):
         """
         creer la df des joueurs selon le type d'export souhaite
         """
         if self.typeExport in ('All', 'Mano') : 
-                self.dfJoueurs = self.miseEnForme()
+                self.dfJoueurs = pd.concat([pd.DataFrame(self.attributJoueur(l), index=[i]) for i,l in enumerate(self.listLinkJoueurs)], axis=0)
         else : 
             self.dfJoueurs = pd.DataFrame(self.attributJoueur(urlPageJoueurs), index=[0])
 
