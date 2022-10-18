@@ -17,7 +17,7 @@ boutonGererCookieTtfl = "//button[@class='sd-cmp-JnaLO']/span[@class='sd-cmp-16t
 divDrapeauIncrustation = "//div[@class='ab-page-blocker']"
 boutonCloseIncrustation = "//button[@class='ab-close-button']"
 boutonCloseConnexionNba = "//div[@class='mvpd-modal-close-button']"
-divTestCalendrier = "//div[@class='shadow-block bg-white flex md:rounded text-sm relative mb-4']"
+divTestCalendrier = "//div[@class='ab-in-app-message  ab-background ab-modal-interactions graphic ab-clickable ab-modal ab-centered']"
 testTextPasDeMatch = "// *[contains(text(),\'No scheduled games')]"
 
 #################################################

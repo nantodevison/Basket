@@ -93,6 +93,7 @@ def fermerFenetreFaçade(driver, elementTest):
     """
     try:
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, elementTest)))
+        fermerIncrustationNba(driver)
     except TimeoutException:
         if WebDriverWait(driver, 10).until(EC.presence_of_element_located((divDrapeauIncrustation))):
             fermerIncrustationNba(driver)
