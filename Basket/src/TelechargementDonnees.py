@@ -26,13 +26,13 @@ from ParamsWeb import (idBoutonGererCookieNba, classLienMatch_calendrier, bouton
 from Outils import checkParamValues
 
 
-nomsColonnesStat=['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
+nomsColonnesStat = ['nom', 'minute','tir_reussi','tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt','lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
  'rebonds_o', 'rebonds_d', 'rebonds', 'passes_dec', 'steal','contres','ball_perdu', 'faute_p','points', 'plus_moins']
-nomsColonnesMatch=['id_equipe','q1','q2','q3','q4','final']
-nomsColonnesStatsEquipe=['id_equipe','pts_in_paint','fastbreak_pts','biggest_lead',
+nomsColonnesMatch = ['id_equipe','q1','q2','q3','q4','final']
+nomsColonnesStatsEquipe = ['id_equipe','pts_in_paint','fastbreak_pts','biggest_lead',
                    'pts_banc','tm_rebonds','ball_perdu','tm_ball_perdu','pt_subi_ctrattaq']
-dnpTupleTexte=("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP","NWT","DND")
-ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,)
+dnpTupleTexte = ("Pas en tenue","N'a pas joué", "Pas avec l'équipe","DNP","NWT","DND")
+ignored_exceptions = (NoSuchElementException,StaleElementReferenceException,)
 
 
 def gererCookieNba(driver):
@@ -41,7 +41,7 @@ def gererCookieNba(driver):
     """
     time.sleep(5)
     try: 
-        boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+        boutonCookie = WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                 By.XPATH, idBoutonGererCookieNba)))
         boutonCookie.click()
         time.sleep(3)
@@ -55,7 +55,7 @@ def gererCookieTtfl(driver):
     """
     time.sleep(5)
     try: 
-        boutonCookie=WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+        boutonCookie = WebDriverWait(driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                 By.XPATH, boutonGererCookieTtfl)))
         boutonCookie.click()
         time.sleep(3)
@@ -122,7 +122,7 @@ class DriverFirefox(object):
         """
         on ne cree le self.driver 'en dur' que sur demande explicite
         """
-        if typeConn!='Auto':
+        if typeConn != 'Auto':
             self.driver = webdriver.Firefox()
             self.driver.implicitly_wait(20)
             time.sleep(2)
@@ -155,7 +155,7 @@ class Calendrier(QObject):
         QObject.__init__(self)
         self.id_saison = id_saison
         self.date_depart = date_depart
-        self.duree=duree
+        self.duree = duree
         
         
     def telechargerUneJournee(self, dateMatch, driver):
@@ -186,7 +186,7 @@ class Calendrier(QObject):
             dfMatchs: la df des matchs avec equipe dom, equipe_est, date_match et id_saison
         """
         listDfMatchs = []
-        print('debut')
+        print('debut telechargerCalendrier')
         with DriverFirefox() as d:
             print('avant driver')
             driver = d.driver
@@ -299,7 +299,7 @@ class JourneeSiteNba(Blessures, QObject):
         self.urlDateJournee=fr'{urlSiteNbaScore}?date={self.dateJournee}'
         with DriverFirefox() as d: 
             self.driver=d.driver
-            self.listFeuilleDeMatch, self.nbMatchs=self.getListFeuilleDeMatch()
+            self.listFeuilleDeMatch, self.nbMatchs = self.getListFeuilleDeMatch()
         
         
     def __str__(self):
@@ -384,13 +384,13 @@ class JourneeSiteNba(Blessures, QObject):
         dfStatsEquipes.columns=nomsColonnesStatsEquipe
         
         
-    def colonnesStats(self,dfStats):
+    def colonnesStats(self, dfStats):
         """
         modifier les noms des colonnes, supprimer les inutiles, supprimer la ligne de fin
         """
         dfStats.drop(dfStats.tail(1).index,inplace=True)
-        dfStats.columns=nomsColonnesStat
-        dfStats.loc[dfStats.head(5).index,'nom']=dfStats.head(5).nom.str[:-1]
+        dfStats.columns = nomsColonnesStat
+        dfStats.loc[dfStats.head(5).index,'nom'] = dfStats.head(5).nom.str[:-1]
         
                 
     def ajoutAttributs(self,dfStatEquipe):
@@ -404,12 +404,12 @@ class JourneeSiteNba(Blessures, QObject):
             trouver les dnp, en fonction du nombre de minute ou des annotations
             """
             if isinstance(minute, float) or isinstance(minute, int): 
-                if minute==0: 
+                if minute == 0: 
                     return True 
                 else: 
                     return False 
             elif isinstance(minute, str): 
-                if any([e in minute for e in dnpTupleTexte])  or float(minute.replace(':','.'))==0:
+                if any([e in minute for e in dnpTupleTexte])  or float(minute.replace(':','.')) == 0:
                     return True 
                 else: 
                     return False 
@@ -433,23 +433,23 @@ class JourneeSiteNba(Blessures, QObject):
                 raise TypeError('type de donnees minutes non gere')
             
             
-        dfStatEquipe['dnp']=dfStatEquipe.minute.apply(lambda x: trouverDnp(x))
-        dfStatEquipe['blesse']=dfStatEquipe.minute.apply(lambda x: "Injury/Illness" in x if isinstance(x, str) else False)
+        dfStatEquipe['dnp'] = dfStatEquipe.minute.apply(lambda x: trouverDnp(x))
+        dfStatEquipe['blesse'] = dfStatEquipe.minute.apply(lambda x: "Injury/Illness" in x if isinstance(x, str) else False)
         #passer les valeurs des joueurs n'ayant pas joues a NaN
         dfStatEquipe.loc[dfStatEquipe.dnp,
-            [c for c in dfStatEquipe.columns if c not in ('nom','dnp','blesse')]]=np.NaN
+            [c for c in dfStatEquipe.columns if c not in ('nom','dnp','blesse')]] = np.NaN
         #convertir en format float les donnees numeriques
         for c in [e for e in dfStatEquipe.columns if e not in ('nom', 'position', 'minute', 'dnp', 'blesse')]:
-                dfStatEquipe[c]=dfStatEquipe[c].astype(float)
+                dfStatEquipe[c] = dfStatEquipe[c].astype(float)
         #convertir le temps joue en format date
-        dfStatEquipe['minute']=dfStatEquipe.minute.apply(lambda x: convertirMinute(x))
+        dfStatEquipe['minute'] = dfStatEquipe.minute.apply(lambda x: convertirMinute(x))
         #simplifier les noms car il le lit 2 fois (je crois que c'est du au differents liens de la page)
-        dfStatEquipe['nom']=dfStatEquipe.nom.apply(lambda x: x.split()[0]+' '+x.split()[1][:-2] if Counter(x)[' ']<=2 and x.split()[-1].lower() not in ('jr.', 'sr.', 'ii','iii','iv','v')  
+        dfStatEquipe['nom'] = dfStatEquipe.nom.apply(lambda x: x.split()[0]+' '+x.split()[1][:-2] if Counter(x)[' '] <= 2 and x.split()[-1].lower() not in ('jr.', 'sr.', 'ii','iii','iv','v')  
                                              else ' '.join(x.split()[:2]+[x.split()[2][:-2],]))
         #ajouter l'attribut de nom simplifie
-        dfStatEquipe['nom_simple']=dfStatEquipe.nom.apply(lambda x: simplifierNomJoueur(x))
+        dfStatEquipe['nom_simple'] = dfStatEquipe.nom.apply(lambda x: simplifierNomJoueur(x))
         #score ttfl
-        dfStatEquipe.loc[~dfStatEquipe.dnp,'score_ttfl']=dfStatEquipe.loc[~dfStatEquipe.dnp].apply(lambda x: sum([x[c] for c in ('points', 'rebonds', 'passes_dec', 'steal','contres', 'tir_reussi',
+        dfStatEquipe.loc[~dfStatEquipe.dnp,'score_ttfl'] = dfStatEquipe.loc[~dfStatEquipe.dnp].apply(lambda x: sum([x[c] for c in ('points', 'rebonds', 'passes_dec', 'steal','contres', 'tir_reussi',
                                     'trois_pt_r','lanc_frc_r')]) - (x['ball_perdu']+(x['tir_tentes']-x['tir_reussi'])+
                                                                   (x['trois_pt_t']-x['trois_pt_r']) + 
                                                                   (x['lanc_frc_t']-x['lanc_frc_r'])), axis=1)
@@ -536,8 +536,8 @@ class JoueursSiteNba(object):
         #self.driver.find_element_by_xpath(f"//div[@class='{refElementNom}']")
         listeCaracNomPosition = [e.text for e in nomPosition.find_elements(by=By.XPATH, value=".//*")]
         """
-        dicoCaracJoueur['taille'] = [float(re.sub('(\(|\)|m)','',re.search('(\([1-2]\.[0-9]{2}m\))',e.text).group(1))) for i,e in enumerate(elements) if i==0][0]
-        dicoCaracJoueur['poids'] = [float(re.sub('(\(|\)|kg)','',re.search('(\([0-9]{1,3}kg\))',e.text).group(1))) for i,e in enumerate(elements) if i==1][0]
+        dicoCaracJoueur['taille'] = [float(re.sub('(\(|\)|m)','',re.search('(\([1-2]\.[0-9]{2}m\))',e.text).group(1))) for i,e in enumerate(elements) if i == 0][0]
+        dicoCaracJoueur['poids'] = [float(re.sub('(\(|\)|kg)','',re.search('(\([0-9]{1,3}kg\))',e.text).group(1))) for i,e in enumerate(elements) if i == 1][0]
         dicoCaracJoueur['draft'] = elements[5].text
         dicoCaracJoueur['date_naissance'] = pd.to_datetime([e.text for e in elements if re.match('[a-z]{0,12} [0-9]{1,2}, [0-9]{4}',e.text.lower())][0])"""
         # caracteristiques physiques
@@ -601,35 +601,35 @@ class JoueursChoisisTtfl(object):
         fichiersHtml: tuple ou list des fichiers html telecharges au prealable depuis l'historique de trashtalk https://fantasy.trashtalk.co/?tpl=historique
         dfJoueursChoisisBdd:df des joueurs deja choisi stockes dans la bdd
         """
-        self.htmlTtfl=htmlTtfl
-        self.saison=saison
+        self.htmlTtfl = htmlTtfl
+        self.saison = saison
         with DriverFirefox() as d:
-            self.driver=d.driver
+            self.driver = d.driver
             self.driver.get(self.htmlTtfl)
             time.sleep(3)
             self.recupSiteTrashtalk()
             time.sleep(3)
-            self.dfJoueurAInserer=self.filtrerJoueurDejaBdd()
+            self.dfJoueurAInserer = self.filtrerJoueurDejaBdd()
         
         
-    def recupSiteTrashtalk(self, titrePageConnexion='#TTFL - Saison 7', titrePageTTFl='Dashboard | TRASHTALK FANTASY'):    
+    def recupSiteTrashtalk(self, titrePageConnexion = '#TTFL - Saison 7', titrePageTTFl = 'Dashboard | TRASHTALK FANTASY'):    
         """
         vérifier si la connexion de __init__ nous dirige directement sur la page TTFL ou sur la page d'accueil
         in: 
            titrePageConnexion: string: titre de la page de connexion (i.e entrer login et mdp)
            titrePageTTFl:  string: titre de la page d'accueil de TTFL (i.e deja connecte)
         """
-        if self.driver.title==titrePageConnexion:
+        if self.driver.title == titrePageConnexion:
             print('connexion a etablir') 
             gererCookieTtfl(self.driver)
             self.ouvrirPageConnexion()
             self.connexion()
-            dfJoueursChoisisBase=self.agregationJoueursChoisis(self.accesHistorique())
+            dfJoueursChoisisBase = self.agregationJoueursChoisis(self.accesHistorique())
             self.formeDfJoueursChoisisTrashtalk(dfJoueursChoisisBase)
             #return 'pageConnexion'
-        elif self.driver.title==titrePageTTFl: 
+        elif self.driver.title == titrePageTTFl: 
             print('connexion deja etablie')
-            dfJoueursChoisisBase=self.agregationJoueursChoisis(self.accesHistorique())
+            dfJoueursChoisisBase = self.agregationJoueursChoisis(self.accesHistorique())
         else: 
             raise NameError('le titre de la page ne correspond pas aux titres connus')
         
@@ -639,7 +639,7 @@ class JoueursChoisisTtfl(object):
         depuis la page d'accueil TTFL non connecte, ouvrir la page de connexion
         """
         time.sleep(3)
-        boutonConnexion=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+        boutonConnexion = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                 By.XPATH, f"//li/a[@href='#login']")))
         boutonConnexion.click()
     
@@ -652,7 +652,7 @@ class JoueursChoisisTtfl(object):
         """
         with open(cheminFichier,'r') as f_id:
             for texte in f_id:
-                login, mdp=texte.strip().split(' ')[0],texte.strip().split(' ')[1]
+                login, mdp = texte.strip().split(' ')[0],texte.strip().split(' ')[1]
         return login, mdp
     
     
@@ -661,13 +661,13 @@ class JoueursChoisisTtfl(object):
         se connecter a mon compte de TTFL
         """
         time.sleep(3)
-        textLogin=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+        textLogin = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
                 By.XPATH, f"//input[@name='email']")))
-        textMdp=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
+        textMdp = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located((
                         By.XPATH, f"//input[@name='password']")))
-        boutonLogin=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+        boutonLogin = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                         By.XPATH, f"//button[@class='btn btn-primary font-montserrat all-caps fs-12 pull-right xs-pull-left']")))
-        login, mdp=self.recupLoginMdp()
+        login, mdp = self.recupLoginMdp()
         textLogin.send_keys(login)
         textMdp.send_keys(mdp)
         time.sleep(3)
@@ -679,13 +679,13 @@ class JoueursChoisisTtfl(object):
         """
         acceder à la page de l'historique et recuperer le nb de page
         """
-        boutonHistorique=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
+        boutonHistorique = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.element_to_be_clickable((
                 By.XPATH, f"//li/a[@href='/?tpl=historique']")))
         boutonHistorique.click()
         time.sleep(2)
-        pagination=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
+        pagination = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
                 By.XPATH, f"//ul[@class='pagination']//a")))
-        longueurPagination=len(pagination)-2
+        longueurPagination = len(pagination)-2
         return longueurPagination
     
     
@@ -693,10 +693,10 @@ class JoueursChoisisTtfl(object):
         """
         parcourir les pages et recuperer les joueurs deja joues
         """
-        listDfJoueursChoisis=[]
+        listDfJoueursChoisis = []
         for i in range(longueurPagination): 
             time.sleep(2)
-            pagination=WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
+            pagination = WebDriverWait(self.driver, 10,ignored_exceptions=ignored_exceptions).until(EC.presence_of_all_elements_located((
                         By.XPATH, f"//ul[@class='pagination']//a")))
             pagination[i+1].click()
             time.sleep(2)
@@ -712,11 +712,11 @@ class JoueursChoisisTtfl(object):
         out: 
             dfJoueurChoisiId : df des joueurs telles que importee du site, avec Date, Joueur, nom_simple, id_joueur
         """
-        dfJoueurChoisis['nom_simple']=dfJoueurChoisis.Joueur.apply(lambda x:  simplifierNomJoueur(x))
+        dfJoueurChoisis['nom_simple'] = dfJoueurChoisis.Joueur.apply(lambda x:  simplifierNomJoueur(x))
         with ct.ConnexionBdd('basket','maison') as c: 
-            dfJoueur=pd.read_sql("select id_joueur, nom_simple from donnees_source.joueur", c.sqlAlchemyConn)
-            self.dfJoueurChoisiId=dfJoueurChoisis.merge(dfJoueur, on='nom_simple')
-            self.dfJoueurChoisiId['Date']=pd.to_datetime(self.dfJoueurChoisiId.Date)
+            dfJoueur = pd.read_sql("select id_joueur, nom_simple from donnees_source.joueur", c.sqlAlchemyConn)
+            self.dfJoueurChoisiId = dfJoueurChoisis.merge(dfJoueur, on='nom_simple')
+            self.dfJoueurChoisiId['Date'] = pd.to_datetime(self.dfJoueurChoisiId.Date)
     
     
     def recupJoueurChoisiBdd(self):
@@ -724,8 +724,8 @@ class JoueursChoisisTtfl(object):
         recuperer les joueurs deja dans la base comme ayant été choisi
         """
         with ct.ConnexionBdd('basket','maison') as c: 
-            dfJoueurChoisisBdd=pd.read_sql("SELECT * FROM ttfl.joueurs_choisis;", c.sqlAlchemyConn)
-            dfJoueurChoisisBdd['date_choix']=pd.to_datetime(dfJoueurChoisisBdd.date_choix)
+            dfJoueurChoisisBdd = pd.read_sql("SELECT * FROM ttfl.joueurs_choisis;", c.sqlAlchemyConn)
+            dfJoueurChoisisBdd['date_choix'] = pd.to_datetime(dfJoueurChoisisBdd.date_choix)
         return dfJoueurChoisisBdd
     
     
@@ -733,7 +733,7 @@ class JoueursChoisisTtfl(object):
         """
         filtrer les joueurs issus des fichiers html deja dans la bdd
         """
-        dfJoueurChoisisBdd=self.recupJoueurChoisiBdd()
+        dfJoueurChoisisBdd = self.recupJoueurChoisiBdd()
         return self.dfJoueurChoisiId.loc[~(self.dfJoueurChoisiId.Date.isin(dfJoueurChoisisBdd.date_choix) & self.dfJoueurChoisiId.id_joueur.isin(dfJoueurChoisisBdd.id_joueur))]
  
  
@@ -750,7 +750,7 @@ class PasDeMatchError(Exception):
     erreur levee si pas de match à une date donnee
     """ 
     def __init__(self, dateJournee):
-        self.dateJournee=dateJournee
+        self.dateJournee = dateJournee
         
     def __str__(self): 
         return "Pas de match le: %s" % self.dateJournee

@@ -37,6 +37,6 @@ def nbJourneeImportDefaut(dateCalendrierAImporter):
     in : 
         dateCalendrierAImporter : date : premier jour a importer
     """
-    nbJoursMatchs=(date.today() - dateCalendrierAImporter).days
+    nbJoursMatchs = (date.today() - dateCalendrierAImporter).days
     return nbJoursMatchs
         

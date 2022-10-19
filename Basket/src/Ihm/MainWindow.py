@@ -30,8 +30,8 @@ class WindowPrincipale(QtWidgets.QMainWindow):
         uic.loadUi(r'C:\Users\martin.schoreisz\git\Basket\Basket\src\Ihm\FenetreBaseStat-TTFL.ui', self)
         
         #inititialisation des données de date
-        dateMatchAImporter, dateCalendrierAImporter, idSaisonRecent=lastDates()[2:]
-        nbJoursMatchs=nbJourneeImportDefaut(dateMatchAImporter)
+        dateMatchAImporter, dateCalendrierAImporter, idSaisonRecent = lastDates()[2:]
+        nbJoursMatchs = nbJourneeImportDefaut(dateMatchAImporter)
         self.dateEdit_ImportJournee.setDate(dateMatchAImporter)
         self.dateEdit_Calendrier.setDate(dateCalendrierAImporter)
         self.spinBox_NbjourImport.setValue(nbJoursMatchs)
@@ -46,43 +46,40 @@ class WindowPrincipale(QtWidgets.QMainWindow):
     def transfertCalendrier(self):
         """
         transferer le calendrier telecharge grace a la classe calendrier() dans la bdd
-        in :
-            id_saison : integer, identiiant saioson
-            date_depart : string format YYYY-MM-DD
-            duree : integer :nb de jours apres date de depart
-            bdd : id de connxion a la bdd
+        in:
+            id_saison: integer, identiiant saioson
+            date_depart: string format YYYY-MM-DD
+            duree: integer:nb de jours apres date de depart
+            bdd: id de connxion a la bdd
         """
-        try : 
-            self.threadCalendrier = QThread()
-            print('avant creation worker')
-            print(self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'))
-            self.workerCalendrier=WorkerCalendrier(self.spinBox_idSaisonCalendrier.value(), 
-                                                   self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'), 
-                                                   self.spinBox_calendrierNbJourImport.value())
-            print('avant move to')
-            self.workerCalendrier.moveToThread(self.threadCalendrier)
-            print('avant signaux/slots')
-            self.threadCalendrier.started.connect(self.workerCalendrier.run)
-            self.workerCalendrier.finished.connect(self.threadCalendrier.quit)
-            self.workerCalendrier.finished.connect(self.workerCalendrier.deleteLater)
-            self.workerCalendrier.finished.connect(self.fermerPgBar)
-            self.threadCalendrier.finished.connect(self.threadCalendrier.deleteLater)
-            self.barresProgressCalendrier=BarreProgression(barreEtape=False)
-            print('postbar')
-            self.workerCalendrier.signalJourneeFaite.connect(self.setJourneeDone)
-            self.workerCalendrier.signalNbJournee.connect(self.initPgBarNouvelleJournee)
-            print('avant start')
-            self.threadCalendrier.start()
-        except Exception as e : 
-            print(e)
+        self.threadCalendrier = QThread()
+        print('avant creation worker')
+        print(self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'))
+        self.workerCalendrier = WorkerCalendrier(int(self.spinBox_idSaisonCalendrier.value()), 
+                                               self.dateEdit_Calendrier.date().toString('yyyy-MM-dd'), 
+                                               self.spinBox_calendrierNbJourImport.value())
+        print('avant move to', self.spinBox_idSaisonCalendrier.value())
+        self.workerCalendrier.moveToThread(self.threadCalendrier)
+        print('avant signaux/slots')
+        self.threadCalendrier.started.connect(self.workerCalendrier.run)
+        self.workerCalendrier.finished.connect(self.threadCalendrier.quit)
+        self.workerCalendrier.finished.connect(self.workerCalendrier.deleteLater)
+        self.workerCalendrier.finished.connect(self.fermerPgBar)
+        self.threadCalendrier.finished.connect(self.threadCalendrier.deleteLater)
+        self.barresProgressCalendrier = BarreProgression(barreEtape=False)
+        print('postbar')
+        self.workerCalendrier.signalJourneeFaite.connect(self.setJourneeDone)
+        self.workerCalendrier.signalNbJournee.connect(self.initPgBarNouvelleJournee)
+        print('avant start')
+        self.threadCalendrier.start()
 
     @pyqtSlot()
     def televerserJourneeSiteNba(self):
         """
         telecharger une ou plusieurs journee du site Nba.com (USA) et les basculer dans la bdd
-        in :
-            date : string : date de depart de telechargement (YYYY-MM-DD)
-            duree : integer : nb de jours a telecharegre a partir de la date de depart
+        in:
+            date: string: date de depart de telechargement (YYYY-MM-DD)
+            duree: integer: nb de jours a telecharegre a partir de la date de depart
         """
         print('avant ouverture Tread')
         #ouvrir le thread
@@ -101,7 +98,7 @@ class WindowPrincipale(QtWidgets.QMainWindow):
         self.workerTelechargement.finished.connect(self.workerTelechargement.deleteLater)
         self.workerTelechargement.finished.connect(self.fermerPgBar)
         self.threadTelechargement.finished.connect(self.threadTelechargement.deleteLater)
-        self.barresProgressTelechargement=BarreProgression()
+        self.barresProgressTelechargement = BarreProgression()
         self.workerTelechargement.signalNbJournee.connect(self.initPgBarNouvelleJournee)
         self.workerTelechargement.signalNouvelleJournee.connect(self.setPgBarNouvelleJournee)
         self.workerTelechargement.signalNbMatch.connect(self.setPgBarNbMatchs)
@@ -126,32 +123,32 @@ class WindowPrincipale(QtWidgets.QMainWindow):
         self.barresProgressTelechargement.progressBar_etape.setValue(numMatch)
     
     @pyqtSlot(int)    
-    def initPgBarNouvelleJournee(self,nbJournee):
-        if self.sender()==self.workerTelechargement :
+    def initPgBarNouvelleJournee(self, nbJournee):
+        if self.sender() == self.workerTelechargement:
             self.barresProgressTelechargement.progressBar_nbJournee.setMaximum(nbJournee)
-        elif self.sender()==self.workerCalendrier :
+        elif self.sender() == self.workerCalendrier:
             self.barresProgressCalendrier.progressBar_nbJournee.setMaximum(nbJournee)
             
     @pyqtSlot(int)   
     def setPgBarNouvelleJournee(self, numJournee): 
-        if self.sender()==self.workerTelechargement :
+        if self.sender() == self.workerTelechargement:
             self.barresProgressTelechargement.label_etape.setText('Import des blessures et nombre de matchs...')       
             self.barresProgressTelechargement.label_nbJournee.setText(f'Traitement de la journée {numJournee}')
             
     @pyqtSlot(int)    
     def setJourneeDone(self, numJournee):
         print()
-        if self.sender()==self.workerTelechargement :
+        if self.sender() == self.workerTelechargement:
             self.barresProgressTelechargement.progressBar_nbJournee.setValue(numJournee)
-        elif self.sender()==self.workerCalendrier :
+        elif self.sender() == self.workerCalendrier:
             self.barresProgressCalendrier.progressBar_nbJournee.setValue(numJournee)
             self.barresProgressCalendrier.label_nbJournee.setText(f'Traitement de la journée {numJournee+1}')
             
     @pyqtSlot()
     def fermerPgBar(self):
-        if self.sender()==self.workerTelechargement :
+        if self.sender() == self.workerTelechargement:
             self.barresProgressTelechargement.close()
-        elif self.sender()==self.workerCalendrier :
+        elif self.sender() == self.workerCalendrier:
             self.barresProgressCalendrier.close()
 
 class BarreProgression(QtWidgets.QDialog):
@@ -171,7 +168,7 @@ class BarreProgression(QtWidgets.QDialog):
         self.label_nbJournee.setText('Initialisation...')
         print('avantShow')
         self.show()
-        if not barreEtape : 
+        if not barreEtape: 
             self.progressBar_etape.hide()
         self.WA_DeleteOnClose=True
         
@@ -202,14 +199,14 @@ class WorkerTelechargement(QObject):
                                                                 periods=self.duree)]): 
             self.signalNouvelleJournee.emit(e+1)
             print(j)
-            try : 
+            try: 
                 journee=JourneeBdd(j)
-            except PasDeMatchError : 
+            except PasDeMatchError: 
                 continue
             self.signalNbMatch.emit(journee.nbMatchs+1)
             journee.signalAvancement.connect(self.transmissionDonneesJournee)
             journee.signalMatchFait.connect(self.transmissionMatchFait) 
-            print(f'journee cree, nb matchs : {journee.nbMatchs}')
+            print(f'journee cree, nb matchs: {journee.nbMatchs}')
             journee.creerAttributsGlobaux()  
             self.signalJourneeDone.emit(e+1)
             print('fait')     
@@ -231,33 +228,33 @@ class WorkerCalendrier(QObject):
     """
     finished = pyqtSignal()
     signalJourneeFaite = pyqtSignal(int)
-    signalNbJournee=pyqtSignal(int)
+    signalNbJournee = pyqtSignal(int)
     
     def __init__(self, idSaison, dateDepart, duree):
         super(WorkerCalendrier, self).__init__()
-        self.idSaison=idSaison
-        self.dateDepart=dateDepart
-        self.duree=duree
+        self.idSaison = idSaison
+        self.dateDepart = dateDepart
+        self.duree = duree
             
     def run(self):
         print('debut run')
-        try : 
+        try: 
             self.signalNbJournee.emit(self.duree)
-            cal=Calendrier(self.idSaison,self.dateDepart,self.duree)
+            cal = Calendrier(self.idSaison,self.dateDepart,self.duree)
             print('avant tranbsmission')
             #cal.signalJourneeFaite.connect(self.transmissionjourneeFaite)
             print('avant calendrier')
             cal.telechargerCalendrier()
             cal.exporterVersBdd()
             #self.finished.emit()
-        except Exception as e : 
+        except Exception as e: 
             print(e)
         
     @pyqtSlot(int)
     def transmissionjourneeFaite(self, numjournee):
         self.signalJourneeFaite.emit(numjournee)
         
-if __name__=="__main__" : 
+if __name__=="__main__": 
     import sys 
     app=QtWidgets.QApplication(sys.argv)
     window=WindowPrincipale()
