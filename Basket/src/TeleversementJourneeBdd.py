@@ -7,7 +7,7 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 '''
 
 import pandas as pd
-from TelechargementDonnees import JourneeSiteNba, Calendrier, PasDeMatchError
+from TelechargementDonnees import JourneeSiteNba, Calendrier, PasDeMatchError, gererCookieNba
 import Connexion_Transfert as ct
 
 def miseAJourBlessesBdd(dfInjuries, sqlAlchemyConn):
@@ -123,7 +123,7 @@ class JourneeBdd(JourneeSiteNba):
     """
     un objet permettant les échanges entre la base et une journee telechargee
     """
-    def __init__(self, dateJournee, bdd='basket', id_saison=2, id_type_match=0, id_type_playoffs=None): 
+    def __init__(self, dateJournee, bdd='basket', id_saison=3, id_type_match=0, id_type_playoffs=None): 
         """
         attributes :
             dateJournee: string de date au format YYYY-mm-dd; attribut classe mere

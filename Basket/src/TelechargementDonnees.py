@@ -328,32 +328,32 @@ class JourneeSiteNba(Blessures, QObject):
         """
         en fonction de la source, creer les dfs des matchs et stats, dans un dico
         """
-        dicoJournee={}
+        dicoJournee = {}
         with DriverFirefox() as d: 
-            self.driver=d.driver
+            self.driver = d.driver
             for e, p in enumerate(self.listFeuilleDeMatch): 
                 print(e, p)
                 self.signalAvancement.emit(f'{p[25:35]}...')
                 self.driver.get(p)
                 time.sleep(7)
                 self.driver.implicitly_wait(20)
+                gererCookieNba(self.driver)
                 #sur l'onglet box-score on recupere les stats des equipes
-                dfsEquipes=pd.read_html(self.driver.page_source)
-                dicoJournee[e]={'stats_e0':dfsEquipes[0]} 
-                dicoJournee[e]['stats_e1']=dfsEquipes[1]
+                dfsEquipes = pd.read_html(self.driver.page_source)
+                dicoJournee[e] = {'stats_e0':dfsEquipes[0]} 
+                dicoJournee[e]['stats_e1'] = dfsEquipes[1]
                 time.sleep(7)
                 self.driver.implicitly_wait(20)
                 #bascule sur l'onglet summary er recuperer les stats de matchs: 
-                elementSummary=WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
+                elementSummary = WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.LINK_TEXT, 'Summary')))
                 self.driver.execute_script("arguments[0].click();", elementSummary)#passer via Javascript pour clicker mm si qqch devant
                 time.sleep(7)
                 self.driver.implicitly_wait(20)
-                dicoJournee[e]['match']=pd.read_html(self.driver.page_source)[0]
-                dicoJournee[e]['stats_equipes']=pd.concat([dicoJournee[e]['match'][['Unnamed: 0']],
-                                                          pd.read_html(self.driver.page_source)[1]], axis=1)
+                dicoJournee[e]['match'] =pd.read_html(self.driver.page_source)[0]
+                dicoJournee[e]['stats_equipes'] = pd.read_html(self.driver.page_source)[1]
                 self.signalMatchFait.emit(e+2)
         self.miseEnFormeDf(dicoJournee)
-        self.dicoJournee=dicoJournee
+        self.dicoJournee = dicoJournee
     
     
     def miseEnFormeDf(self, dicoJournee):
@@ -376,12 +376,12 @@ class JourneeSiteNba(Blessures, QObject):
         """
         modifier les noms de colonnees dans une df de match, gestion ds prolongations
         """
-        nbColonnesMatch=len(dfMatch.columns) - len(nomsColonnesMatch)
+        nbColonnesMatch = len(dfMatch.columns) - len(nomsColonnesMatch)
         if nbColonnesMatch > 0: 
-            prolongation=[f'pr{i+1}' for i in range(nbColonnesMatch)]
-            nomsColonnesMatch=nomsColonnesMatch[:-1]+prolongation+[nomsColonnesMatch[-1]]
-        dfMatch.columns=nomsColonnesMatch
-        dfStatsEquipes.columns=nomsColonnesStatsEquipe
+            prolongation = [f'pr{i+1}' for i in range(nbColonnesMatch)]
+            nomsColonnesMatch = nomsColonnesMatch[:-1] + prolongation + [nomsColonnesMatch[-1]]
+        dfMatch.columns = nomsColonnesMatch
+        dfStatsEquipes.columns = nomsColonnesStatsEquipe
         
         
     def colonnesStats(self, dfStats):
