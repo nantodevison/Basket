@@ -1,0 +1,1 @@
+{"resources":{"Scripts/Script-1.sql":{"default-datasource":"postgres-jdbc-184dce6a72b-6afe8dfa3bb3235e","default-catalog":"bambin"},"Scripts/Script.sql":{"default-schema":"public","default-datasource":"postgres-jdbc-184dce6a72b-6afe8dfa3bb3235e","default-catalog":"Basket"}}}

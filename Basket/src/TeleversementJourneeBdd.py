@@ -8,7 +8,15 @@ module de televersement dans  la bdd des donnees relative a une journee du site
 
 import pandas as pd
 from TelechargementDonnees import JourneeSiteNba, Calendrier, PasDeMatchError, gererCookieNba
-import Connexion_Transfert as ct
+# Import des modules persos
+# importing the importlib.util module
+import importlib.util        
+# passing the file name and path as argument
+spec = importlib.util.spec_from_file_location(
+  "Connexion_Transfert", r"C:\Users\martin.schoreisz\git\Outils\Outils\src\Connexions\Connexion_Transfert.py")    
+# importing the module as foo 
+ct = importlib.util.module_from_spec(spec)        
+spec.loader.exec_module(ct)
 
 def miseAJourBlessesBdd(dfInjuries, sqlAlchemyConn):
     """

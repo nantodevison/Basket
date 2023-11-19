@@ -17,13 +17,28 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 from collections import Counter
-import Connexion_Transfert as ct
+# import Connexion_Transfert as ct
 from PyQt5.QtCore import QObject, pyqtSignal
 from ParamsWeb import (idBoutonGererCookieNba, classLienMatch_calendrier, boutonGererCookieTtfl, urlSiteNbaScore,
                        divDrapeauIncrustation, boutonCloseIncrustation, boutonCloseConnexionNba, divTestCalendrier,
                        urlPageJoueurs, listeDeroulanteNbPage, classeTableauColonne1, classeLienNom, refDivCarac, refParagrapheCarac,
                        refElementNom, sliderHistorique)
-from Outils import checkParamValues
+# Import des modules persos
+# importing the importlib.util module
+import importlib.util        
+# passing the file name and path as argument
+spec = importlib.util.spec_from_file_location(
+  "Connexion_Transfert", r"C:\Users\martin.schoreisz\git\Outils\Outils\src\Connexions\Connexion_Transfert.py")    
+# importing the module as foo 
+ct = importlib.util.module_from_spec(spec)        
+spec.loader.exec_module(ct)
+# passing the file name and path as argument
+spec = importlib.util.spec_from_file_location(
+  "Outils", r"C:\Users\martin.schoreisz\git\Outils\Outils\src\Outils\Outils.py")    
+# importing the module as foo 
+Outils = importlib.util.module_from_spec(spec)        
+spec.loader.exec_module(Outils)
+# from Outils import checkParamValues
 
 
 nomsColonnesStat = ['nom', 'minute', 'tir_reussi', 'tir_tentes', 'pct_tir', 'trois_pt_r', 'trois_pt_t', 'pct_3_pt', 'lanc_frc_r', 'lanc_frc_t', 'pct_lfrc',
@@ -335,11 +350,21 @@ class JourneeSiteNba(Blessures, QObject):
                 print(e, p)
                 self.signalAvancement.emit(f'{p[25:35]}...')
                 self.driver.get(p)
-                time.sleep(7)
+                time.sleep(5)
                 self.driver.implicitly_wait(20)
                 gererCookieNba(self.driver)
-                #sur l'onglet box-score on recupere les stats des equipes
-                dfsEquipes = pd.read_html(self.driver.page_source)
+                #sur l'onglet box-score on recupere les stats des equipes, si il y a une ValueError : no tables found
+                # on refait un tour
+                tempPause = 10
+                while tempPause < 31:
+                    try:
+                        dfsEquipes = pd.read_html(self.driver.page_source)
+                        tempPause += 100
+                    except ValueError:
+                        print(f"value error à {p}")
+                        tempPause += 10
+                        time.sleep(10)
+                        
                 dicoJournee[e] = {'stats_e0':dfsEquipes[0]} 
                 dicoJournee[e]['stats_e1'] = dfsEquipes[1]
                 time.sleep(7)
@@ -399,6 +424,24 @@ class JourneeSiteNba(Blessures, QObject):
         in: 
            dfStatEquipe: df de stats des equipes issues du dico des matchs et stats mis en forme issu sde miseEnFormeDf()
         """
+        
+        def convertirMinutesSecondesCorrompu(minuteSecondes):
+            """
+            si le string de mintes et secondes est de la forme MM.000000:SS
+            in:
+                minuteSecondes string : forme MM.000000:SS
+            out:
+                minutes : int
+                secondes : int
+            """
+            if not all([e in minuteSecondes for e in ('.', ':')]):
+                raise ValueError(f"le format {minuteSecondes} n'est pas pris en charge par la fonction convertirMinutesSecondesCorrompu")
+            else:
+                listMinuteSecondes = minuteSecondes.split(':')
+                minutes = int(float(listMinuteSecondes[0]))
+                secondes  = int(listMinuteSecondes[1])
+                return minutes, secondes                
+        
         def trouverDnp(minute):
             """
             trouver les dnp, en fonction du nombre de minute ou des annotations
@@ -409,8 +452,16 @@ class JourneeSiteNba(Blessures, QObject):
                 else: 
                     return False 
             elif isinstance(minute, str): 
-                if any([e in minute for e in dnpTupleTexte])  or float(minute.replace(':', '.')) == 0:
+                if any([e in minute for e in dnpTupleTexte]):
                     return True 
+                elif all([e in minute for e in ('.', ':')]):
+                    minutes, secondes = convertirMinutesSecondesCorrompu(minute)
+                    if minutes == 0 and secondes == 0:
+                        return True
+                    else:
+                        False
+                elif float(minute.replace(':', '.')) == 0:
+                    return True
                 else: 
                     return False 
             else: 
@@ -424,6 +475,9 @@ class JourneeSiteNba(Blessures, QObject):
             if pd.isnull(minute): 
                 return pd.to_timedelta(minute, unit='S')
             elif isinstance(minute, str): 
+                if all([e in minute for e in ('.', ':')]):
+                    minutes, secondes = convertirMinutesSecondesCorrompu(minute)
+                    minute = f'{minutes}.{secondes}'
                 return pd.to_timedelta('00:'+':'.join([a.zfill(2) for a in str(minute).split('.')]))
             elif isinstance(minute, float): 
                 return pd.to_timedelta('00:'+':'.join([a.zfill(2) for a in str(minute).split('.')]))
@@ -476,7 +530,7 @@ class JoueursSiteNba(object):
                                   valeur possible: 'All', 'Mano'
             liensMano: string: adresse internetde la page du joueur a recuperer
         """
-        checkParamValues(typeExport, ['All', 'Mano'])
+        Outils.checkParamValues(typeExport, ['All', 'Mano'])
         with DriverFirefox() as d:
             self.anneeRef = anneeRef
             self.driver = d.driver

@@ -7,7 +7,15 @@ regroupe les fonctions permettant de recuperer et inserer les vlauers par defaut
 '''
 
 import pandas as pd
-import Connexion_Transfert as ct
+# Import des modules persos
+# importing the importlib.util module
+import importlib.util        
+# passing the file name and path as argument
+spec = importlib.util.spec_from_file_location(
+  "Connexion_Transfert", r"C:\Users\martin.schoreisz\git\Outils\Outils\src\Connexions\Connexion_Transfert.py")    
+# importing the module as foo 
+ct = importlib.util.module_from_spec(spec)        
+spec.loader.exec_module(ct)
 from datetime import timedelta, date
 
 def lastDates(bdd='basket'):
